@@ -5,7 +5,7 @@ import BestDeals from "@/components/BestDeals";
 import MostViewed from "@/components/MostViewed";
 import Categories from "@/components/Categories";
 import Promotions from "@/components/Promotions";
-// import Footer from "@/components/Footer";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -19,7 +19,7 @@ export default function Home() {
         <Categories />
         <Promotions />
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
