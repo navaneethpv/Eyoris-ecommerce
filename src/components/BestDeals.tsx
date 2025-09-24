@@ -54,8 +54,8 @@ export default function BestDeals() {
                 className="rounded-t-lg"
               />
             </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
+            <div className="p-4 flex flex-col h-full">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 min-h-[48px]">{product.name}</h3> {/* Added min-h to ensure consistent height */}
               <div className="flex items-center mb-2">
                 <div className="flex text-yellow-400">
                   {Array(5).fill(0).map((_, i) => (
@@ -68,7 +68,7 @@ export default function BestDeals() {
                 <span className="text-xl font-bold text-gray-900">{product.currentPrice}</span>
                 <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
               </div>
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300">
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto"> {/* Added mt-auto to push button to bottom */}
                 Add to cart
               </button>
             </div>
