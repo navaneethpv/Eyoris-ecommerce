@@ -4,16 +4,13 @@ export default function SigninLayout({ children }: { children: React.ReactNode }
   return (
     <div className="min-h-screen bg-white flex">
       {/* Left side - Decorative image */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 bg-[url('/assets/siginIn.png')] bg-cover" >
-        <div className="max-w-md">
-          {/* <Image
-            src="/assets/siginIn.png"
-            alt="Cozy chair with blanket"
-            width={500}
-            height={500}
-            className="w-full h-auto"
-          /> */}
-        </div>
+      <div className="hidden lg:block lg:w-1/2 relative bg-[#F3F5F7]">
+        <Image
+          src="/assets/siginIn.png"
+          alt="Cozy chair with blanket"
+          fill
+          className="object-contain"
+        />
       </div>
 
       {/* Right side - Content area */}
