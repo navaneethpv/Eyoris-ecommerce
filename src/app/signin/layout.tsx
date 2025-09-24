@@ -1,14 +1,18 @@
+import Image from "next/image";
+
 export default function SigninLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white flex">
       {/* Left side - Decorative image */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gray-50 items-center justify-center p-12">
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 bg-[url('/assets/siginIn.png')] bg-cover" >
         <div className="max-w-md">
-          <img
-            src="/images/siginIn.png"
+          {/* <Image
+            src="/assets/siginIn.png"
             alt="Cozy chair with blanket"
+            width={500}
+            height={500}
             className="w-full h-auto"
-          />
+          /> */}
         </div>
       </div>
 
