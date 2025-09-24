@@ -27,7 +27,7 @@ export default function SigninPage() {
                 name="email"
                 type="email"
                 required
-                className="mt-1 block w-full px-3 py-2.5 border-b border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-gray-900 transition duration-150"
+                className="mt-1 block w-full px-3 py-2.5 border-b border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-gray-900 transition duration-150 text-black"
                 placeholder="Your username or email address"
               />
             </div>
@@ -39,12 +39,12 @@ export default function SigninPage() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   required
-                  className="mt-1 block w-full px-3 py-2.5 border-b border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-gray-900 pr-10 transition duration-150"
+                  className="mt-1 block w-full px-3 py-2.5 border-b border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-0 focus:border-gray-900 pr-10 transition duration-150 text-black"
                   placeholder="Password"
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  className="absolute inset-y-0 right-0 pr-5 flex items-center"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
