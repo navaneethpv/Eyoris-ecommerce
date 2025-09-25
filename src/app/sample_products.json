@@ -210,8 +210,8 @@
     "product_name": "Sicons All Purpose Tea Tree Dog Shampoo",
     "product_category_tree": "[\"Pet Supplies >> Grooming >> Skin & Coat Care >> Shampoo >> Sicons All Purpose Tea Tree Dog Shampoo (200 ml)\"]",
     "pid": "PSOEH3ZYYFETGCCD",
-    "retail_price": "nan",
-    "discounted_price": "nan",
+    "retail_price": null,
+    "discounted_price": null,
     "image": "[\"http://img6a.flixcart.com/image/pet-shampoo/c/c/d/sh-df-07-sicons-200-1100x1100-imaeh3kvn25fznjt.jpeg\", \"http://img6a.flixcart.com/image/pet-shampoo/c/c/d/sh-df-07-sicons-200-original-imaeh3kvn25fznjt.jpeg\"]",
     "is_FK_Advantage_product": "false",
     "description": "Specifications of Sicons All Purpose Tea Tree Dog Shampoo (200 ml) General Pet Type Dog Brand Sicons Quantity 200 ml Model Number SH.DF-07 Type All Purpose Fragrance Tea Tree Form Factor Spray In the Box Sales Package Shampoo Sicons Dog Fashion Dry Bath Urban Pet",
@@ -363,15 +363,15 @@
     "product_name": "Alisha Solid Women's Cycling Shorts",
     "product_category_tree": "[\"Clothing >> Women's Clothing >> Lingerie, Sleep & Swimwear >> Shorts >> Alisha Shorts >> Alisha Solid Women's Cycling Shorts\"]",
     "pid": "SRTEH2FD3ANFFMHP",
-    "retail_price": "nan",
-    "discounted_price": "nan",
+    "retail_price": null,
+    "discounted_price": null,
     "image": "[\"http://img6a.flixcart.com/image/short/m/g/y/altht-3p-18-alisha-34-original-imaeh2d5zgnh6vsb.jpeg\", \"http://img5a.flixcart.com/image/short/m/g/y/altht-3p-18-alisha-34-original-imaeh2d5zgnh6vsb.jpeg\", \"http://img6a.flixcart.com/image/short/p/h/t/altht-3p-1-alisha-34-original-imaeh2d5jxvh4msy.jpeg\", \"http://img6a.flixcart.com/image/short/p/h/t/altht-3p-1-alisha-34-original-imaeh2d5yz9fcjxe.jpeg\", \"http://img6a.flixcart.com/image/short/p/h/t/altht-3p-1-alisha-34-original-imaeh2d5fa94gzuy.jpeg\", \"http://img5a.flixcart.com/image/short/z/j/7/altght-7-alisha-38-original-imaeh2d5jsz2ghd6.jpeg\"]",
     "is_FK_Advantage_product": "false",
     "description": "Alisha Solid Women's Cycling Shorts - Buy Black, White, Navy Alisha Solid Women's Cycling Shorts For Only Rs. 999 Online in India. Shop Online For Apparels. Huge Collection of Branded Clothes Only at Flipkart.com",
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
     "brand": "Alisha",
-    "product_specifications": NaN
+    "product_specifications": null
   },
   {
     "uniq_id": "7a7ba93ab20a2b50fd5a7dc74bcba063",
@@ -438,7 +438,7 @@
     "description": "Glus Wedding Lingerie Set - Buy Turquoise Glus Wedding Lingerie Set For Only Rs. 1299 Online in India. Shop Online For Apparels. Huge Collection of Branded Clothes Only at Flipkart.com",
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
-    "brand": NaN,
+    "brand": null,
     "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Number of Contents in Sales Package\", \"value\"=>\"Pack of 1\"}, {\"key\"=>\"Fabric\", \"value\"=>\"Polyamide\"}, {\"key\"=>\"Type\", \"value\"=>\"Bra and Panty Set\"}, {\"key\"=>\"Function\", \"value\"=>\"Wedding\"}, {\"key\"=>\"Series\", \"value\"=>\"Fashion\"}, {\"key\"=>\"Style\", \"value\"=>\"Front Open Bra and Bikini Cut Back Mesh Panty\"}, {\"key\"=>\"Neck\", \"value\"=>\"V-neck\"}, {\"key\"=>\"Design\", \"value\"=>\"Racer Back With Strings . Balconette Underwire Oushup Thick Pad Bra and Designer Bikini Cut Panty.\"}, {\"key\"=>\"Pattern\", \"value\"=>\"Solid\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Women's\"}, {\"key\"=>\"Occasion\", \"value\"=>\"Wedding\"}, {\"key\"=>\"Cup Size\", \"value\"=>\"B\"}, {\"key\"=>\"Cup Type\", \"value\"=>\"Thick Padded Pushup Cups\"}, {\"value\"=>\"Wash With Similar Colors, Use Detergent For Colors\"}, {\"value\"=>\"Racer Back with strings , balconette underwire bar with front opening Bra. Designer bikini cut panty. String design at front and complete see through mesh at Back.\"}, {\"value\"=>\"Lingerie Set\"}]}"
   },
   {
@@ -455,7 +455,7 @@
     "description": "Veelys Shiny White Quad Roller Skates - Size 4.5 UK only for Rs 2499 . Ideal For Boys . Buy online @ Flipkart.com. Only Genuine Products. Free Shipping. Cash On Delivery!",
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
-    "brand": NaN,
+    "brand": null,
     "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Playing Level\", \"value\"=>\"Advanced\"}, {\"key\"=>\"Age Group\", \"value\"=>\"4 - 18 Years\"}, {\"key\"=>\"Type\", \"value\"=>\"Quad Roller\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Boys\"}, {\"key\"=>\"Shoe Size\", \"value\"=>\"4.5 UK\"}, {\"key\"=>\"Weight\", \"value\"=>\"400 g\"}, {\"value\"=>\"NA\"}, {\"key\"=>\"Number of Contents in Sales Package\", \"value\"=>\"Pack of 1\"}, {\"key\"=>\"Sales Package\", \"value\"=>\"Pair Of Shoes\"}, {\"key\"=>\"Lining\", \"value\"=>\"No\"}, {\"key\"=>\"Closure Type\", \"value\"=>\"Automatic Rollers\"}]}"
   },
   {
@@ -472,7 +472,7 @@
     "description": "Buy Bulaky vanity case Jewellery Vanity Case for Rs.390 online. Bulaky vanity case Jewellery Vanity Case at best prices with FREE shipping & cash on delivery. Only Genuine Products. 30 Day Replacement Guarantee.",
     "product_rating": "3",
     "overall_rating": "3",
-    "brand": NaN,
+    "brand": null,
     "product_specifications": "{\"product_specification\"=>{\"key\"=>\"Body Material\", \"value\"=>\"croco leather material\"}}"
   },
   {
@@ -489,7 +489,7 @@
     "description": "FDT Women's Leggings - Buy Parrot Green FDT Women's Leggings For Only Rs. 699 Online in India. Shop Online For Apparels. Huge Collection of Branded Clothes Only at Flipkart.com",
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
-    "brand": NaN,
+    "brand": null,
     "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Number of Contents in Sales Package\", \"value\"=>\"Pack of 1\"}, {\"key\"=>\"Fabric\", \"value\"=>\"Cotton\"}, {\"key\"=>\"Type\", \"value\"=>\"Leggings\"}, {\"key\"=>\"Waistband\", \"value\"=>\"Elastic\"}, {\"key\"=>\"Pattern\", \"value\"=>\"Solid\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Women's\"}, {\"value\"=>\"Gentle Machine Wash in Lukewarm Water, Do Not Bleach\"}]}"
   },
   {
@@ -506,7 +506,7 @@
     "description": "Madcaps C38GR30 Men's Cargos - Buy Green Madcaps C38GR30 Men's Cargos For Only Rs. 2199 Online in India. Shop Online For Apparels. Huge Collection of Branded Clothes Only at Flipkart.com",
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
-    "brand": NaN,
+    "brand": null,
     "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Number of Contents in Sales Package\", \"value\"=>\"Pack of 1\"}, {\"key\"=>\"Fabric\", \"value\"=>\"Cotton\"}, {\"key\"=>\"Fit\", \"value\"=>\"Relaxed Fit\"}, {\"key\"=>\"Pattern\", \"value\"=>\"Printed\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Men's\"}, {\"value\"=>\"Gentle Machine Wash in Lukewarm Water, Do Not Bleach, Do Not Tumble Dry, Cool Iron, Do Not Dry Clean, Wash And Iron Inside Out, Wash With Similar Colors, Use Detergent\"}, {\"key\"=>\"Style Code\", \"value\"=>\"CARGO 38 GREEN\"}]}"
   },
   {
@@ -535,7 +535,7 @@
     "pid": "FABEJX2NHNKCYHKA",
     "retail_price": "999.0",
     "discounted_price": "699.0",
-    "image": "[\"http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-1000x1000-imaejbczsqzjrbfd.jpeg\", \"http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-original-imaejbczsqzjrbfd.jpeg\", \"http://img6a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-original-imaejbczsqwbk8yz.jpeg\", \"http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-original-imaejbczy6tcpa3x.jpeg\", \"http://img5a.flixcart.com/image/fabric/u/g/e/w-nd-black-lehe-bt-indcrown-original-imaejbczrdg3464f.jpeg\"]",
+    "image": "[\"http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-1000x1000-imaejbczsqzjrbfd.jpeg\", \"http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-original-imaejbczsqzjrbfd.jpeg\", \"http://img6a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-original-imaejbczsqwbk8yz.jpeg\", \"http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-original-imaejbczy6tcpa3x.jpeg\", \"http://img5a.flixcart.com/image/u/g/e/w-nd-black-lehe-bt-indcrown-original-imaejbczrdg3464f.jpeg\"]",
     "is_FK_Advantage_product": "false",
     "description": "Key Features of Indcrown Net Embroidered Semi-stitched Lehenga Choli Material Ghagra Choli , Ghagra, Choli, Dupatta Set , Lehenga Choli , Lehenga, Choli and Dupatta Set .,Indcrown Net Embroidered Semi-stitched Lehenga Choli Material (Semi-stitched) Price: Rs. 699 We have not authorised any other seller to sell our brand Indcrown . Any seller doing so is selling fake Indcrown Products. Buy original Indcrown products from the seller \" indcrown‘’ only,Specifications of Indcrown Net Embroidered Semi-stitched Lehenga Choli Material (Semi-stitched) Fabric Details Fabric Net Type Semi-stitched Lehenga Choli Material General Details Pattern Embroidered Ideal For Women's Color Multicolor Fabric Care Dry clean or else Normal Hand Wash Additional Details Other Details Lehnga Choli is an Indian traditional ware also known as Chaniya Choli. We at Bolly Lounge offers you to attract compliments by this attractive Lehnga Choli made with fine quality material and beautiful work which can be worn for functions, festivals, parties and even office also. This Lehnga Choli ...View More Lehnga Choli is an Indian traditional ware also known as Chaniya Choli. We at Bolly Lounge offers you to attract compliments by this attractive Lehnga Choli made with fine quality material and beautiful work which can be worn for functions, festivals, parties and even office also. This Lehnga Choli is comes with unstitched material so it can be stitched according to your taste and preference. Stunning Self Designed Partywear Salwar Suit Gives A Trendy Look. Suit Having Fine Embroidery Work Over All. A Fine Fabric Used To Make It, It Will Be Comfortable In All Season. Style Code R C Lehe Bt In the Box 1 Lehenga Choli And Duppta Set",
     "product_rating": "No rating available",
@@ -643,7 +643,7 @@
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
     "brand": "Pick Pocket",
-    "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Pattern\", \"value\"=>\"Embroidered\"}, {\"key\"=>\"Occasion\", \"value\"=>\"Casual\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Women's\"}, {\"key\"=>\"Lining\", \"value\"=>\"Polyester\"}, {\"key\"=>\"Fabric\", \"value\"=>\"Bengal Silk\"}, {\"key\"=>\"Style Code\", \"value\"=>\"TL-012\"}, {\"value\"=>\"First Time Dry Clean\"}]}"
+    "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Pattern\", \"value\"=>\"Embroidered\"}, {\"key\"=>\"Occasion\", \"value\"=>\"Casual\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Women\"}, {\"key\"=>\"Lining\", \"value\"=>\"Polyester\"}, {\"key\"=>\"Fabric\", \"value\"=>\"Bengal Silk\"}, {\"key\"=>\"Style Code\", \"value\"=>\"TL-012\"}, {\"value\"=>\"First Time Dry Clean\"}]}"
   },
   {
     "uniq_id": "dee64864c0419bec80fbbb94d19bc40d",
@@ -660,7 +660,7 @@
     "product_rating": "No rating available",
     "overall_rating": "No rating available",
     "brand": "Angelfish",
-    "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Closure\", \"value\"=>\"Velcro\"}, {\"key\"=>\"Type\", \"value\"=>\"Potli\"}, {\"key\"=>\"Material\", \"value\"=>\"Fabric\"}, {\"key\"=>\"Style Code\", \"value\"=>\"AELKABJ01224-A\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Girls\"}, {\"key\"=>\"Bag Size\", \"value\"=>\"Small\"}, {\"key\"=>\"Occasion\", \"value\"=>\"Party\"}, {\"key\"=>\"Color Code\", \"value\"=>\"Multicolor\"}, {\"key\"=>\"Weight\", \"value\"=>\"200 g\"}, {\"key\"=>\"Number of Compartments\", \"value\"=>\"1\"}]}"
+    "product_specifications": "{\"product_specification\"=>[{\"key\"=>\"Closure\", \"value\"=>\"Velcro\"}, {\"key\"=>\"Type\", \"value\"=>\"Potli\"}, {\"key\"=>\"Material\", \"value\"=>\"Fabric\"}, {\"key\"=>\"Style Code\", \"value\"=>\"AELKABJ01224-A\"}, {\"key\"=>\"Ideal For\", \"value\"=>\"Girls\"}, {\"key\"=>\"Bag Size\", \"value\"=>\"Small\"}, {\"key\"=>\"Occasion\", \"value\"=>\"Party\"}, {\"key\"=>\"Color Code\", \"value\"=>\"Multicolor\"}, {\"key\"=>\"Weight\", \"value\"\"200 g\"}, {\"key\"=>\"Number of Compartments\", \"value\"=>\"1\"}]}"
   },
   {
     "uniq_id": "595f55f2c1293f07ea9ec9fa2bb39f46",
