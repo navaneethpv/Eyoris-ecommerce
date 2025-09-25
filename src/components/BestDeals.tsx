@@ -10,9 +10,19 @@ export default function BestDeals() {
     async function fetchProducts() {
       try {
         const response = await fetch('/sample_products.json');
-        const data: Product[] = await response.json();
-        // Take only products with valid images
-        const processedProducts = data.slice(0, 8).filter(product => product.image && product.image.length > 0);
+        const data = await response.json();
+        // Take only products with valid images and map to Product type
+        const processedProducts = data.slice(9, 17)
+          .filter((product: any) => product.image && product.image.length > 0)
+          .map((product: any) => ({
+            uniq_id: product.uniq_id,
+            name: product.product_name,
+            rating: parseFloat(product.product_rating),
+            reviews: 0, // The data does not contain reviews
+            currentPrice: product.discounted_price,
+            oldPrice: product.retail_price,
+            image: JSON.parse(product.image)[0], // Take the first image
+          }));
         setProducts(processedProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -29,7 +39,7 @@ export default function BestDeals() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
-          <ProductCard key={product.uniq_id} product={product} />
+          <ProductCard key={product.uniq_id} product={product}/>
         ))}
       </div>
     </section>
