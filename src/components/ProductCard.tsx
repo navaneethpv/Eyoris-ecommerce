@@ -52,13 +52,6 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
           {product.name}
         </h3>
-
-        <p className="text-gray-500 text-sm">
-          Retail Price: ₹{product.oldPrice}
-        </p>
-        <p className="text-green-600 font-medium text-sm">
-          Discounted Price: ₹{product.currentPrice}
-        </p>
         <div className="mt-auto">
           <div className="flex items-baseline gap-2">
             <p className="text-gray-500 text-sm line-through">
