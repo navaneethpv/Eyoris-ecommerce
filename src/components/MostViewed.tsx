@@ -1,83 +1,50 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { Product } from '@/types/index';
+
+interface FlipkartProduct {
+  uniq_id: string;
+  product_name: string;
+  retail_price: string;
+  discounted_price: string;
+  image: string[];
+  overall_rating: string;
+  product_rating: string;
+}
 
 export default function MostViewed() {
-  const products = [
-    {
-      id: 1,
-      name: 'ZEBRONICS ZEB-BRO, With In-Line MIC, 3.5mm Jack, 10mm drivers, Compatible....',
-      rating: 4,
-      reviews: 1400,
-      currentPrice: '₹299',
-      oldPrice: '₹999',
-      discount: '70% off',
-      image: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=MostViewed1', // Placeholder image
-    },
-    {
-      id: 2,
-      name: 'boAt BassHeads 100 Wired Earphones with Mic (Furious Red, In the Ear)',
-      rating: 5,
-      reviews: 3000,
-      currentPrice: '₹399',
-      oldPrice: '₹1,999',
-      image: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=MostViewed2', // Placeholder image
-    },
-    {
-      id: 3,
-      name: 'Motorola g45 5G (Pantone Dahlia Purple, 128 GB) (8 GB RAM)',
-      rating: 5,
-      reviews: 2000,
-      currentPrice: '₹29,999',
-      oldPrice: '₹50,000',
-      image: 'https://via.placeholder.com/150/008000/FFFFFF?text=MostViewed3', // Placeholder image
-    },
-    {
-      id: 4,
-      name: 'Product 4',
-      rating: 4,
-      reviews: 1200,
-      currentPrice: '₹1,299',
-      oldPrice: '₹2,499',
-      image: 'https://via.placeholder.com/150/FFFF00/000000?text=Product4', // Placeholder image
-    },
-    {
-      id: 5,
-      name: 'Product 5',
-      rating: 5,
-      reviews: 2500,
-      currentPrice: '₹499',
-      oldPrice: '₹999',
-      image: 'https://via.placeholder.com/150/00FFFF/000000?text=Product5', // Placeholder image
-    },
-    {
-      id: 6,
-      name: 'Product 6',
-      rating: 3,
-      reviews: 800,
-      currentPrice: '₹899',
-      oldPrice: '₹1,799',
-      image: 'https://via.placeholder.com/150/FF00FF/FFFFFF?text=Product6', // Placeholder image
-    },
-    {
-      id: 7,
-      name: 'Product 7 - New Arrival',
-      rating: 4,
-      reviews: 1500,
-      currentPrice: '₹799',
-      oldPrice: '₹1,599',
-      image: 'https://via.placeholder.com/150/FFA500/FFFFFF?text=Product7', // Placeholder image
-    },
-    {
-      id: 8,
-      name: 'Product 8 - Limited Edition',
-      rating: 5,
-      reviews: 3500,
-      currentPrice: '₹1,999',
-      oldPrice: '₹3,999',
-      image: 'https://via.placeholder.com/150/800080/FFFFFF?text=Product8', // Placeholder image
-    },
-  ];
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch('/sample_products.json');
+        const data: FlipkartProduct[] = await response.json();
+
+            const processedProducts: Product[] = data.slice(25, 34).map((product) => {
+              const rating = product.product_rating === 'No rating available' ? 0 : parseFloat(product.product_rating);
+              // Ensure image is parsed correctly and is an array before accessing the first element
+              const imageUrl = Array.isArray(product.image) ? product.image[0] : (typeof product.image === 'string' ? JSON.parse(product.image)[0] : '');
+              return {
+                uniq_id: product.uniq_id,
+                name: product.product_name,
+                rating: rating,
+                reviews: 1000,
+                currentPrice: product.discounted_price ? `₹${product.discounted_price}` : 'N/A',
+                oldPrice: product.retail_price ? `₹${product.retail_price}` : 'N/A',
+                image: imageUrl,
+              } as Product;
+            });
+
+        setProducts(processedProducts);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }
+
+    fetchProducts();
+  }, []);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -109,14 +76,14 @@ export default function MostViewed() {
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * (100 / 5)}%)` }}
           >
-            {products.map((product) => (
-              <div key={product.id} className="w-1/5 flex-shrink-0 px-2">
+            {products.map((product: Product) => (
+              <div key={product.uniq_id} className="w-1/5 flex-shrink-0 px-2">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
                   <div className="relative h-44 w-full">
                     <Image
                       src={product.image}
                       alt={product.name}
-                      layout="fill"
+                      fill
                       objectFit="contain"
                       className="rounded-t-lg"
                     />
@@ -129,12 +96,12 @@ export default function MostViewed() {
                           <svg key={i} className={`w-5 h-5 ${i < product.rating ? 'text-yellow-400' : 'text-gray-300'}`} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.381-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" /></svg>
                         ))}
                       </div>
-                      <span className="ml-2 text-sm text-gray-600">({product.reviews})</span>
+                      <span className="ml-2 text-sm text-gray-600">({String(product.reviews)})</span>
                     </div>
                     <div className="flex items-baseline space-x-2 mb-2">
                       <span className="text-lg font-bold text-gray-900">{product.currentPrice}</span>
                       <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
-                      {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
+                      {product.rating && <span className="text-sm text-green-600">{product.rating}</span>}
                     </div>
                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto">
                       Add to cart
@@ -146,7 +113,7 @@ export default function MostViewed() {
           </div>
         </div>
         <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4">
-            <button onClick={handlePrev} disabled={currentIndex === 0} className="p-2 rounded-full bg-white/50 hover:bg-.tsx-white disabled:opacity-50 shadow-md">
+            <button onClick={handlePrev} disabled={currentIndex === 0} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
             <button onClick={handleNext} disabled={currentIndex >= products.length - 5} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
