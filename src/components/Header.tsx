@@ -23,9 +23,9 @@ export default function Header() {
               />
             </svg>
             +001234567890
-          </span>
+            </span>
           <div className="flex-grow flex justify-center items-center space-x-4">
-            <span>Get 50% Off on Selected Items</span>
+            <span>Get 50&apos;% Off on Selected Items</span>
             <a href="#" className="text-blue-600 hover:underline">
               Shop Now
             </a>
@@ -88,7 +88,7 @@ export default function Header() {
             Category
           </a>
           <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
-            What's new
+            What&apos;s new
           </a>
           <a href="#" className="text-gray-700 hover:text-blue-600 font-medium">
             Deals

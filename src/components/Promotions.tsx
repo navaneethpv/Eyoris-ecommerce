@@ -3,16 +3,16 @@ import Image from 'next/image';
 
 export default function Promotions() {
   const promotions = [
-    {
-      id: "promo-fashion-1",
-      title: "Alisha's Fashion Picks: Shorts & Apparel",
-      items: [
-        "http://img5a.flixcart.com/image/short/u/4/a/altht-3p-21-alisha-38-original-imaeh2d5vm5zbtgg.jpeg",
-        "http://img5a.flixcart.com/image/short/6/2/h/altght-11-alisha-38-original-imaeh2d5uq9thnyg.jpeg",
-        "http://img6a.flixcart.com/image/swimsuit/5/v/9/carrel-sw-3091-black-white01-carrel-4xl-original-imaehyzm2sywfavb.jpeg",
-        "http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-1000x1000-imaejbczsqzjrbfd.jpeg"
-      ]
-    },
+  {
+    id: "promo-petcare-4",
+    title: "Sicons Pet Care: Shampoos & Toys",
+    items: [
+      "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-1100x1100-imaeh3hfvav85tva.jpeg",
+      "http://img6a.flixcart.com/image/pet-shampoo/c/c/d/sh-df-07-sicons-200-1100x1100-imaeh3kvn25fznjt.jpeg",
+      "http://img5a.flixcart.com/image/pet-shampoo/v/x/m/sh-df-02-sicons-200-1100x1100-imaeh3kjba4htqfg.jpeg",
+      "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-original-imaeh3hfvav85tva.jpeg"
+    ]
+  },
     {
       id: "promo-home-2",
       title: "FabHomeDecor: Sofa Beds & Home Accents",
@@ -37,10 +37,10 @@ export default function Promotions() {
       id: "promo-petcare-4",
       title: "Sicons Pet Care: Shampoos & Toys",
       items: [
-        "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-1100x1100-imaeh3hfvav85tva.jpeg",
-        "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-original-imaeh3hfvav85tva.jpeg",
-        "http://img6a.flixcart.com/image/pet-shampoo/c/c/d/sh-df-07-sicons-200-1100x1100-imaeh3kvn25fznjt.jpeg",
-      "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-1100x1100-imaeh3hfvav85tva.jpeg"
+      "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-1100x1100-imaeh3hfvav85tva.jpeg",
+      "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-original-imaeh3hfvav85tva.jpeg",
+      "http://img6a.flixcart.com/image/pet-shampoo/c/c/d/sh-df-07-sicons-200-1100x1100-imaeh3kvn25fznjt.jpeg",
+      "http://img5a.flixcart.com/image/pet-shampoo/v/x/m/sh-df-02-sicons-200-original-imaeh3kjba4htqfg.jpeg"
     ]
   },
   {
@@ -90,4 +90,3 @@ export default function Promotions() {
     </section>
   );
 }
-
