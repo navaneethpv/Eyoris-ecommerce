@@ -4,65 +4,65 @@ import Image from 'next/image';
 export default function Promotions() {
   const promotions = [
     {
-      id: 1,
-      title: 'Up to 70% off | Festive Deals You Can\'t Miss',
+      id: "promo-fashion-1",
+      title: "Alisha's Fashion Picks: Shorts & Apparel",
       items: [
-        'https://via.placeholder.com/100/FF0000/FFFFFF?text=Promo1_1',
-        'https://via.placeholder.com/100/FF0000/FFFFFF?text=Promo1_2',
-        'https://via.placeholder.com/100/FF0000/FFFFFF?text=Promo1_3',
-        'https://via.placeholder.com/100/FF0000/FFFFFF?text=Promo1_4',
-      ],
+        "http://img5a.flixcart.com/image/short/u/4/a/altht-3p-21-alisha-38-original-imaeh2d5vm5zbtgg.jpeg",
+        "http://img5a.flixcart.com/image/short/6/2/h/altght-11-alisha-38-original-imaeh2d5uq9thnyg.jpeg",
+        "http://img6a.flixcart.com/image/swimsuit/5/v/9/carrel-sw-3091-black-white01-carrel-4xl-original-imaehyzm2sywfavb.jpeg",
+        "http://img5a.flixcart.com/image/fabric/h/k/a/r-c-lehe-bt-indcrown-1000x1000-imaejbczsqzjrbfd.jpeg"
+      ]
     },
     {
-      id: 2,
-      title: 'Trending Now Best Sellers in Electronics & Fashion',
+      id: "promo-home-2",
+      title: "FabHomeDecor: Sofa Beds & Home Accents",
       items: [
-        'https://via.placeholder.com/100/0000FF/FFFFFF?text=Promo2_1',
-        'https://via.placeholder.com/100/0000FF/FFFFFF?text=Promo2_2',
-        'https://via.placeholder.com/100/0000FF/FFFFFF?text=Promo2_3',
-        'https://via.placeholder.com/100/0000FF/FFFFFF?text=Promo2_4',
-      ],
+        "http://img6a.flixcart.com/image/sofa-bed/j/f/y/fhd112-double-foam-fabhomedecor-leatherette-black-leatherette-1100x1100-imaeh3gemjjcg9ta.jpeg",
+        "http://img5a.flixcart.com/image/artificial-plant/g/s/n/bbajc218-bengal-blooms-original-imaeg8ety3zfcnvw.jpeg",
+        "http://img5a.flixcart.com/image/vanity-box/8/5/t/j-635-bulaky-vanity-case-1100x1100-imadzy6atzfswnag.jpeg",
+        "http://img5a.flixcart.com/image/bottle/j/m/m/av004bgr-freelance-350-vacuum-bottles-1000x1100-imaegykdk6ytzrzz.jpeg"
+      ]
     },
     {
-      id: 3,
-      title: 'Flat 50% off Home & Kitchen Essentials',
+      id: "promo-footwear-3",
+      title: "AW Bellies & Footwear Collection",
       items: [
-        'https://via.placeholder.com/100/008000/FFFFFF?text=Promo3_1',
-        'https://via.placeholder.com/100/008000/FFFFFF?text=Promo3_2',
-        'https://via.placeholder.com/100/008000/FFFFFF?text=Promo3_3',
-        'https://via.placeholder.com/100/008000/FFFFFF?text=Promo3_4',
-      ],
+        "http://img5a.flixcart.com/image/shoe/7/z/z/red-as-454-aw-11-original-imaeebfwsdf6jdf6.jpeg",
+        "http://img6a.flixcart.com/image/shoe/b/p/n/pink-200db202-dilli-bazaaar-10-original-imaeh2zz4x6hnuwf.jpeg",
+        "http://img5a.flixcart.com/image/shoe/s/g/m/black-r998-22-ladela-38-original-imaega8phqh6tf4e.jpeg",
+        "http://img5a.flixcart.com/image/shoe/p/f/h/black-sfwf0377-style-foot-44-original-imaeh4cxasyrdtjr.jpeg"
+      ]
     },
     {
-      id: 4,
-      title: 'Up to 45% OFF on Skin & Hair Care Products',
+      id: "promo-petcare-4",
+      title: "Sicons Pet Care: Shampoos & Toys",
       items: [
-        'https://via.placeholder.com/100/FFFF00/000000?text=Promo4_1',
-        'https://via.placeholder.com/100/FFFF00/000000?text=Promo4_2',
-        'https://via.placeholder.com/100/FFFF00/000000?text=Promo4_3',
-        'https://via.placeholder.com/100/FFFF00/000000?text=Promo4_4',
-      ],
+        "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-1100x1100-imaeh3hfvav85tva.jpeg",
+        "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-original-imaeh3hfvav85tva.jpeg",
+        "http://img6a.flixcart.com/image/pet-shampoo/c/c/d/sh-df-07-sicons-200-1100x1100-imaeh3kvn25fznjt.jpeg",
+      "http://img5a.flixcart.com/image/pet-shampoo/r/j/5/sh-df-14-sicons-500-1100x1100-imaeh3hfvav85tva.jpeg"
+    ]
+  },
+  {
+    id: "promo-lifestyle-5",
+      title: "Freelance Bottles & Shopmania Stationery",
+      items: [
+        "http://img5a.flixcart.com/image/bottle/j/m/m/av004bgr-freelance-350-vacuum-bottles-1000x1100-imaegykdk6ytzrzz.jpeg",
+        "http://img5a.flixcart.com/image/diary-notebook/g/y/y/shopmania-nb00664-1100x1100-imaej4wguh2c6dfb.jpeg",
+        "http://img5a.flixcart.com/image/diary-notebook/e/g/h/shopmania-nb00678-1100x1100-imaej4whhbgzn5z3.jpeg",
+        "http://img5a.flixcart.com/image/packaging-security-bag/6/y/q/8-x-10-inches-security-bags-without-pod-jacket-courier-bag-1100x1100-imaegbjpxtthuyzc.jpeg"
+      ]
     },
     {
-      id: 5,
-      title: 'Flat ₹2000 OFF on Laptops & Tablets',
+      id: "promo-kids-6",
+      title: "Oye & Dongli Kids' Apparel",
       items: [
-        'https://via.placeholder.com/100/FF00FF/FFFFFF?text=Promo5_1',
-        'https://via.placeholder.com/100/FF00FF/FFFFFF?text=Promo5_2',
-        'https://via.placeholder.com/100/FF00FF/FFFFFF?text=Promo5_3',
-        'https://via.placeholder.com/100/FF00FF/FFFFFF?text=Promo5_4',
-      ],
-    },
-    {
-      id: 6,
-      title: 'Footwear Sale: Starting at just ₹499',
-      items: [
-        'https://via.placeholder.com/100/00FFFF/000000?text=Promo6_1',
-        'https://via.placeholder.com/100/00FFFF/000000?text=Promo6_2',
-        'https://via.placeholder.com/100/00FFFF/000000?text=Promo6_3',
-        'https://via.placeholder.com/100/00FFFF/000000?text=Promo6_4',
-      ],
-    },
+        "http://img6a.flixcart.com/image/dungaree-romper/9/z/d/bpr0015-oye-1-2-years-original-imaeeyu6ashttgyv.jpeg",
+        "http://img5a.flixcart.com/image/t-shirt/w/x/t/dlhbb445-beige-black-gyellow-purple-dongli-10-11-years-original-imaehb54gxhchxcd.jpeg",
+        "http://img5a.flixcart.com/image/t-shirt/f/n/f/dlhbb445-beige-black-gyellow-purple-dongli-15-16-years-original-imaehb55kjd6g4kg.jpeg",
+        "http://img6a.flixcart.com/image/t-shirt/g/y/5/dlhbb445-beige-black-gyellow-purple-dongli-12-13-years-original-imaehb54re656maf.jpeg"
+      ]
+    }
   ];
 
   return (
@@ -78,7 +78,7 @@ export default function Promotions() {
                     src={item}
                     alt={`Promotion item ${index + 1}`}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                   />
                 </div>
               ))}
@@ -90,3 +90,4 @@ export default function Promotions() {
     </section>
   );
 }
+
