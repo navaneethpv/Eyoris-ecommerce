@@ -22,7 +22,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div
       key={product.uniq_id}
-      className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col"
+      className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:cursor-pointer hover:scale-104 duration-150 gap-5"
     >
       <div className="relative h-48">
         <Image
