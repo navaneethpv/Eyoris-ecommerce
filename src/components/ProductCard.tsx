@@ -23,7 +23,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const currentPrice = parseFloat(product.currentPrice);
   let discountPercentage = 0;
   if (!isNaN(oldPrice) && !isNaN(currentPrice) && oldPrice > 0) {
-    discountPercentage = Math.round(((oldPrice - currentPrice) / oldPrice) * 100);
+    discountPercentage = Math.round(
+      ((oldPrice - currentPrice) / oldPrice) * 100
+    );
   }
 
   return (
@@ -58,18 +60,19 @@ export default function ProductCard({ product }: ProductCardProps) {
           Discounted Price: ₹{product.currentPrice}
         </p>
         <div className="mt-auto">
-        <div className="flex items-baseline gap-2">
-          <p className="text-gray-500 text-sm line-through">
-            ₹{product.oldPrice}
-          </p>
-          <p className="text-green-600 font-medium text-sm">
-            ₹{product.currentPrice}
-          </p>
-        </div>
-        <div className="mt-auto pt-4">
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300">
-            Add to cart
-          </button>
+          <div className="flex items-baseline gap-2">
+            <p className="text-gray-500 text-sm line-through">
+              ₹{product.oldPrice}
+            </p>
+            <p className="text-green-600 font-medium text-sm">
+              ₹{product.currentPrice}
+            </p>
+          </div>
+          <div className="mt-auto pt-4">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300">
+              Add to cart
+            </button>
+          </div>
         </div>
       </div>
     </div>
