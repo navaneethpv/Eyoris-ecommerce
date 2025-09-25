@@ -58,6 +58,24 @@ export default function BestDeals() {
       oldPrice: '₹1,799',
       image: 'https://via.placeholder.com/150/FF00FF/FFFFFF?text=Product6', // Placeholder image
     },
+    {
+      id: 7,
+      name: 'Product 7 - New Deal',
+      rating: 4,
+      reviews: 1600,
+      currentPrice: '₹699',
+      oldPrice: '₹1,399',
+      image: 'https://via.placeholder.com/150/FFD700/FFFFFF?text=Product7', // Placeholder image
+    },
+    {
+      id: 8,
+      name: 'Product 8 - Special Offer',
+      rating: 5,
+      reviews: 2800,
+      currentPrice: '₹1,499',
+      oldPrice: '₹2,999',
+      image: 'https://via.placeholder.com/150/DA70D6/FFFFFF?text=Product8', // Placeholder image
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

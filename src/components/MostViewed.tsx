@@ -59,6 +59,24 @@ export default function MostViewed() {
       oldPrice: '₹1,799',
       image: 'https://via.placeholder.com/150/FF00FF/FFFFFF?text=Product6', // Placeholder image
     },
+    {
+      id: 7,
+      name: 'Product 7 - New Arrival',
+      rating: 4,
+      reviews: 1500,
+      currentPrice: '₹799',
+      oldPrice: '₹1,599',
+      image: 'https://via.placeholder.com/150/FFA500/FFFFFF?text=Product7', // Placeholder image
+    },
+    {
+      id: 8,
+      name: 'Product 8 - Limited Edition',
+      rating: 5,
+      reviews: 3500,
+      currentPrice: '₹1,999',
+      oldPrice: '₹3,999',
+      image: 'https://via.placeholder.com/150/800080/FFFFFF?text=Product8', // Placeholder image
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
