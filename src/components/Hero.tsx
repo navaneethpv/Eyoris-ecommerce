@@ -5,7 +5,7 @@ import Image from "next/image";
 const banners = [
   {
     id: "banner1",
-    src: "/assets/bannerImage.png",
+    src: "/assets/bannerImage1.png",
     text: {
       h1: "On Sale",
     },
@@ -15,6 +15,20 @@ const banners = [
     src: "/assets/bannerImage2.png", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Summer Collection",
+    },
+  },
+  {
+    id: "banner3",
+    src: "/assets/bannerImage3.png", // Ensure this image exists in your public/assets directory
+    text: {
+      h1: "Offer1",
+    },
+  },
+  {
+    id: "banner4",
+    src: "/assets/bannerImage5.jpg", // Ensure this image exists in your public/assets directory
+    text: {
+      h1: "Offer2",
     },
   },
 ];
@@ -35,7 +49,7 @@ export default function Hero() {
   const currentBanner = banners[currentBannerIndex];
 
   return (
-    <section className="relative w-full h-[600px] bg-[#BDB4AB] flex items-center justify-center overflow-hidden hover:cursor-pointer">
+    <section className="relative w-full h-[800px] bg-[#BDB4AB] flex items-center justify-center overflow-hidden hover:cursor-pointer">
       <Image
         src={currentBanner.src}
         alt={currentBanner.text.h1}
