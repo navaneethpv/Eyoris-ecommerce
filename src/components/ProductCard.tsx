@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative h-48">
         <Image
           src={imageUrl}
-          alt={product.product_name}
+          alt={product.name}
           fill
           objectFit="contain"
           className="rounded-t-lg"
@@ -36,13 +36,13 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
       <div className="p-4 flex flex-col flex-grow">
         <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
-          {product.product_name}
+          {product.name}
         </h3>
         <p className="text-gray-500 text-sm">
-          Retail Price: ₹{product.retail_price}
+          Retail Price: ₹{product.oldPrice}
         </p>
         <p className="text-green-600 font-medium text-sm">
-          Discounted Price: ₹{product.discounted_price}
+          Discounted Price: ₹{product.currentPrice}
         </p>
         <div className="mt-auto">
           <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300">
