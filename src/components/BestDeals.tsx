@@ -22,6 +22,7 @@ export default function BestDeals() {
             currentPrice: product.discounted_price,
             oldPrice: product.retail_price,
             image: JSON.parse(product.image)[0], // Take the first image
+            discount: product.discounted_price && product.retail_price ? `${Math.round(((parseFloat(product.retail_price) - parseFloat(product.discounted_price)) / parseFloat(product.retail_price)) * 100)}%` : undefined,
           }));
         setProducts(processedProducts);
       } catch (error) {

@@ -34,6 +34,7 @@ export default function MostViewed() {
                 currentPrice: product.discounted_price ? `₹${product.discounted_price}` : 'N/A',
                 oldPrice: product.retail_price ? `₹${product.retail_price}` : 'N/A',
                 image: imageUrl,
+                discount: product.discounted_price && product.retail_price ? `${Math.round(((parseFloat(product.retail_price) - parseFloat(product.discounted_price)) / parseFloat(product.retail_price)) * 100)}%` : undefined,
               } as Product;
             });
 
