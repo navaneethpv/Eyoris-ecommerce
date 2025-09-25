@@ -44,7 +44,7 @@ export default function BestDeals() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
             <div className="relative h-48 w-full">
               <Image
                 src={product.image}
@@ -54,7 +54,7 @@ export default function BestDeals() {
                 className="rounded-t-lg"
               />
             </div>
-            <div className="p-4 flex flex-col h-full">
+            <div className="p-4 flex flex-col flex-grow">
               <h3 className="text-lg font-semibold text-gray-900 mb-2 min-h-[48px]">{product.name}</h3> {/* Added min-h to ensure consistent height */}
               <div className="flex items-center mb-2">
                 <div className="flex text-yellow-400">
