@@ -11,7 +11,7 @@ export default function BestDeals() {
       reviews: 1400,
       currentPrice: '₹999',
       oldPrice: '₹2,999',
-      image: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=Product1', // Placeholder image
+      image: '/assets/product1.png', // Placeholder image
     },
     {
       id: 2,
@@ -63,7 +63,7 @@ export default function BestDeals() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
-    if (currentIndex < products.length - 3) {
+    if (currentIndex < products.length - 5) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -88,22 +88,22 @@ export default function BestDeals() {
         <div className="overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }}
+            style={{ transform: `translateX(-${currentIndex * (100 / 5)}%)` }}
           >
             {products.map((product) => (
-              <div key={product.id} className="w-1/3 flex-shrink-0 px-4">
+              <div key={product.id} className="w-1/5 flex-shrink-0 px-2">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-44 w-full">
                     <Image
                       src={product.image}
                       alt={product.name}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit="contain"
                       className="rounded-t-lg"
                     />
                   </div>
                   <div className="p-4 flex flex-col flex-grow">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2 min-h-[48px]">{product.name}</h3>
+                    <h3 className="text-base font-semibold text-gray-900 mb-1 min-h-[40px]">{product.name}</h3>
                     <div className="flex items-center mb-2">
                       <div className="flex text-yellow-400">
                         {Array(5).fill(0).map((_, i) => (
@@ -112,8 +112,8 @@ export default function BestDeals() {
                       </div>
                       <span className="ml-2 text-sm text-gray-600">({product.reviews})</span>
                     </div>
-                    <div className="flex items-baseline space-x-2 mb-4">
-                      <span className="text-xl font-bold text-gray-900">{product.currentPrice}</span>
+                    <div className="flex items-baseline space-x-2 mb-2">
+                      <span className="text-lg font-bold text-gray-900">{product.currentPrice}</span>
                       <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
                     </div>
                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto">
@@ -129,7 +129,7 @@ export default function BestDeals() {
             <button onClick={handlePrev} disabled={currentIndex === 0} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={handleNext} disabled={currentIndex >= products.length - 3} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
+            <button onClick={handleNext} disabled={currentIndex >= products.length - 5} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </button>
         </div>
