@@ -19,6 +19,13 @@ const getImageUrl = (imageString: string) => {
 export default function ProductCard({ product }: ProductCardProps) {
   const imageUrl = getImageUrl(product.image);
 
+  const oldPrice = parseFloat(product.oldPrice);
+  const currentPrice = parseFloat(product.currentPrice);
+  let discountPercentage = 0;
+  if (!isNaN(oldPrice) && !isNaN(currentPrice) && oldPrice > 0) {
+    discountPercentage = Math.round(((oldPrice - currentPrice) / oldPrice) * 100);
+  }
+
   return (
     <div
       key={product.uniq_id}
@@ -27,24 +34,31 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative h-48">
         <Image
           src={imageUrl}
-          alt={product.product_name}
+          alt={product.name}
           fill
           objectFit="contain"
           className="rounded-t-lg"
           onError={(e) => ((e.target as HTMLImageElement).src = "/next.svg")}
         />
+        {discountPercentage > 0 && (
+          <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            {discountPercentage}% OFF
+          </div>
+        )}
       </div>
       <div className="p-4 flex flex-col flex-grow">
         <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
-          {product.product_name}
+          {product.name}
         </h3>
-        <p className="text-gray-500 text-sm">
-          Retail Price: ₹{product.retail_price}
-        </p>
-        <p className="text-green-600 font-medium text-sm">
-          Discounted Price: ₹{product.discounted_price}
-        </p>
-        <div className="mt-auto">
+        <div className="flex items-baseline gap-2">
+          <p className="text-gray-500 text-sm line-through">
+            ₹{product.oldPrice}
+          </p>
+          <p className="text-green-600 font-medium text-sm">
+            ₹{product.currentPrice}
+          </p>
+        </div>
+        <div className="mt-auto pt-4">
           <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300">
             Add to cart
           </button>
