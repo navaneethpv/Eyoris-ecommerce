@@ -8,31 +8,31 @@ export default function Categories() {
       id: 1,
       title: 'Earbuds',
       subtitle: 'Smartwatch is Good For You',
-      image: '/assets/catergories/earpod.png', // Earbuds image
+      image: '/assets/Images/catergories/earpod.png', // Earbuds image
     },
     {
       id: 2,
       title: 'Speakers',
       subtitle: 'Experience Audio Like Never Before.',
-      image: '/assets/catergories/speaker.png', // Placeholder image
+      image: '/assets/Images/catergories/speaker.png', // Placeholder image
     },
     {
       id: 3,
       title: 'Laptops',
       subtitle: 'Power. Innovation. Mobility.',
-      image: '/assets/catergories/laptop.png', // Placeholder image
+      image: '/assets/Images/catergories/laptop.png', // Placeholder image
     },
     {
       id: 4,
       title: 'Mobile Phone',
       subtitle: 'The Future in Your Hands. Experience Innovation, Anytime, Anywhere.',
-      image: '/assets/catergories/phone.png', // Placeholder image
+      image: '/assets/Images/catergories/phone.png', // Placeholder image
     },
     {
       id: 5,
       title: 'Accessories',
       subtitle: 'The Future in Your Hands. Experience Innovation, Anytime, Anywhere.',
-      image: '/assets/catergories/accessories.png', // Placeholder image
+      image: '/assets/Images/catergories/accessories.png', // Placeholder image
     },
   ];
 
@@ -48,7 +48,7 @@ export default function Categories() {
             fill
             style={{ objectFit: 'cover' }}
             className="z-0"
-            onError={(e) => ((e.target as HTMLImageElement).src = '/assets/catergories/accessories.png')} // Fallback to original path if placeholder fails
+            onError={(e) => ((e.target as HTMLImageElement).src = '/assets/Images/catergories/accessories.png')} // Fallback to original path if placeholder fails
           /> */}
            <Image
                   src={categories[0].image}

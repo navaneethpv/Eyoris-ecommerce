@@ -5,28 +5,28 @@ import Image from "next/image";
 const banners = [
   {
     id: "banner1",
-    src: "/assets/bannerImage1.png",
+    src: "/assets/Images/bannerImages/bannerImage1.png",
     text: {
       h1: "On Sale",
     },
   },
   {
     id: "banner2",
-    src: "/assets/bannerImage2.png", // Ensure this image exists in your public/assets directory
+    src: "/assets/Images/bannerImages/bannerImage2.png", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Summer Collection",
     },
   },
   {
     id: "banner3",
-    src: "/assets/bannerImage3.png", // Ensure this image exists in your public/assets directory
+    src: "/assets/Images/bannerImages/bannerImage3.png", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Offer1",
     },
   },
   {
     id: "banner4",
-    src: "/assets/bannerImage5.jpg", // Ensure this image exists in your public/assets directory
+    src: "/assets/Images/bannerImages/bannerImage5.jpg", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Offer2",
     },

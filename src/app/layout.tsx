@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   title: "Eyrois AI-Powered E-Commerce",
   description: "AI-Powered E-Commerce Platform with Visual Search and Metadata Filtering",
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{

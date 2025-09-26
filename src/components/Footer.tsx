@@ -8,7 +8,7 @@ export default function Footer() {
         {/* Logo and description with email input */}
         <div className="space-y-0">
           <div className="flex items-center space-x-2">
-            <Image src="/assets/logo.png" alt="Eyoris Logo" width={160} height={80} className="w-40 h-20" />
+            <Image src="/logo.png" alt="Eyoris Logo" width={160} height={80} className="w-40 h-20" />
             {/* <h2 className="text-2xl font-bold text-blue-500 drop-shadow-md">Eyoris</h2> */}
           </div>
           <p className="text-sm font-semibold max-w-xs">
@@ -78,13 +78,13 @@ export default function Footer() {
           <h3 className="font-semibold text-lg mb-3">Download App</h3>
           <p className="text-sm mb-3">Save $3 with App New User Only</p>
           <div className="flex items-center space-x-3 mb-3">
-            <Image src="/assets/qr-code.png" alt="QR Code" width={80} height={80} className="w-20 h-20 mt-1" />
+            <Image src="/assets/Images/qr-code.png" alt="QR Code" width={80} height={80} className="w-20 h-20 mt-1" />
             <div className="space-y-4">
             <a href="#" aria-label="Google Play Store">
-                <Image src="/assets/google-play-badge.png" alt="Get it on Google Play" width={100} height={40} className="h-10" />
+                <Image src="/assets/Images/google-play-badge.png" alt="Get it on Google Play" width={100} height={40} className="h-10" />
               </a>
               <a href="#" aria-label="Apple App Store">
-                <Image src="/assets/app-store-badge.png" alt="Download on the App Store" width={100} height={40} className="h-10 mt-1" />
+                <Image src="/assets/Images/app-store-badge.png" alt="Download on the App Store" width={100} height={40} className="h-10 mt-1" />
               </a>
             </div>
           </div>
