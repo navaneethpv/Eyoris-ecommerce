@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link"; // Import Link for the logo
+
 export default function SignupLayout({
   children,
 }: {
@@ -6,10 +8,22 @@ export default function SignupLayout({
 }) {
   return (
     <div className="min-h-screen bg-white flex">
-      {/* Left side - Decorative image */}
+      {/* Left side - Decorative image and Logo */}
       <div className="hidden lg:block lg:w-1/2 relative bg-[#F3F5F7]">
+        {/* Logo */}
+        <div className="absolute top-8 left-8 z-10">
+          <Link href="/">
+            <Image
+              src="/assets/Images/logo.png"
+              alt="Eyoris Logo"
+              width={100} // Adjust width as needed
+              height={30} // Adjust height as needed
+              className="object-contain"
+            />
+          </Link>
+        </div>
         <Image
-          src="/assets/siginIn.png"
+          src="/assets/Images/siginIn.png" // Updated path based on environment_details
           alt="Cozy chair with blanket"
           fill
           className="object-contain"
