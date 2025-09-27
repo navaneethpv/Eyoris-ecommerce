@@ -13,13 +13,13 @@ export default function SignupLayout({
         {/* Logo */}
         <div className="absolute top-8 left-8 z-10">
           <Link href="/">
-            <Image
+            {/* <Image
               src="/assets/Images/logo.png"
               alt="Eyoris Logo"
               width={100} // Adjust width as needed
               height={30} // Adjust height as needed
               className="object-contain"
-            />
+            /> */}
           </Link>
         </div>
         <Image

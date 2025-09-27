@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import PhonePage from "../phone/page";
 // No useState needed for this design
 
 export default function SignupPage() {
@@ -30,12 +31,14 @@ export default function SignupPage() {
           </p>
 
           <div>
+            <Link href={"/phone"}>
             <button
               type="button"
               className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out hover:cursor-pointer"
             >
               Proceed to create an account
             </button>
+            </Link>
           </div>
 
           <div className="text-center pt-4 border-t border-gray-200 mt-6">
