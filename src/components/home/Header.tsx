@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -26,9 +27,9 @@ export default function Header() {
             </span>
           <div className="flex-grow flex justify-center items-center space-x-4">
             <span>Get 50&apos;% Off on Selected Items</span>
-            <a href="#" className="text-blue-600 hover:underline">
+            <Link href="#" className="text-blue-600 hover:underline">
               Shop Now
-            </a>
+            </Link>
           </div>
           <div className="flex items-center space-x-4">
             <span className="flex items-center">
@@ -141,7 +142,7 @@ export default function Header() {
               />
             </svg>
           </div>
-          <a
+          <Link
             href="/signin"
             className="flex items-center text-gray-700 hover:text-blue-600"
           >
@@ -160,7 +161,7 @@ export default function Header() {
               />
             </svg>
             Login
-          </a>
+          </Link>
           <a
             href="#"
             className="flex items-center text-gray-700 hover:text-blue-600"
