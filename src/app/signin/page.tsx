@@ -1,11 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 
 export default function SigninPage() {
-  const [showPassword, setShowPassword] = useState(false);
-
   return (
     <div className="space-y-8">
       {/* Form */}
