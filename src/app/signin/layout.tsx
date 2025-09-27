@@ -1,15 +1,25 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SigninLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white flex">
       {/* Left side - Decorative image */}
       <div className="hidden lg:block lg:w-1/2 relative bg-[#F3F5F7]">
+        <Link href="/" className="absolute top-8 left-100 z-10">
+          <Image
+            src="/assets/Images/logo.png"
+            alt="Eyoris Logo"
+            width={200}
+            height={50}
+            className="object-contain"
+          />
+        </Link>
         <Image
-          src="/assets/siginIn.png"
+          src="/assets/Images/siginIn.png"
           alt="Cozy chair with blanket"
           fill
-          className="object-contain"
+          className="object-cover"
         />
       </div>
 
