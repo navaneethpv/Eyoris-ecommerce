@@ -15,7 +15,7 @@ export default function PhonePage() {
                 +918788838828
               </span>
               <Link
-                href="/change-phone"
+                href="/phone"
                 className="text-blue-600 hover:text-blue-500 font-medium"
               >
                 Change
@@ -33,7 +33,7 @@ export default function PhonePage() {
                   Password
                 </label>
                 <Link
-                  href="/forgot-password"
+                  href="/forgot"
                   className="text-sm text-blue-600 hover:text-blue-500 font-medium"
                 >
                   Forgot password?
