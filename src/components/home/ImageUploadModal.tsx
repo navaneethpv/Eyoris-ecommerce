@@ -7,10 +7,20 @@ interface ImageUploadModalProps {
   onClose: () => void;
 }
 
+/**
+ * A modal component for uploading images.
+ * @param {ImageUploadModalProps} props - The props for the component.
+ * @returns {JSX.Element | null} - The rendered component or null if not open.
+ */
 export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  /**
+   * Handles the change event when a file is selected.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+   */
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -21,8 +31,63 @@ export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalPr
     }
   };
 
+  /**
+   * Handles the drag enter event.
+   * @param {React.DragEvent<HTMLDivElement>} event - The drag event.
+   */
+  const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  /**
+   * Handles the drag leave event.
+   * @param {React.DragEvent<HTMLDivElement>} event - The drag event.
+   */
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(false);
+  };
+
+  /**
+   * Handles the drag over event.
+   * @param {React.DragEvent<HTMLDivElement>} event - The drag event.
+   */
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  /**
+   * Handles the drop event.
+   * @param {React.DragEvent<HTMLDivElement>} event - The drop event.
+   */
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragging(false);
+    if (event.dataTransfer.files && event.dataTransfer.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setSelectedImage(e.target?.result as string);
+      };
+      reader.readAsDataURL(event.dataTransfer.files[0]);
+    }
+  };
+
+  /**
+   * Handles the click event for the browse button.
+   */
   const handleBrowseClick = () => {
     fileInputRef.current?.click();
+  };
+
+  /**
+   * Handles the removal of the selected image.
+   */
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   if (!isOpen) {
@@ -30,21 +95,29 @@ export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalPr
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Upload Image</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-800">
+          <h2 className="text-xl font-semibold text-gray-800">Upload Image</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-800 text-2xl">
             &times;
           </button>
         </div>
-        <div className="border-2 border-dashed border-gray-300 p-6 text-center rounded-lg">
+        <div
+          className={`border-2 border-dashed border-gray-300 p-6 text-center rounded-lg ${
+            isDragging ? "bg-blue-100" : ""
+          }`}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
           {selectedImage ? (
             <div className="mb-4">
               <Image src={selectedImage} alt="Selected" width={150} height={150} className="mx-auto" />
             </div>
           ) : (
-            <p className="text-gray-500 mb-4">Drag & drop images here or click to select</p>
+            <p className="text-gray-500 mb-4">Drag & drop images here or click to browse</p>
           )}
           <input
             type="file"
@@ -61,7 +134,13 @@ export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalPr
           </button>
         </div>
         {selectedImage && (
-          <div className="mt-4 text-right">
+          <div className="mt-4 flex justify-end gap-4">
+            <button
+              onClick={handleRemoveImage}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+            >
+              Remove
+            </button>
             <button
               onClick={() => {
                 // Handle image submission logic here
