@@ -6,20 +6,23 @@ import MostViewed from "@/components/home/MostViewed";
 import Categories from "@/components/home/Categories";
 import Promotions from "@/components/home/Promotions";
 import Footer from "@/components/home/Footer";
+import { CartProvider } from "@/context/CartContext"; // Import CartProvider
 
 export default function Home() {
   return (
-    <div className="bg-white">
-      <Header />
-      <main>
-        <Hero />
-        <Features />
-        <BestDeals />
-        <MostViewed />
-        <Categories />
-        <Promotions />
-      </main>
-      <Footer />
-    </div>
+    <CartProvider> {/* Wrap the entire page content with CartProvider */}
+      <div className="bg-white">
+        <Header />
+        <main>
+          <Hero />
+          <Features />
+          <BestDeals />
+          <MostViewed />
+          <Categories />
+          <Promotions />
+        </main>
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }
