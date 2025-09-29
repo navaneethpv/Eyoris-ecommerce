@@ -1,8 +1,11 @@
 "use client";
+"use client";
 import React from "react";
 import Image from "next/image";
 import { Product } from "@/types";
+import { useCart } from "@/context/CartContext"; // Import useCart hook
 
+// Define ProductCardProps interface
 interface ProductCardProps {
   product: Product;
 }
@@ -17,6 +20,8 @@ const getImageUrl = (imageString: string) => {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { addToCart, emptyCart } = useCart(); // Get addToCart and emptyCart from context
+
   const imageUrl = getImageUrl(product.image);
 
   const oldPrice = parseFloat(product.oldPrice);
@@ -27,6 +32,22 @@ export default function ProductCard({ product }: ProductCardProps) {
       ((oldPrice - currentPrice) / oldPrice) * 100
     );
   }
+
+  // Handler for adding item to cart, which also clears the cart first as per user request
+  const handleAddToCart = () => {
+    emptyCart(); // Clear the cart first
+    const itemToAdd = {
+      id: parseInt(product.uniq_id, 10), // Convert uniq_id to a number
+      name: product.name,
+      price: currentPrice, // Using currentPrice as the item price
+      image: imageUrl,
+      // Providing a default color as it's required by CartItem, assuming 'color' is not directly available on Product.
+      // If 'color' is a critical field, the Product type and CartItem interface might need to be adjusted.
+      color: "default",
+      quantity: 1, // Initial quantity is 1 when adding from product card
+    };
+    addToCart(itemToAdd);
+  };
 
   return (
     <div
@@ -62,7 +83,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             </p>
           </div>
           <div className="mt-auto pt-4">
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300">
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300"
+            >
               Add to cart
             </button>
           </div>
