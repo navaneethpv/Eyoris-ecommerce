@@ -5,7 +5,7 @@ export default function CartHeader() {
   return (
     <div className="mb-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Cart</h1>
-      <div className="flex items-center justify-center space-x-4">
+      <div className="flex items-center justify-center space-x-20 ">
         {/* Step 1: Shopping cart */}
         <div className="flex flex-col items-center">
           <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg mb-1">
