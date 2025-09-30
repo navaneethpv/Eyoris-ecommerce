@@ -122,7 +122,7 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
         <div className="flex items-center">
-          <Image src="/logo.png" alt="Eyoris" width={160} height={50} />
+          <Image src="/assets/Images/logo.png" alt="Eyoris" width={160} height={50} />
         </div>
 
         {/* Navigation */}
