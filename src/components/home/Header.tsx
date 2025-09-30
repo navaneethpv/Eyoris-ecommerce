@@ -121,9 +121,11 @@ export default function Header() {
       {/* Main header */}
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
+        <Link href={"/"}>
         <div className="flex items-center">
           <Image src="/assets/Images/logo.png" alt="Eyoris" width={160} height={50} />
         </div>
+        </Link>
 
         {/* Navigation */}
         <nav className="hidden lg:flex space-x-8">
@@ -356,8 +358,8 @@ export default function Header() {
               </div>
             )}
           </div>
-          <a
-            href="#"
+          <Link
+            href={"cart"}
             className="flex items-center text-gray-700 hover:text-blue-600"
           >
             <svg
@@ -375,7 +377,7 @@ export default function Header() {
               />
             </svg>
             Cart
-          </a>
+          </Link>
         </div>
       </div>
       <ImageUploadModal isOpen={isModalOpen} onClose={closeModal} />

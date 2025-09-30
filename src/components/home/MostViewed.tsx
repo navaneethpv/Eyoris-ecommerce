@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/index';
 
-interface FlipkartProduct {
+interface EyoristProduct {
   uniq_id: string;
   product_name: string;
   retail_price: string;
@@ -20,7 +20,7 @@ export default function MostViewed() {
     async function fetchProducts() {
       try {
         const response = await fetch('/sample_products.json');
-        const data: FlipkartProduct[] = await response.json();
+        const data: EyoristProduct[] = await response.json();
 
             const processedProducts: Product[] = data.slice(25, 34).map((product) => {
               const rating = product.product_rating === 'No rating available' ? 0 : parseFloat(product.product_rating);
