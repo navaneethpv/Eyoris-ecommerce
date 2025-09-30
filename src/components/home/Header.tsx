@@ -356,8 +356,8 @@ export default function Header() {
               </div>
             )}
           </div>
-          <a
-            href="#"
+          <Link
+            href="cart"
             className="flex items-center text-gray-700 hover:text-blue-600"
           >
             <svg
@@ -375,7 +375,7 @@ export default function Header() {
               />
             </svg>
             Cart
-          </a>
+          </Link>
         </div>
       </div>
       <ImageUploadModal isOpen={isModalOpen} onClose={closeModal} />
