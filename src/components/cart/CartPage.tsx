@@ -4,10 +4,10 @@ import CartHeader from "./CartHeader";
 import CartItemsList from "./CartItemsList";
 import PriceDetails from "./PriceDetails";
 import Coupon from "./Coupon";
-import { cartItems as initialCartItems, CartItem as CartItemType } from "@/data/cartData";
+import {CartItem as CartItemType } from "@/data/cartData";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItemType[]>(initialCartItems);
+  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
 
   // Function to handle quantity changes
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
