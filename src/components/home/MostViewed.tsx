@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/index';
+import { useCart } from '@/context/CartContext';
 
 interface EyoristProduct {
   uniq_id: string;
@@ -15,6 +16,7 @@ interface EyoristProduct {
 
 export default function MostViewed() {
   const [products, setProducts] = useState<Product[]>([]);
+  const {addToCart} = useCart();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -60,6 +62,31 @@ export default function MostViewed() {
       setCurrentIndex(currentIndex - 1);
     }
   };
+  const handleAddtoCart = (product: Product) => {
+    let priceToAdd = 0;
+    if (product.currentPrice && product.currentPrice !== 'N/A') {
+      const priceString = product.currentPrice.replace('₹', '');
+      priceToAdd = parseFloat(priceString);
+      if (isNaN(priceToAdd)) {
+        console.error(`Failed to parse price for product ${product.name}: ${product.currentPrice}`);
+        priceToAdd = 0;
+      }
+    } else {
+      console.warn(`Product ${product.name} has no price available.`);
+      priceToAdd = 0;
+    }
+
+    const itemToAdd = {
+      id: parseInt(product.uniq_id, 10),
+      name: product.name,
+      price: priceToAdd,
+      image:product.image,
+      color:'default'
+    };
+    addToCart(itemToAdd);
+    console.log(itemToAdd);
+    console.log('added successfully');
+  };
 
   return (
     <section className="container mx-auto py-12 px-4">
@@ -85,7 +112,7 @@ export default function MostViewed() {
                       src={product.image}
                       alt={product.name}
                       fill
-                      objectFit="contain"
+                      style={{ objectFit: 'contain' }}
                       className="rounded-t-lg"
                     />
                   </div>
@@ -102,9 +129,9 @@ export default function MostViewed() {
                     <div className="flex items-baseline space-x-2 mb-2">
                       <span className="text-lg font-bold text-gray-900">{product.currentPrice}</span>
                       <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
-                      {product.rating && <span className="text-sm text-green-600">{product.rating}</span>}
+                      {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
                     </div>
-                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto">
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto" onClick={()=>handleAddtoCart(product)}>
                       Add to cart
                     </button>
                   </div>
