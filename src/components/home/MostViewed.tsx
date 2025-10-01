@@ -77,7 +77,7 @@ export default function MostViewed() {
     }
 
     const itemToAdd = {
-      id: parseInt(product.uniq_id, 10),
+      id: product.uniq_id,
       name: product.name,
       price: priceToAdd,
       image:product.image,
