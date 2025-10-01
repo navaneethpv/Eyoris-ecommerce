@@ -1,30 +1,29 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import CartHeader from "./CartHeader";
 import CartItemsList from "./CartItemsList";
 import PriceDetails from "./PriceDetails";
 import Coupon from "./Coupon";
-import {CartItem as CartItemType } from "@/data/cartData";
+import { useCart } from "@/context/CartContext";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
 
   // Function to handle quantity changes
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    const currentItem = cartItems.find(item => item.id === itemId);
+    if (!currentItem) return;
+    const diff = newQuantity - currentItem.quantity;
+    updateQuantity(itemId, diff);
   };
 
   // Function to handle item removal
   const handleRemoveItem = (itemId: string) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    removeFromCart(itemId);
   };
 
   // Recalculate total price and final amount whenever cartItems change
-  const calculateTotalPrice = (items: CartItemType[]) => {
+  const calculateTotalPrice = (items: typeof cartItems) => {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 

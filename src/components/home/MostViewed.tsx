@@ -76,13 +76,13 @@ export default function MostViewed() {
       priceToAdd = 0;
     }
 
-    const itemToAdd = {
-      id: product.uniq_id,
-      name: product.name,
-      price: priceToAdd,
-      image:product.image,
-      color:'default'
-    };
+      const itemToAdd = {
+        id: product.uniq_id,
+        name: product.name,
+        price: priceToAdd,
+        imageUrl: product.image,
+        color:'default'
+      };
     addToCart(itemToAdd);
     console.log(itemToAdd);
     console.log('added successfully');
