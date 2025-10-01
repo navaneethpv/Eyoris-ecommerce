@@ -6,11 +6,9 @@ import MostViewed from "@/components/home/MostViewed";
 import Categories from "@/components/home/Categories";
 import Promotions from "@/components/home/Promotions";
 import Footer from "@/components/home/Footer";
-import { CartProvider } from "@/context/CartContext"; // Import CartProvider
 
 export default function Home() {
   return (
-    <CartProvider> {/* Wrap the entire page content with CartProvider */}
       <div className="bg-white">
         <Header />
         <main>
@@ -23,6 +21,5 @@ export default function Home() {
         </main>
         <Footer />
       </div>
-    </CartProvider>
   );
 }
