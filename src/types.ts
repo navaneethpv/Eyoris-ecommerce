@@ -27,7 +27,7 @@ export interface Product {
 // Note: 'id' is number here, while 'uniq_id' in Product is string.
 // 'price' is number here, while 'currentPrice'/'oldPrice' in Product are strings.
 export interface CartItem {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
