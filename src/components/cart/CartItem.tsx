@@ -23,6 +23,7 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
   const handleRemoveClick = () => {
     onRemove(item.id);
   };
+  console.log(item)
 
   return (
     <div className="flex flex-col sm:flex-row items-center py-6 border-b border-gray-200 last:border-b-0">
@@ -31,7 +32,7 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
           src={item.imageUrl}
           alt={item.name}
           layout="fill"
-          objectFit="cover"
+          objectFit="contain"
         />
       </div>
       <div className="flex-grow sm:ml-6 text-center sm:text-left flex flex-col justify-center">
