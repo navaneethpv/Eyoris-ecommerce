@@ -122,9 +122,14 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
         <Link href={"/"}>
-        <div className="flex items-center">
-          <Image src="/assets/Images/logo.png" alt="Eyoris" width={160} height={50} />
-        </div>
+          <div className="flex items-center">
+            <Image
+              src="/assets/Images/logo.png"
+              alt="Eyoris"
+              width={160}
+              height={50}
+            />
+          </div>
         </Link>
 
         {/* Navigation */}
@@ -232,9 +237,7 @@ export default function Header() {
               </svg>
             </button>
             {isDropdownOpen && (
-              <div
-                className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20"
-              >
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
                 <Link
                   href="/my-profile"
                   className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -359,11 +362,7 @@ export default function Header() {
             )}
           </div>
           <Link
-<<<<<<< HEAD
-            href="cart"
-=======
             href={"cart"}
->>>>>>> test
             className="flex items-center text-gray-700 hover:text-blue-600"
           >
             <svg
