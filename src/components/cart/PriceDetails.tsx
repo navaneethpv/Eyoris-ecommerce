@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { cartItems as initialCartItems, CartItem as CartItemType } from "@/data/cartData";
+// import { cartItems as initialCartItems, CartItem as CartItemType } from "@/data/cartData";
 
 interface PriceDetailsProps {
   totalPrice: number;
