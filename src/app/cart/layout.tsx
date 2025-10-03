@@ -8,9 +8,11 @@ export default function CartLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className='bg-white h-screen'>
+    <section className='bg-white'>
       <Header />
       {children}
+      <Footer />
+      
     </section>
   );
 }
