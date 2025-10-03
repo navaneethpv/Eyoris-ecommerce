@@ -46,7 +46,7 @@ export default function Header() {
   }, [dropdownRef]);
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Top bar */}
       <div className="bg-gray-100 py-2 text-sm text-gray-600">
         <div className="container mx-auto flex justify-between items-center px-4">
@@ -119,7 +119,7 @@ export default function Header() {
       </div>
 
       {/* Main header */}
-      <div className="container mx-auto flex items-center justify-between py-4 px-4">
+            <div className="container mx-auto flex items-center justify-between py-3 px-4 bg-white z-50">
         {/* Logo */}
         <Link href={"/"}>
           <div className="flex items-center">
