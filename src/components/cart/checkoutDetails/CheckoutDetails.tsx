@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import CartHeader from "../shopingCart/Header";
 
 const indianStates = [
   "Andhra Pradesh",
@@ -67,38 +68,7 @@ export default function CheckoutDetails() {
   return (
     <div className="container mx-auto p-4 text-gray-900">
       <div className="max-w-6xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-10 text-center">
-            Cart
-          </h1>
-          <div className="flex items-center justify-center space-x-20 mt-3">
-            {/* Step 1: Shopping cart */}
-            <div className="flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-lg mb-1">
-                ✓
-              </div>
-              <span className="text-sm font-semibold text-green-500">
-                Shopping cart
-              </span>
-            </div>
-
-            {/* Step 2: Checkout details */}
-            <div className="flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-lg mb-1">
-                2
-              </div>
-              <span className="text-sm text-blue-500 font-semibold">Checkout details</span>
-            </div>
-
-            {/* Step 3: Order complete */}
-            <div className="flex flex-col items-center">
-              <div className="w-10 h-10 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center font-bold text-lg mb-1">
-                3
-              </div>
-              <span className="text-sm text-gray-600">Order complete</span>
-            </div>
-          </div>
-        </div>
+        <CartHeader activeStep="checkout" />
         {/* Contact Information */}
         <div className="mb-6">
           <h2 className="text-xl font-semibold mb-3">Contact Information</h2>
