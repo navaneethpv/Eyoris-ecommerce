@@ -25,6 +25,11 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
   };
   console.log(item)
 
+  // Calculate discount amount for this item
+  const discountAmount = item.discountPrice && item.discountPrice < item.price
+    ? (item.price - item.discountPrice) * item.quantity
+    : 0;
+  console.log(discountAmount)
   return (
     <div className="flex flex-col sm:flex-row items-center py-6 border-b border-gray-200 last:border-b-0">
       <div className="flex-shrink-0 w-40 h-40 sm:w-32 sm:h-32 relative mb-4 sm:mb-0 rounded-lg overflow-hidden">
@@ -38,6 +43,11 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
       <div className="flex-grow sm:ml-6 text-center sm:text-left flex flex-col justify-center">
         <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
         <p className="text-sm text-gray-500">Color: {item.color}</p>
+        {discountAmount > 0 && (
+          <p className="text-sm text-red-500 font-semibold">
+            You save: ₹{discountAmount.toFixed(2)}
+          </p>
+        )}
         <button
           onClick={handleRemoveClick}
           className="text-sm text-red-500 hover:text-red-700 flex items-center justify-center sm:justify-start mt-2"
@@ -58,7 +68,7 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
         </button>
       </div>
       <div className="ml-auto flex flex-col items-center sm:items-end mt-4 sm:mt-0">
-        <p className="text-lg font-bold text-gray-800 mb-2 sm:mb-0">₹{(item.price * item.quantity).toFixed(2)}</p>
+        <p className="text-lg font-bold text-gray-800 mb-2 sm:mb-0">₹{((item.discountPrice || item.price) * item.quantity).toFixed(2)}</p>
         <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
           <button
             onClick={handleDecreaseQuantity}
