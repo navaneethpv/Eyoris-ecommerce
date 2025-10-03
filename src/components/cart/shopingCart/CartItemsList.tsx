@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { CartItem as CartItemType } from "@/data/cartData";
+import { CartItem as CartItemType } from "@/types";
 import CartItem from "./CartItem";
 
 interface CartItemsListProps {
