@@ -2,6 +2,10 @@
 import React, { useState } from "react";
 import CartHeader from "../shopingCart/Header";
 
+interface CheckoutDetailsProps {
+  onOrderComplete: () => void;
+}
+
 const indianStates = [
   "Andhra Pradesh",
   "Arunachal Pradesh",
@@ -33,7 +37,7 @@ const indianStates = [
   "West Bengal",
 ];
 
-export default function CheckoutDetails() {
+export default function CheckoutDetails({ onOrderComplete }: CheckoutDetailsProps) {
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState("cardCredit"); // Default to card credit
   const [selectedState, setSelectedState] = useState(""); // State for selected Indian state
@@ -304,7 +308,7 @@ export default function CheckoutDetails() {
                 htmlFor="paypal"
                 className="ml-3 block text-base font-medium text-gray-700"
               >
-                Paypal
+                Pay by Paypal
               </label>
             </div>
             <div className="flex items-center">
@@ -327,7 +331,10 @@ export default function CheckoutDetails() {
           </div>
         </div>
 
-        <button className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold">
+        <button
+          className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold"
+          onClick={onOrderComplete}
+        >
           Place Order
         </button>
       </div>
