@@ -34,8 +34,8 @@ export default function MostViewed() {
                 name: product.product_name,
                 rating: rating,
                 reviews: 1000,
-                currentPrice: product.discounted_price ? `₹${product.discounted_price}` : 'N/A',
-                oldPrice: product.retail_price ? `₹${product.retail_price}` : 'N/A',
+                currentPrice: product.discounted_price ? product.discounted_price : 'N/A',
+                oldPrice: product.retail_price ? product.retail_price : 'N/A',
                 image: imageUrl,
                 discount: product.discounted_price && product.retail_price ? `${Math.round(((parseFloat(product.retail_price) - parseFloat(product.discounted_price)) / parseFloat(product.retail_price)) * 100)}%` : undefined,
               } as Product;
@@ -64,25 +64,31 @@ export default function MostViewed() {
     }
   };
   const handleAddtoCart = (product: Product) => {
-    let priceToAdd = 0;
-    if (product.currentPrice && product.currentPrice !== 'N/A') {
-      const priceString = product.currentPrice.replace('₹', '');
-      priceToAdd = parseFloat(priceString);
-      if (isNaN(priceToAdd)) {
-        console.error(`Failed to parse price for product ${product.name}: ${product.currentPrice}`);
-        priceToAdd = 0;
+    let oldPrice = 0;
+    let currentPrice = 0;
+    if (product.oldPrice && product.oldPrice !== 'N/A') {
+      oldPrice = parseFloat(product.oldPrice);
+      if (isNaN(oldPrice)) {
+        console.error(`Failed to parse old price for product ${product.name}: ${product.oldPrice}`);
+        oldPrice = 0;
       }
-    } else {
-      console.warn(`Product ${product.name} has no price available.`);
-      priceToAdd = 0;
+    }
+    if (product.currentPrice && product.currentPrice !== 'N/A') {
+      currentPrice = parseFloat(product.currentPrice);
+      if (isNaN(currentPrice)) {
+        console.error(`Failed to parse current price for product ${product.name}: ${product.currentPrice}`);
+        currentPrice = 0;
+      }
     }
 
       const itemToAdd = {
         id: product.uniq_id,
         name: product.name,
-        price: priceToAdd,
+        price: oldPrice,
+        discountPrice: currentPrice < oldPrice ? currentPrice : undefined,
         imageUrl: product.image,
-        color:'default'
+        color:'default',
+        quantity: 1,
       };
     addToCart(itemToAdd);
     console.log(itemToAdd);
@@ -128,8 +134,8 @@ export default function MostViewed() {
                       <span className="ml-2 text-sm text-gray-600">({String(product.reviews)})</span>
                     </div>
                     <div className="flex items-baseline space-x-2 mb-2">
-                      <span className="text-lg font-bold text-gray-900">{product.currentPrice}</span>
-                      <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
+                      <span className="text-lg font-bold text-gray-900">₹{product.currentPrice}</span>
+                      <span className="text-sm text-gray-500 line-through">₹{product.oldPrice}</span>
                       {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
                     </div>
                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto hover:cursor-pointer" onClick={()=>handleAddtoCart(product)}>
