@@ -38,7 +38,8 @@ export default function ProductCard({ product }: ProductCardProps) {
     const itemToAdd = {
       id: product.uniq_id,// Convert uniq_id to a number, as CartItem expects a number for id
       name: product.name,
-      price: currentPrice, // Using currentPrice as the item price
+      price: oldPrice, // Using oldPrice as the original item price
+      discountPrice: currentPrice < oldPrice ? currentPrice : undefined, // discounted price if applicable
       imageUrl: imageUrl, // Changed 'image' to 'imageUrl' to match CartItem type
       // Providing a default color as it's required by CartItem, assuming 'color' is not directly available on Product.
       // If 'color' is a critical field, the Product type and CartItem interface might need to be adjusted.
