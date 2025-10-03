@@ -5,7 +5,6 @@ import CartItemsList from "./CartItemsList";
 import PriceDetails from "./PriceDetails";
 import Coupon from "./Coupon";
 import { useCart } from "@/context/CartContext";
-import Link from "next/link";
 
 interface CartPageProps {
   onProceedToCheckout: () => void;
