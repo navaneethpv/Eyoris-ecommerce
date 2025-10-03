@@ -46,3 +46,12 @@ export interface CartContextType {
   updateQuantity: (id: string, amount: number) => void;
   emptyCart: () => void;
 }
+export interface CartItem {
+  id: string;
+  name: string;
+  color: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+}
+
