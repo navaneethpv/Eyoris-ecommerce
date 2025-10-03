@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/index';
 import { useCart } from '@/context/CartContext';
+import { PiHandshakeLight } from 'react-icons/pi';
 
 interface EyoristProduct {
   uniq_id: string;
@@ -131,7 +132,7 @@ export default function MostViewed() {
                       <span className="text-sm text-gray-500 line-through">{product.oldPrice}</span>
                       {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
                     </div>
-                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto" onClick={()=>handleAddtoCart(product)}>
+                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto hover:cursor-pointer" onClick={()=>handleAddtoCart(product)}>
                       Add to cart
                     </button>
                   </div>
@@ -141,10 +142,10 @@ export default function MostViewed() {
           </div>
         </div>
         <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4">
-            <button onClick={handlePrev} disabled={currentIndex === 0} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
+            <button onClick={handlePrev} disabled={currentIndex === 0} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md hover:cursor-pointer">
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
-            <button onClick={handleNext} disabled={currentIndex >= products.length - 5} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md">
+            <button onClick={handleNext} disabled={currentIndex >= products.length - 5} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md hover:cursor-pointer">
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </button>
         </div>
