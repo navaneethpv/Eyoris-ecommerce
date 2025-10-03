@@ -26,3 +26,23 @@ export interface SampleProductJson {
   brand: string | null;
   product_specifications: string;
 }
+
+// Interface for items stored in the cart
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+  color: string;
+  discountPrice?: number; // discounted price, made optional
+}
+
+// Interface for the Cart Context
+export interface CartContextType {
+  cartItems: CartItem[];
+  addToCart: (item: Omit<CartItem, 'quantity'>) => void;
+  removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, amount: number) => void;
+  emptyCart: () => void;
+}
