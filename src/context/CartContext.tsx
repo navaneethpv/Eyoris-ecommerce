@@ -31,7 +31,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       if (existingItem) {
         console.log("Updating existing item in cart:", itemToAdd.name, "new quantity:", existingItem.quantity + 1);
         return prevItems.map((item) =>
-          item.id === itemToAdd.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === itemToAdd.id ? { ...item, quantity: item.quantity + 1, discountPrice: itemToAdd.discountPrice } : item
         );
       }
       console.log("Adding new item to cart:", itemToAdd.name);
