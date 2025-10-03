@@ -5,7 +5,8 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 interface CartItem {
   id: string;
   name: string;
-  price: number;
+  price: number; // original price
+  discountPrice?: number; // discounted price, made optional
   quantity: number;
   imageUrl: string;
   color: string;
@@ -16,7 +17,7 @@ interface CartContextType {
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, amount: number) => void;
-  emptyCart: () => void; // Added emptyCart
+  emptyCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -28,7 +29,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === itemToAdd.id);
       if (existingItem) {
-        return prevItems; // If item already exists, do not update quantity
+        return prevItems.map((item) =>
+          item.id === itemToAdd.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
       }
       return [...prevItems, { ...itemToAdd, quantity: 1 }];
     });
@@ -51,7 +54,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-   
     <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, emptyCart }}>
       {children}
     </CartContext.Provider>
