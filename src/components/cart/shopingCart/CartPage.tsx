@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import CartHeader from "../CartHeader";
+import CartHeader from "./Header"; // Corrected import path
 import CartItemsList from "./CartItemsList";
 import PriceDetails from "./PriceDetails";
 import Coupon from "./Coupon";
 import { useCart } from "@/context/CartContext";
+import Link from "next/link";
 
 interface CartPageProps {
   onProceedToCheckout: () => void;
@@ -47,32 +48,45 @@ export default function CartPage({ onProceedToCheckout }: CartPageProps) {
   return (
     <div className="bg-gray-100 min-h-screen p-4 md:p-8">
       <div className="max-w-6xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
-        <CartHeader />
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="lg:w-2/3">
-            <CartItemsList
-              items={cartItems}
-              onQuantityChange={handleQuantityChange}
-              onRemove={handleRemoveItem}
-            />
-            <Coupon />
+        <CartHeader activeStep="cart" />
+        {cartItems.length === 0 ? (
+          <div className="text-center py-10">
+            <p className="text-xl text-gray-600">Your cart is empty.</p>
+            <p className="text-md text-gray-500 mt-2">Please add some products to proceed.</p>
+            {/* Optionally, add a button to navigate to shop page */}
+            {/* <Link href="/shop">
+              <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md">
+                Go to Shop
+              </button>
+            </Link> */}
           </div>
-          <div className="lg:w-1/3">
-            <PriceDetails
-              totalPrice={totalPrice}
-              discount={discount}
-              couponDiscount={couponDiscount}
-              platformFee={platformFee}
-              finalAmount={finalAmount}
-            />
-            <button
-              className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-semibold mt-4"
-              onClick={onProceedToCheckout}
-            >
-              Proceed to Checkout
-            </button>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="lg:w-2/3">
+              <CartItemsList
+                items={cartItems}
+                onQuantityChange={handleQuantityChange}
+                onRemove={handleRemoveItem}
+              />
+              <Coupon />
+            </div>
+            <div className="lg:w-1/3">
+              <PriceDetails
+                totalPrice={totalPrice}
+                discount={discount}
+                couponDiscount={couponDiscount}
+                platformFee={platformFee}
+                finalAmount={finalAmount}
+              />
+              <button
+                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-semibold mt-4"
+                onClick={onProceedToCheckout}
+              >
+                Proceed to Checkout
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
