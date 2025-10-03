@@ -27,14 +27,18 @@ export default function CartPage() {
     return items.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
-  // Placeholder values for discount, coupon, and fee
-  // These would typically come from state or context and be updated by Coupon component
-  const discount = 2000;
-  const couponDiscount = 50;
-  const platformFee = 5;
+  const calculateDiscountPrice = (items: typeof cartItems) => {
+    return items.reduce((total, item) => total + (item.price - (item.discountPrice || item.price)) * item.quantity, 0);
+  };
+
+  // Set couponDiscount and platformFee to 0 if no products in cart
+  const couponDiscount = cartItems.length > 0 ? 50 : 0;
+  const platformFee = cartItems.length > 0 ? 5 : 0;
 
   const totalPrice = calculateTotalPrice(cartItems);
-  const finalAmount = totalPrice - discount - couponDiscount + platformFee;
+  const discount = calculateDiscountPrice(cartItems);
+  const finalAmountRaw = totalPrice - discount - couponDiscount + platformFee;
+  const finalAmount = isNaN(finalAmountRaw) ? 0 : finalAmountRaw;
 
   return (
     <div className="bg-gray-100 min-h-screen p-4 md:p-8">
