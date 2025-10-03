@@ -50,7 +50,7 @@ export default function CartItem({ item, onQuantityChange, onRemove }: CartItemP
         )}
         <button
           onClick={handleRemoveClick}
-          className="text-sm text-red-500 hover:text-red-700 flex items-center justify-center sm:justify-start mt-2"
+          className="text-sm text-red-500 hover:text-red-700 flex items-center justify-center sm:justify-start mt-2 hover:cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
