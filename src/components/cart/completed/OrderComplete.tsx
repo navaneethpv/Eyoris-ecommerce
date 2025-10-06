@@ -2,7 +2,29 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const OrderComplete: React.FC = () => {
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  discountPrice?: number;
+  quantity: number;
+  imageUrl: string;
+  color: string;
+}
+
+interface OrderData {
+  cartItems: CartItem[];
+  total: number;
+  paymentMethod: string;
+  orderCode: string;
+  orderDate: string;
+}
+
+interface OrderCompleteProps {
+  orderData: OrderData;
+}
+
+const OrderComplete: React.FC<OrderCompleteProps> = ({ orderData }) => {
   const [activeStep] = useState('complete'); // Assuming this page is only for completed orders
 
   const getStepClasses = (stepName: string) => {
@@ -68,37 +90,31 @@ const OrderComplete: React.FC = () => {
 
         {/* Ordered Items */}
         <div className="flex justify-center space-x-6 mb-8">
-          <div className="relative">
-            <Image src="/assets/Images/catergories/earpod.png" alt="Product 1" width={100} height={100} className="border rounded-lg" />
-            <span className="absolute top-0 right-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs -mt-2 -mr-2">2</span>
-          </div>
-          <div className="relative">
-            <Image src="/assets/Images/catergories/speaker.png" alt="Product 2" width={100} height={100} className="border rounded-lg" />
-            <span className="absolute top-0 right-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs -mt-2 -mr-2">2</span>
-          </div>
-          <div className="relative">
-            <Image src="/assets/Images/catergories/accessories.png" alt="Product 3" width={100} height={100} className="border rounded-lg" />
-            <span className="absolute top-0 right-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs -mt-2 -mr-2">1</span>
-          </div>
+          {orderData.cartItems.map((item) => (
+            <div key={item.id} className="relative">
+              <Image src={item.imageUrl} alt={item.name} width={100} height={100} className="border rounded-lg" />
+              <span className="absolute top-0 right-0 bg-black text-white rounded-full w-6 h-6 flex items-center justify-center text-xs -mt-2 -mr-2">{item.quantity}</span>
+            </div>
+          ))}
         </div>
 
         {/* Order Details */}
         <div className="text-left max-w-xs mx-auto mb-8">
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Order code:</span>
-            <span className="font-semibold">#0123_45678</span>
+            <span className="font-semibold">{orderData.orderCode}</span>
           </div>
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Date:</span>
-            <span className="font-semibold">October 19, 2023</span>
+            <span className="font-semibold">{orderData.orderDate}</span>
           </div>
           <div className="flex justify-between mb-2">
             <span className="text-gray-600">Total:</span>
-            <span className="font-semibold">$1,345.00</span>
+            <span className="font-semibold">₹{orderData.total.toFixed(2)}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Payment method:</span>
-            <span className="font-semibold">Credit Card</span>
+            <span className="font-semibold">{orderData.paymentMethod === 'cardCredit' ? 'Credit Card' : orderData.paymentMethod === 'paypal' ? 'PayPal' : 'UPI'}</span>
           </div>
         </div>
 
