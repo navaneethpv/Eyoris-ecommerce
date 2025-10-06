@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CartHeader from "../shopingCart/Header";
 
 interface CheckoutDetailsProps {
-  onOrderComplete: () => void;
+  onOrderComplete: (data: { paymentMethod: string }) => void;
 }
 
 const indianStates = [
@@ -333,7 +333,7 @@ export default function CheckoutDetails({ onOrderComplete }: CheckoutDetailsProp
 
         <button
           className="w-full bg-black text-white py-3 rounded-md text-lg font-semibold"
-          onClick={onOrderComplete}
+          onClick={() => onOrderComplete({ paymentMethod: selectedPaymentMethod })}
         >
           Place Order
         </button>
