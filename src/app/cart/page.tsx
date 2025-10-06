@@ -8,7 +8,8 @@ import { useCart } from "@/context/CartContext"; // Import useCart
 export default function Cart() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [showOrderComplete, setShowOrderComplete] = useState(false);
-  const { addToCart } = useCart(); // Use the addToCart function
+  const [orderPaymentMethod, setOrderPaymentMethod] = useState<string>("");
+  const { cartItems, addToCart } = useCart(); // Use cartItems and addToCart
 
   // Temporary function to add items for testing
   const addDummyItems = () => {
@@ -34,17 +35,24 @@ export default function Cart() {
     setShowCheckout(true);
   };
 
-  const handleOrderComplete = () => {
-    setShowOrderComplete(true);
-    setShowCheckout(false); // Hide checkout details once order is complete
-  };
+
 
   return (
     <div>
       {showOrderComplete ? (
-        <OrderComplete />
+        <OrderComplete orderData={{
+          cartItems: cartItems,
+          total: cartItems.reduce((acc, item) => acc + (item.discountPrice ?? item.price) * item.quantity, 0),
+          paymentMethod: orderPaymentMethod,
+          orderCode: "#0123_45678", // You can generate or fetch this dynamically
+          orderDate: new Date().toLocaleDateString(),
+        }} />
       ) : showCheckout ? (
-        <CheckoutDetails onOrderComplete={handleOrderComplete} />
+        <CheckoutDetails onOrderComplete={(data) => {
+          setOrderPaymentMethod(data.paymentMethod);
+          setShowOrderComplete(true);
+          setShowCheckout(false);
+        }} />
       ) : (
         <>
           <CartPage onProceedToCheckout={handleProceedToCheckout} />
