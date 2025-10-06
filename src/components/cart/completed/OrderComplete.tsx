@@ -1,32 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const OrderComplete: React.FC = () => {
+  const [activeStep] = useState('complete'); // Assuming this page is only for completed orders
+
+  const getStepClasses = (stepName: string) => {
+    const isActive = activeStep === stepName;
+    const isComplete = (stepName === 'cart' || stepName === 'checkout') && activeStep === 'complete';
+
+    return {
+      circleClasses: `rounded-full w-8 h-8 flex items-center justify-center text-white mr-2 ${
+        isComplete ? 'bg-green-500' : (isActive ? 'bg-gray-800' : 'bg-gray-300')
+      }`,
+      textClasses: `font-semibold ${
+        isComplete ? 'text-green-500' : (isActive ? 'text-gray-800' : 'text-gray-500')
+      }`,
+    };
+  };
+
+  const cartStep = getStepClasses('cart');
+  const checkoutStep = getStepClasses('checkout');
+  const completeStep = getStepClasses('complete');
+
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 text-black">
       <h1 className="text-4xl font-bold text-center mb-8">Complete!</h1>
 
       {/* Progress Indicator */}
-      <div className="flex justify-center items-center mb-12">
-        <div className="flex items-center">
-          <div className="bg-green-500 rounded-full w-8 h-8 flex items-center justify-center text-white mr-2">
-            &#x2713;
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-10 text-center">Cart</h1>
+        <div className="flex items-center justify-center space-x-20 mt-3">
+          {/* Step 1: Shopping cart */}
+          <Link href="/cart">
+            <div className="flex flex-col items-center">
+              <div className={cartStep.circleClasses}>
+                {activeStep === 'cart' ? '1' : '✓'}
+              </div>
+              <span className={cartStep.textClasses}>Shopping cart</span>
+            </div>
+          </Link>
+
+          {/* Step 2: Checkout details */}
+          <div className="flex flex-col items-center">
+            <div className={checkoutStep.circleClasses}>
+              {activeStep === 'checkout' ? '2' : (activeStep === 'complete' ? '✓' : '2')}
+            </div>
+            <span className={checkoutStep.textClasses}>Checkout details</span>
           </div>
-          <span className="text-green-500 font-semibold">Shopping cart</span>
-        </div>
-        <div className="flex-1 h-1 bg-green-500 mx-4"></div>
-        <div className="flex items-center">
-          <div className="bg-green-500 rounded-full w-8 h-8 flex items-center justify-center text-white mr-2">
-            &#x2713;
+
+          {/* Step 3: Order complete */}
+          <div className="flex flex-col items-center">
+            <div className={completeStep.circleClasses}>
+              {activeStep === 'complete' ? '✓' : '3'}
+            </div>
+            <span className={completeStep.textClasses}>Order complete</span>
           </div>
-          <span className="text-green-500 font-semibold">Checkout details</span>
-        </div>
-        <div className="flex-1 h-1 bg-gray-300 mx-4"></div>
-        <div className="flex items-center">
-          <div className="bg-gray-800 rounded-full w-8 h-8 flex items-center justify-center text-white mr-2">
-            3
-          </div>
-          <span className="text-gray-800 font-semibold">Order complete</span>
         </div>
       </div>
 
