@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import PhonePage from "../phone/page";
 import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
@@ -27,7 +26,7 @@ export default function SignupPage() {
           </div>
 
           <p className="text-base text-gray-700">
-            Let's create an account using your mobile number
+            Let&apos;s create an account using your mobile number
           </p>
 
           <div>

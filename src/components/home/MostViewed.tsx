@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Product } from '@/types/index';
 import { useCart } from '@/context/CartContext';
-import { PiHandshakeLight } from 'react-icons/pi';
 
 interface EyoristProduct {
   uniq_id: string;

@@ -26,7 +26,7 @@ export default function OtpPage() {
               </Link>
             </p>
             <p className="text-sm text-gray-700 mt-4">
-              We've sent a One Time Password (OTP) to the mobile number above.
+              We&apos;ve sent a One Time Password (OTP) to the mobile number above.
               Please enter it to complete verification
             </p>
           </div>
