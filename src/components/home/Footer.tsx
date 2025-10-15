@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-gray-300 text-gray-800 py-10 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div className="flex flex-wrap justify-between max-w-7xl mx-auto gap-10">
         {/* Logo and description with email input */}
         <div className="space-y-0">
           <div className="flex items-center space-x-2">
@@ -88,6 +88,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
+
           <div className="flex space-x-4 text-black text-xl justify-center mr-7 mt-1.5">
             <a href="#" aria-label="Facebook" className="hover:text-blue-600">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.271 0-4.192 1.58-4.192 4.615v3.385z"/></svg>
