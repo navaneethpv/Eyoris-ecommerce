@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import ImageUploadModal from "./ImageUploadModal";
 import { useCart } from "@/context/CartContext";
+import Navigation from "./Navigation/Navigation";
+
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -135,32 +137,7 @@ export default function Header() {
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden lg:flex space-x-8">
-            <a
-              href="#"
-              className="text-gray-700 hover:text-blue-600 font-medium"
-            >
-              Category
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-blue-600 font-medium"
-            >
-              What&apos;s new
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-blue-600 font-medium"
-            >
-              Deals
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-blue-600 font-medium"
-            >
-              Delivery
-            </a>
-          </nav>
+          <Navigation />
 
           {/* Search and Icons */}
           <div className="flex items-center space-x-4">
