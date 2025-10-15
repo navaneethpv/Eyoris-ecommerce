@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import ImageUploadModal from "./ImageUploadModal";
 import { useCart } from "@/context/CartContext";
-import Navigation from "./Navigation/Navigation";
+import Navigation from "./components/Navigation/NavigationSection";
+import LogoSection from "./components/Navigation/LogoSection";
+import TopBar from "./components/Navigation/TopBar";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -52,88 +53,13 @@ export default function Header() {
     <>
       <header className="bg-white shadow-sm sticky top-0 z-50">
         {/* Top bar */}
-        <div className="bg-gray-100 py-2 text-sm text-gray-600">
-          <div className="container mx-auto flex justify-between items-center px-4">
-            <span className="flex items-center">
-              <svg
-                className="w-4 h-4 mr-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-              +001234567890
-            </span>
-            <div className="flex-grow flex justify-center items-center space-x-4">
-              <span>Get 50&apos;% Off on Selected Items</span>
-              <Link href="#" className="text-blue-600 hover:underline">
-                Shop Now
-              </Link>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="flex items-center">
-                <svg
-                  className="w-4 h-4 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3h8z"
-                  />
-                </svg>
-                English
-              </span>
-              <span className="flex items-center">
-                <svg
-                  className="w-4 h-4 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                Location
-              </span>
-            </div>
-          </div>
-        </div>
+        <TopBar />
 
         {/* Main header */}
         <div className="container mx-auto flex items-center justify-between py-3 px-4 bg-white z-50">
           {/* Logo */}
           <Link href={"/"}>
-            <div className="flex items-center">
-              <Image
-                src="/assets/Images/logo.png"
-                alt="Eyoris"
-                width={160}
-                height={50}
-              />
-            </div>
+            <LogoSection />
           </Link>
 
           {/* Navigation */}
@@ -370,7 +296,7 @@ export default function Header() {
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-               <div className="absolute w-10 h-10">
+              <div className="absolute w-10 h-10">
                 <span className="ml-1 font-bold text-white group-hover:text-blue-500 bg-gray-900 px-1.5 py-0.5 rounded-full">
                   {cartItems
                     ? cartItems.reduce(
