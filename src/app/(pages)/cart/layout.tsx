@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@/components/home/Header';
+import Header from '@/components/home/components/Navigation/Header';
 import Footer from '@/components/home/Footer';
 
 export default function CartLayout({
