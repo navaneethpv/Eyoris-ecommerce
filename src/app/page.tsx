@@ -3,7 +3,7 @@ import Hero from "@/components/home/Hero";
 import Features from "@/components/home/Features";
 import BestDeals from "@/components/home/components/BestDeals/BestDeals";
 import MostViewed from "@/components/home/MostViewed";
-import Categories from "@/components/home/Categories";
+import Categories from "@/components/home/components/Catergoris/CategoriesSection";
 import Promotions from "@/components/home/Promotions";
 import Footer from "@/components/home/Footer";
 
