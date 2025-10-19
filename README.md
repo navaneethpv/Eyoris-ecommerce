@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Eyoris - E-commerce Application
+
+Eyoris is a modern e-commerce application built with Next.js, designed to provide a seamless shopping experience. It features product browsing, a shopping cart, and a checkout process.
+
+## Features
+
+*   **Product Catalog**: Browse a variety of products with detailed descriptions and images.
+*   **Shopping Cart**: Add, remove, and update quantities of items in your cart.
+*   **Checkout Process**: A multi-step checkout flow including contact information, shipping address, and payment method.
+*   **User Authentication**: Sign-in and sign-up functionality (OTP verification, phone number login).
+*   **Responsive Design**: Optimized for various screen sizes, from mobile to desktop.
+
+## Technologies Used
+
+*   **Next.js**: React framework for building server-side rendered and static web applications.
+*   **React**: JavaScript library for building user interfaces.
+*   **TypeScript**: Superset of JavaScript that adds static typing.
+*   **Tailwind CSS**: A utility-first CSS framework for rapidly building custom designs.
+*   **Context API**: For state management (e.g., `CartContext`).
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+*   Node.js (v18 or higher recommended)
+*   npm or yarn
+
+### Installation
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/navaneethpv/eyoris.git
+    cd eyoris
+    ```
+
+2.  **Install dependencies:**
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+### Running the Application
+
+To run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
 
-## Learn More
+*   Navigate through categories and product listings.
+*   Add desired products to your cart.
+*   Proceed to checkout to complete your purchase.
+*   Sign in or create an account for a personalized experience.
 
-To learn more about Next.js, take a look at the following resources:
+## Contributing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.
