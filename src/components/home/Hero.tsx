@@ -5,27 +5,34 @@ import Image from "next/image";
 const banners = [
   {
     id: "banner1",
-    src: "/assets/Images/bannerImages/bannerImage1.png",
+    src: "/assets/Images/bannerImages/BannerVideo.mp4",
     text: {
       h1: "On Sale",
     },
   },
   {
     id: "banner2",
+    src: "/assets/Images/bannerImages/bannerImage1.jpg",
+    text: {
+      h1: "On Sale",
+    },
+  },
+  {
+    id: "banner3",
     src: "/assets/Images/bannerImages/bannerImage2.png", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Summer Collection",
     },
   },
   {
-    id: "banner3",
+    id: "banner4",
     src: "/assets/Images/bannerImages/bannerImage3.png", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Offer1",
     },
   },
   {
-    id: "banner4",
+    id: "banner5",
     src: "/assets/Images/bannerImages/bannerImage5.jpg", // Ensure this image exists in your public/assets directory
     text: {
       h1: "Offer2",
@@ -50,14 +57,25 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-[800px] bg-[#BDB4AB] flex items-center justify-center overflow-hidden hover:cursor-pointer">
-      <Image
-        src={currentBanner.src}
-        alt={currentBanner.text.h1}
-        layout="fill"
-        objectFit="cover"
-        quality={100}
-        className="z-0"
-      />
+      {currentBanner.src.endsWith(".mp4") ? (
+        <video
+          src={currentBanner.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        />
+      ) : (
+        <Image
+          src={currentBanner.src}
+          alt={currentBanner.text.h1}
+          layout="fill"
+          objectFit="contain"
+          quality={100}
+          className="z-0"
+        />
+      )}
       <div className="absolute inset-0 bg-black opacity-20 z-10"></div>
       {/* Navigation arrows */}
       <button
