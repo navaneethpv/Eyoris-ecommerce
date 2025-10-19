@@ -26,9 +26,7 @@ const CartSection:React.FC<CartProps> = ({cartItems}) => {
         </svg>
         <div className="absolute w-10 h-10">
           <span className="ml-1 font-bold text-white group-hover:text-blue-500 bg-gray-900 px-1.5 py-0.5 rounded-full">
-            {cartItems
-              ? cartItems.reduce((total, item) => total + item.quantity, 0)
-              : 0}
+            {cartItems ? cartItems.length : 0}
           </span>
         </div>
         Cart
