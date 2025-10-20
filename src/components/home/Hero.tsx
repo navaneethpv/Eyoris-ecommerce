@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "next/image";
 
 const banners = [
@@ -31,13 +31,6 @@ const banners = [
       h1: "Offer1",
     },
   },
-  {
-    id: "banner5",
-    src: "/assets/Images/bannerImages/bannerImage5.jpg", // Ensure this image exists in your public/assets directory
-    text: {
-      h1: "Offer2",
-    },
-  },
 ];
 
 export default function Hero() {
@@ -54,6 +47,13 @@ export default function Hero() {
   };
 
   const currentBanner = banners[currentBannerIndex];
+
+  useEffect(() =>{
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000);
+    return () => clearInterval(interval);
+  },[])
 
   return (
     <section className="relative w-full h-[800px] bg-[#BDB4AB] flex items-center justify-center overflow-hidden hover:cursor-pointer">
