@@ -1,7 +1,8 @@
+//This is for search page ,This is a demo file 
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { categories } from '../../components/home/components/Catergoris/categories';
+import { categories } from '../../../components/home/components/Catergoris/categories';
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
