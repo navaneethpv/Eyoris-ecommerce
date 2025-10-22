@@ -36,7 +36,7 @@ export default function Hero() {
   }, [currentBannerIndex]);
 
   return (
-    <section className="relative w-full h-[800px] bg-[#BDB4AB] flex items-center justify-center overflow-hidden hover:cursor-pointer">
+    <section className="relative w-full h-[800px] flex items-center justify-center overflow-hidden hover:cursor-pointer">
       {currentBanner.src.endsWith(".mp4") ? (
         <video
           src={currentBanner.src}
