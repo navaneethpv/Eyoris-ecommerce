@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import ImageUploadModal from "../../ImageUploadModal";
+import ImageUploadModal from "../ImageUpload/ImageUploadModal";
 import { useCart } from "@/context/CartContext";
 import Navigation from "./NavigationSection";
 import LogoSection from "./LogoSection";

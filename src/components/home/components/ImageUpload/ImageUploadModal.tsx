@@ -7,20 +7,11 @@ interface ImageUploadModalProps {
   onClose: () => void;
 }
 
-/**
- * A modal component for uploading images.
- * @param {ImageUploadModalProps} props - The props for the component.
- * @returns {JSX.Element | null} - The rendered component or null if not open.
- */
 export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  /**
-   * Handles the change event when a file is selected.
-   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
-   */
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -31,36 +22,20 @@ export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalPr
     }
   };
 
-  /**
-   * Handles the drag enter event.
-   * @param {React.DragEvent<HTMLDivElement>} event - The drag event.
-   */
   const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(true);
   };
 
-  /**
-   * Handles the drag leave event.
-   * @param {React.DragEvent<HTMLDivElement>} event - The drag event.
-   */
   const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
   };
 
-  /**
-   * Handles the drag over event.
-   * @param {React.DragEvent<HTMLDivElement>} event - The drag event.
-   */
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
-  /**
-   * Handles the drop event.
-   * @param {React.DragEvent<HTMLDivElement>} event - The drop event.
-   */
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
@@ -73,16 +48,10 @@ export default function ImageUploadModal({ isOpen, onClose }: ImageUploadModalPr
     }
   };
 
-  /**
-   * Handles the click event for the browse button.
-   */
   const handleBrowseClick = () => {
     fileInputRef.current?.click();
   };
 
-  /**
-   * Handles the removal of the selected image.
-   */
   const handleRemoveImage = () => {
     setSelectedImage(null);
     if (fileInputRef.current) {
