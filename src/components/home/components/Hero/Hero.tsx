@@ -1,29 +1,39 @@
 "use client";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { banners } from "@/data/banners";
 
 export default function Hero() {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
+
+  const switchBanner = (newIndex: number) => {
+    setIsFading(true);
+    setTimeout(() => {
+      setCurrentBannerIndex(newIndex);
+      setIsFading(false);
+    }, 300);
+  };
 
   const handlePrev = () => {
-    setCurrentBannerIndex(
-      (prevIndex) => (prevIndex - 1 + banners.length) % banners.length
-    );
+    const newIndex = (currentBannerIndex - 1 + banners.length) % banners.length;
+    switchBanner(newIndex);
   };
 
   const handleNext = () => {
-    setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % banners.length);
+    const newIndex = (currentBannerIndex + 1) % banners.length;
+    switchBanner(newIndex);
   };
 
   const currentBanner = banners[currentBannerIndex];
 
-  useEffect(() =>{
+  useEffect(() => {
     const interval = setInterval(() => {
-      handleNext();
+      const newIndex = (currentBannerIndex + 1) % banners.length;
+      switchBanner(newIndex);
     }, 5000);
     return () => clearInterval(interval);
-  },[])
+  }, [currentBannerIndex]);
 
   return (
     <section className="relative w-full h-[800px] bg-[#BDB4AB] flex items-center justify-center overflow-hidden hover:cursor-pointer">
@@ -34,7 +44,9 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300 ${
+            isFading ? "opacity-0" : "opacity-100"
+          }`}
         />
       ) : (
         <Image
@@ -43,7 +55,9 @@ export default function Hero() {
           layout="fill"
           objectFit="contain"
           quality={100}
-          className="z-0"
+          className={`z-0 transition-opacity duration-300 ${
+            isFading ? "opacity-0" : "opacity-100"
+          }`}
         />
       )}
       <div className="absolute inset-0 bg-black opacity-20 z-10"></div>
