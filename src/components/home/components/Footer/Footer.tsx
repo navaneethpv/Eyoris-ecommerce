@@ -1,10 +1,10 @@
 import React from "react";
-import LogoSection from "./components/Footer/LogoSection";
-import EmailInput from "./components/Footer/EmailInput";
-import Support from "./components/Footer/SupportSection";
-import AccountSection from "./components/Footer/AccountSection";
-import QuickLinkSection from "./components/Footer/QuickLinkSection";
-import DownloadAppSection from "./components/Footer/DownloadAppSection";
+import LogoSection from "./LogoSection";
+import EmailInput from "./EmailInput";
+import Support from "./SupportSection";
+import AccountSection from "./AccountSection";
+import QuickLinkSection from "./QuickLinkSection";
+import DownloadAppSection from "./DownloadAppSection";
 
 export default function Footer() {
   return (
