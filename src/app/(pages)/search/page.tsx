@@ -1,4 +1,4 @@
-//This is for search page ,This is a demo file 
+//This is for search page ,This is a demo file
 "use client";
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -64,7 +64,7 @@ export default function SearchPage() {
           </ul>
         </div>
       ) : query.trim() !== '' ? (
-        <p>No results found for "{query}".</p>
+        <p>No results found for &quot;{query}.</p>
       ) : (
         <p>Enter a search term to see results.</p>
       )}
