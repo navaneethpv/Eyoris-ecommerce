@@ -22,7 +22,7 @@ const Banners: React.FC<BannersProps> = ({ currentBanner, isFading }) => {
           loop
           muted
           playsInline
-          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-300 ${
+          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
             isFading ? "opacity-0" : "opacity-100"
           }`}
         />
@@ -33,7 +33,7 @@ const Banners: React.FC<BannersProps> = ({ currentBanner, isFading }) => {
           layout="fill"
           objectFit="contain"
           quality={100}
-          className={`z-0 transition-opacity duration-300 ${
+          className={`z-0 transition-opacity duration-1000 ${
             isFading ? "opacity-0" : "opacity-100"
           }`}
         />
