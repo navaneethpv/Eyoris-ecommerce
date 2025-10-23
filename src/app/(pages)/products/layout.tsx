@@ -1,3 +1,5 @@
+import Footer from '@/components/home/components/Footer/Footer';
+import Header from '@/components/home/components/Navigation/Header';
 import React from 'react';
 
 export default function ProductsLayout({
@@ -6,8 +8,11 @@ export default function ProductsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      {children}
-    </div>
+    <section className='bg-white'>
+          <Header />
+          {children}
+          <Footer />
+          
+        </section>
   );
 }

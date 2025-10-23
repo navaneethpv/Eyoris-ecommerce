@@ -11,108 +11,87 @@ type Product = {
 const products: Product[] = [
   {
     id: 1,
-    name: "Classic Cotton Shirt",
+    name: "Status Contract Anti Slip Front Door Mat|(38x58cm) Living Room Rug for....",
     price: 1299,
-    color: "White",
-    image: "https://images.unsplash.com/photo-1520975922131-6ce46ef61ca3",
+    color: "Blue",
+    image: "https://m.media-amazon.com/images/I/81rubH-VPtL._AC_UL320_.jpg",
   },
   {
     id: 2,
-    name: "Slim Fit Denim",
+    name: "Cortina Premium Silicon Floor Mat, Bath Mat, Doormat, Bathroom...",
     price: 1899,
     color: "Blue",
-    image: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb",
+    image: "https://m.media-amazon.com/images/I/61AnrlMQpSL._AC_UL320_.jpg",
   },
   {
     id: 3,
-    name: "Black Hoodie",
+    name: "Lifelong LLYM92 Yoga mat for Women & Men EVA Material 4mm...",
     price: 1599,
     color: "Black",
-    image: "https://images.unsplash.com/photo-1559563458-527698bf5295",
+    image: "https://m.media-amazon.com/images/I/612K2lgbyIL._AC_UL320_.jpg",
   },
   {
     id: 4,
-    name: "Beige Chinos",
+    name: "VERVENIX 2 Pcs Kitchen Mats Set – Waterproof Memory Foam Anti-..",
     price: 1799,
     color: "Beige",
-    image: "https://images.unsplash.com/photo-1617137968427-85924c800b59",
+    image: "https://m.media-amazon.com/images/I/51eG2i8WIdL._AC_UL320_.jpg",
   },
   {
     id: 5,
-    name: "Olive Green Jacket",
+    name: "VERVENIX Doormat (Pack of 2) Quick-Dry Anti-Slip Bathroom Mat | Non-Slip Home Print Bathroom Mat | Water-Absorbing Rubber Doormat, for ...",
     price: 2499,
     color: "Olive",
-    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ef3",
+    image: "https://m.media-amazon.com/images/I/51A0sU7cCYL._AC_UL320_.jpg",
   },
   {
     id: 6,
-    name: "Red T-Shirt",
+    name: "Purav Light 35mm Artificial Green Grass Carpet Mat for Balcony| Grass Mat for Floor, Home Decoration| Perfect for Indoor and Outdoor Use| Entrace ..",
     price: 999,
-    color: "Red",
-    image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
+    color: "Green",
+    image: "https://m.media-amazon.com/images/I/71XZMbAheZL._AC_UL320_.jpg",
   },
   {
     id: 7,
-    name: "Grey Sweatpants",
+    name: "SARAL HOME EASY LIVING Microfiber Soft Anti Slip Rectangular Door Mat|Bath Mat Set of 2 (Grey, 35X50 CM) ",
     price: 1499,
     color: "Grey",
-    image: "https://images.unsplash.com/photo-1618354691460-8a873b2b7c7e",
+    image: "https://m.media-amazon.com/images/I/81VBOV0tQ+L._AC_UL320_.jpg",
   },
   {
     id: 8,
-    name: "Navy Blue Blazer",
+    name: "Roseate Flower Super Soft (40x60 cm) Microfiber 2000 GSM Bath Mat",
     price: 3299,
     color: "Navy",
-    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2",
+    image: "https://m.media-amazon.com/images/I/71bhh7D1KZL._AC_UL320_.jpg",
   },
   {
     id: 9,
-    name: "Brown Leather Belt",
+    name: "JAYTOP Kitchen Mats for Floor Anti Slip, 2 Pcs Kitchen Mats, Waterproof",
     price: 799,
     color: "Brown",
-    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
+    image: "https://m.media-amazon.com/images/I/81l+ps0DsZL._AC_UL320_.jpg",
   },
   {
     id: 10,
-    name: "Yellow Polo Shirt",
+    name: "Saral Home Solid & Striped Microfiber Anti-Skid Bath Mats (Brown,35X50 cm, Set of 2) ",
     price: 1199,
     color: "Yellow",
-    image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f",
+    image: "https://m.media-amazon.com/images/I/81BGLJI8OCL._AC_UL320_.jpg",
   },
   {
     id: 11,
-    name: "White Sneakers",
-    price: 2199,
-    color: "White",
-    image: "https://images.unsplash.com/photo-1552346154-21d32818f23c",
+    name: "Roseate Flower Super Soft (40x60 cm) Microfiber 2000 GSM Bath Mat",
+    price: 3299,
+    color: "Navy",
+    image: "https://m.media-amazon.com/images/I/71amrUS1MWL._AC_UL320_.jpg",
   },
   {
     id: 12,
-    name: "Blue Jeans",
-    price: 1699,
-    color: "Blue",
-    image: "https://images.unsplash.com/photo-1560243563-062bfc001d68",
-  },
-  {
-    id: 13,
-    name: "Green T-Shirt",
-    price: 899,
-    color: "Green",
-    image: "https://images.unsplash.com/photo-1576566529027-401779738270",
-  },
-  {
-    id: 14,
-    name: "Leather Jacket",
-    price: 4999,
-    color: "Black",
-    image: "https://images.unsplash.com/photo-1594938307030-f8072979227f",
-  },
-  {
-    id: 15,
-    name: "Striped Sweater",
-    price: 1999,
-    color: "Navy",
-    image: "https://images.unsplash.com/photo-1542272604-7678a9d45787",
+    name: "JAYTOP Kitchen Mats for Floor Anti Slip, 2 Pcs Kitchen Mats, Waterproof",
+    price: 799,
+    color: "Brown",
+    image: "https://m.media-amazon.com/images/I/71O+xX3UL6L._AC_UL320_.jpg",
   },
 ];
 
@@ -132,7 +111,7 @@ const ProductPage: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 flex p-6 gap-6">
+    <div className="min-h-screen bg-gray-50 flex p-6 gap-6 items-start text-black">
       {/* Sidebar */}
       <aside className="w-1/5 bg-white rounded-2xl shadow p-4">
         <h2 className="font-semibold mb-3 text-lg">Filters</h2>
@@ -159,9 +138,10 @@ const ProductPage: React.FC = () => {
               <div
                 key={color}
                 onClick={() => toggleColor(color)}
-                className={`w-6 h-6 rounded-full bg-${color}-500 cursor-pointer border-2 ${
+                className={`w-6 h-6 rounded-full cursor-pointer border-2 ${
                   selectedColors.includes(color) ? 'border-black' : 'border-gray-200'
                 }`}
+                style={{ backgroundColor: color }}
               ></div>
             ))}
           </div>
@@ -169,7 +149,7 @@ const ProductPage: React.FC = () => {
       </aside>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-h-[100vh] overflow-y-auto flex-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
@@ -180,13 +160,13 @@ const ProductPage: React.FC = () => {
               <img
                 src={product.image}
                 alt={product.name}
-                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+                className="object-contain w-full h-full hover:scale-105 transition-transform duration-300"
               />
             </div>
 
             {/* Product Info */}
             <div className="mt-4">
-              <h2 className="text-lg font-semibold truncate">{product.name}</h2>
+              <h2 className="text-sm font-light">{product.name}</h2>
               <p className="text-gray-600 text-sm mt-1">
                 ₹{product.price.toLocaleString()}
               </p>
