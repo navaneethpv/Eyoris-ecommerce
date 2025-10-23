@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import CartPage from "@/components/cart/shopingCart/CartPage";
-import CheckoutDetails from "@/components/cart/checkoutDetails/CheckoutDetails";
+import CheckoutDetails from "@/components/cart/checkoutDetails/page";
 import OrderComplete from "@/components/cart/completed/page";
 import { useCart } from "@/context/CartContext"; // Import useCart
 
