@@ -15,8 +15,8 @@ const promotions = [
     items: [
       "https://cdn.pixabay.com/photo/2014/09/24/14/29/macbook-459196_640.jpg",
       "https://cdn.pixabay.com/photo/2016/11/19/16/01/audio-1840073_640.jpg",
-      "https://cdn.pixabay.com/photo/2016/06/28/05/10/laptop-1483974_640.jpg",
-      "https://media.istockphoto.com/id/155352786/photo/office-chair.jpg?s=2048x2048&w=is&k=20&c=8CWTKNfUOZU4fiF6_nj_fVJrvP0ZGyVQVcLXvYRiwIc="
+      "https://cdn.pixabay.com/photo/2017/03/19/01/43/living-room-2155376_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/08/02/01/01/living-room-2569325_640.jpg"
     ]
   },
   {
@@ -24,39 +24,39 @@ const promotions = [
     title: "Trendy Footwear Collection: Bellies & More",
     items: [
       "https://cdn.pixabay.com/photo/2017/04/08/16/16/kicks-2213619_640.jpg",
-      "https://cdn.pixabay.com/photo/2020/12/21/13/50/bath-towels-5849999_640.jpg",
+      "https://cdn.pixabay.com/photo/2016/11/19/18/06/feet-1839922_640.jpg",
       "https://cdn.pixabay.com/photo/2017/07/02/19/24/dumbbells-2465478_640.jpg",
       "https://cdn.pixabay.com/photo/2016/03/27/19/31/fashion-1283863_640.jpg"
     ]
   },
   {
     id: "promo-petcare-4",
-    title: "Self-Care & Skincare: Pamper Yourself",
+    title: "Pet Grooming Essentials: Brushes & Accessories",
     items: [
-      "https://images.unsplash.com/photo-1551446339-1e5c6f164ec2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fExvdGlvbnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-      "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNraW5jYXJlfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=500",
-      "https://images.pexels.com/photos/3851905/pexels-photo-3851905.jpeg",
-      "https://cdn.pixabay.com/photo/2023/11/14/23/06/beauty-8388873_640.jpg  "
+      "https://cdn.pixabay.com/photo/2018/05/07/10/48/husky-3380548_640.jpg",
+      "https://cdn.pixabay.com/photo/2019/07/30/05/53/dog-4372036_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/09/25/13/12/dog-2785074_640.jpg",
+      "https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_640.jpg"
     ]
   },
   {
     id: "promo-lifestyle-5",
-    title: "Streetwear Fashion: Urban Style & More",
+    title: "Lifestyle Must-Haves: Bottles & Stationery",
     items: [
-      "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg",
-      "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg",
-      "https://images.unsplash.com/photo-1653704841996-c2ed854aedd8?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2Fwc3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500",
-      "https://images.pexels.com/photos/189199/pexels-photo-189199.jpeg"
+      "https://cdn.pixabay.com/photo/2016/11/29/06/18/home-1867177_640.jpg",
+      "https://cdn.pixabay.com/photo/2015/07/31/11/45/library-869061_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/03/19/01/43/living-room-2155376_640.jpg",
+      "https://cdn.pixabay.com/photo/2019/10/08/20/09/plant-4536025_640.jpg"
     ]
   },
   {
     id: "promo-kids-6",
-    title: "Eco-Friendly Living: Sustainable Products",
+    title: "Adorable Kids' Fashion: Apparel for Little Ones",
     items: [
-      "https://cdn.pixabay.com/photo/2017/08/06/23/10/flowers-2597372_640.jpg",
-      "https://cdn.pixabay.com/photo/2020/04/25/14/09/spring-5090978_640.jpg",
-      "https://rukminim2.flixcart.com/image/612/612/xif0q/solar-light-set/n/u/g/2-solar-interaction-wall-lamp-bk-888-5-5-lavitra-original-imahfhdbsskzetcn.jpeg?q=70",
-      "https://media.istockphoto.com/id/611634162/photo/bamboo-wooden-tableware-isolated-on-white.webp?a=1&b=1&s=612x612&w=0&k=20&c=JF7wxDR10QUDfHdo67c4a-9UL2RiQdN5sTxZUc-fzpg="
+      "https://cdn.pixabay.com/photo/2017/11/10/05/48/baby-2935462_640.jpg",
+      "https://cdn.pixabay.com/photo/2016/11/22/23/44/puppies-1850021_640.jpg",
+      "https://cdn.pixabay.com/photo/2018/01/15/07/52/woman-3083383_640.jpg",
+      "https://cdn.pixabay.com/photo/2017/08/01/01/33/kid-2562327_640.jpg"
     ]
   }
 ];

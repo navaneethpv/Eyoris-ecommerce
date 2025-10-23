@@ -45,7 +45,8 @@ const Search: React.FC<SearchProps> = ({ openModal }) => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
+      // router.push(`/search?q=${encodeURIComponent(query)}`);
+      router.push(`/products`);
       setIsDropdownOpen(false);
     }
   };
