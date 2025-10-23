@@ -6,6 +6,11 @@ interface SearchProps {
   openModal: () => void;
 }
 
+interface Category {
+  title: string;
+  // Add other properties if known, e.g., id: string;
+}
+
 const Search: React.FC<SearchProps> = ({ openModal }) => {
   const [query, setQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -23,7 +28,7 @@ const Search: React.FC<SearchProps> = ({ openModal }) => {
       setIsDropdownOpen(false);
     } else {
       const filtered = categories
-        .map((cat: any) => cat.title)
+        .map((cat: Category) => cat.title)
         .filter((title: string) => title.toLowerCase().includes(value.toLowerCase()));
       setFilteredSuggestions(filtered);
       setIsDropdownOpen(filtered.length > 0);
@@ -39,7 +44,7 @@ const Search: React.FC<SearchProps> = ({ openModal }) => {
   const handleSearchIconClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
     if (!isDropdownOpen && query.trim() === '') {
-      setFilteredSuggestions(categories.map((cat: any) => cat.title));
+      setFilteredSuggestions(categories.map((cat: Category) => cat.title));
     }
   };
 

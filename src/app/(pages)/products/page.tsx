@@ -1,5 +1,6 @@
 'use client';
 import React from "react";
+import Image from "next/image"; // Import the Image component
 type Product = {
   id: number;
   name: string;
@@ -157,10 +158,12 @@ const ProductPage: React.FC = () => {
           >
             {/* Image */}
             <div className="relative w-full h-60 overflow-hidden rounded-xl">
-              <img
+              <Image
                 src={product.image}
                 alt={product.name}
-                className="object-contain w-full h-full hover:scale-105 transition-transform duration-300"
+                layout="fill"
+                objectFit="contain"
+                className="hover:scale-105 transition-transform duration-300"
               />
             </div>
 

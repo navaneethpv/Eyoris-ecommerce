@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import ProgressIndicator from './components/ProgressIndicator';
 import OrderedItems from './components/OrderedItems';
 

@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { categories } from '../../../components/home/components/Catergoris/categories';
 
+interface Category {
+  title: string;
+  // Add other properties if known, e.g., id: string;
+}
+
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
@@ -15,7 +20,7 @@ export default function SearchPage() {
       setFilteredSuggestions([]);
     } else {
       const filtered = categories
-        .map((cat: any) => cat.title)
+        .map((cat: Category) => cat.title)
         .filter((title: string) => title.toLowerCase().includes(query.toLowerCase()));
       setFilteredSuggestions(filtered);
     }
