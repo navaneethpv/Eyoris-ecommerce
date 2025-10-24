@@ -1,3 +1,4 @@
+// Imports
 'use client'
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -5,14 +6,14 @@ import { Product } from '@/types/index';
 import { useCart } from '@/context/CartContext';
 import mostViewed from '@/hooks/mostViewed';
 
-
+// Component definition
 export default function MostViewed() {
+  // State management
   const {addToCart} = useCart();
   const [currentIndex, setCurrentIndex] = useState(0);
   const products = mostViewed();
 
-  
-
+  // Carousel navigation handlers
   const handleNext = () => {
     if (currentIndex < products.length - 5) {
       setCurrentIndex(currentIndex + 1);
@@ -24,6 +25,8 @@ export default function MostViewed() {
       setCurrentIndex(currentIndex - 1);
     }
   };
+
+  // Add to cart handler
   const handleAddtoCart = (product: Product) => {
     let oldPrice = 0;
     let currentPrice = 0;
@@ -56,8 +59,11 @@ export default function MostViewed() {
     console.log('added successfully');
   };
 
+  // Render section
   return (
+    // Main container
     <section className="container mx-auto py-12 px-4">
+      {/* Header section */}
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-bold text-gray-900">Most Viewed Products</h2>
         <a href="#" className="text-blue-600 hover:underline flex items-center">
@@ -66,15 +72,19 @@ export default function MostViewed() {
         </a>
       </div>
 
+      {/* Carousel container */}
       <div className="relative">
+        {/* Products display area */}
         <div className="overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * (100 / 5)}%)` }}
           >
+            {/* Product cards */}
             {products.map((product: Product) => (
               <div key={product.uniq_id} className="w-1/5 flex-shrink-0 px-2">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
+                  {/* Product image */}
                   <div className="relative h-44 w-full">
                     <Image
                       src={product.image}
@@ -84,8 +94,10 @@ export default function MostViewed() {
                       className="rounded-t-lg"
                     />
                   </div>
+                  {/* Product details */}
                   <div className="p-4 flex flex-col flex-grow">
                     <h3 className="text-base font-semibold text-gray-900 mb-1 min-h-[40px]">{product.name}</h3>
+                    {/* Rating and reviews */}
                     <div className="flex items-center mb-2">
                       <div className="flex text-yellow-400">
                         {Array(5).fill(0).map((_, i) => (
@@ -94,11 +106,13 @@ export default function MostViewed() {
                       </div>
                       <span className="ml-2 text-sm text-gray-600">({String(product.reviews)})</span>
                     </div>
+                    {/* Pricing */}
                     <div className="flex items-baseline space-x-2 mb-2">
                       <span className="text-lg font-bold text-gray-900">₹{product.currentPrice}</span>
                       <span className="text-sm text-gray-500 line-through">₹{product.oldPrice}</span>
                       {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
                     </div>
+                    {/* Add to cart button */}
                     <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto hover:cursor-pointer" onClick={()=>handleAddtoCart(product)}>
                       Add to cart
                     </button>
@@ -108,6 +122,7 @@ export default function MostViewed() {
             ))}
           </div>
         </div>
+        {/* Navigation buttons */}
         <div className="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4">
             <button onClick={handlePrev} disabled={currentIndex === 0} className="p-2 rounded-full bg-white/50 hover:bg-white disabled:opacity-50 shadow-md hover:cursor-pointer">
                 <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>

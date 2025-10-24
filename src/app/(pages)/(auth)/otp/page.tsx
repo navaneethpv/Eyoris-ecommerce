@@ -1,19 +1,27 @@
+// Imports
 "use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// Component definition
 export default function OtpPage() {
+  // Router hook
   const router = useRouter();
+
+  // Render section
   return (
+    // Main container
     <div className="space-y-8">
       {/* Main content card */}
       <div className="bg-white p-8 rounded-lg shadow-md">
         <div className="space-y-6">
+          {/* Header section */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               Authentication required
             </h2>
+            {/* Phone number display */}
             <p className="text-sm text-gray-600 flex items-center">
               <span className="font-medium text-gray-900 mr-1">
                 IN +918838838181
@@ -25,13 +33,16 @@ export default function OtpPage() {
                 Change
               </Link>
             </p>
+            {/* Instructions */}
             <p className="text-sm text-gray-700 mt-4">
               We&apos;ve sent a One Time Password (OTP) to the mobile number above.
               Please enter it to complete verification
             </p>
           </div>
 
+          {/* OTP form */}
           <form className="space-y-6">
+            {/* OTP input field */}
             <div>
               <label
                 htmlFor="otp"
@@ -51,6 +62,7 @@ export default function OtpPage() {
               </div>
             </div>
 
+            {/* Submit button */}
             <div>
               <button
                 type="submit"
@@ -62,6 +74,7 @@ export default function OtpPage() {
             </div>
           </form>
 
+          {/* Resend OTP link */}
           <div className="text-center">
             <Link
               href="/resend-otp"
@@ -71,6 +84,7 @@ export default function OtpPage() {
             </Link>
           </div>
 
+          {/* Divider */}
           <div className="relative flex justify-center text-sm">
             <span className="px-2 bg-white text-gray-500">or</span>
             <div className="absolute inset-y-0 left-0 right-0 flex items-center">
@@ -78,6 +92,7 @@ export default function OtpPage() {
             </div>
           </div>
 
+          {/* Alternative sign-in options */}
           <div className="space-y-3">
             <button
               type="button"

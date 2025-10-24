@@ -1,15 +1,21 @@
+// Imports
 "use client";
 
 import Link from "next/link";
 
+// Component definition
 export default function PhonePage() {
+  // Render section
   return (
+    // Main container
     <div className="space-y-8">
       {/* Main content card */}
       <div className="bg-white p-8 rounded-lg shadow-md">
         <div className="space-y-6">
+          {/* Header section */}
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Sign in</h2>
+            {/* Phone number display */}
             <p className="text-sm text-gray-600 flex items-center">
               <span className="font-medium text-gray-900 mr-1">
                 +918788838828
@@ -23,7 +29,9 @@ export default function PhonePage() {
             </p>
           </div>
 
+          {/* Password form */}
           <form className="space-y-6">
+            {/* Password input field */}
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label
@@ -45,6 +53,7 @@ export default function PhonePage() {
               </div>
             </div>
 
+            {/* Submit button */}
             <div>
               <Link href={"/"}>
               <button
@@ -57,6 +66,7 @@ export default function PhonePage() {
             </div>
           </form>
 
+          {/* Divider */}
           <div className="relative flex justify-center text-sm">
             <span className="px-2 bg-white text-gray-500">or</span>
             <div className="absolute inset-y-0 left-0 right-0 flex items-center">
@@ -64,6 +74,7 @@ export default function PhonePage() {
             </div>
           </div>
 
+          {/* Alternative sign-in option */}
           <div>
             <Link href="/otp">
               <button

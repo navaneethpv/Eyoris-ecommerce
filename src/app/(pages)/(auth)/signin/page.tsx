@@ -1,20 +1,29 @@
+// Imports
 "use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+// Component definition
 export default function SigninPage() {
+  // Router hook
   const router = useRouter();
+
+  // Render section
   return (
+    // Main container
     <div className="space-y-8">
-      {/* Form */}
+      {/* Form card */}
       <div className="bg-white p-8 rounded-lg shadow-md">
         <div className="space-y-6">
+          {/* Header section */}
           <div>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign in or create a account</h2>
           </div>
 
+          {/* Sign-in form */}
           <form className="space-y-6">
+            {/* Email/phone input field */}
             <div>
               <input
                 id="email"
@@ -26,6 +35,7 @@ export default function SigninPage() {
               />
             </div>
 
+            {/* Terms agreement checkbox */}
             <div className="flex items-center">
               <input
                 id="agree-terms"
@@ -45,6 +55,7 @@ export default function SigninPage() {
               </label>
             </div>
 
+            {/* Submit button */}
             <div>
               <button
                 type="submit"
