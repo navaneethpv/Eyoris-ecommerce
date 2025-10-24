@@ -61,7 +61,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           onError={(e) => ((e.target as HTMLImageElement).src = "/next.svg")}
         />
         {discountPercentage > 0 && (
-          <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+          <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
             {discountPercentage}% OFF
           </div>
         )}

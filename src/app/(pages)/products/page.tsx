@@ -139,7 +139,7 @@ const ProductPage: React.FC = () => {
               <div
                 key={color}
                 onClick={() => toggleColor(color)}
-                className={`w-6 h-6 rounded-full cursor-pointer border-2 ${
+                className={`w-6 h-6 rounded-lg cursor-pointer border-2 ${
                   selectedColors.includes(color) ? 'border-black' : 'border-gray-200'
                 }`}
                 style={{ backgroundColor: color }}
