@@ -10,7 +10,7 @@ export function useBestDeals() {
         const response = await fetch('/sample_products.json');
         const data: SampleProductJson[] = await response.json(); // Use the new interface for raw data
         // Take only products with valid images and map to Product type
-        const processedProducts = data.slice(9, 17)
+        const processedProducts = data.slice(10, 18)
           .filter((product: SampleProductJson) => product.image && product.image.length > 0)
           .map((product: SampleProductJson) => ({
             uniq_id: product.uniq_id,
