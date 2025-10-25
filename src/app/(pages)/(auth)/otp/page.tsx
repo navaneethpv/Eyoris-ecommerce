@@ -1,8 +1,14 @@
 // Imports
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import HeaderSection from "./components/HeaderSection";
+import PhoneNumberDisplay from "./components/PhoneNumberDisplay";
+import Instructions from "./components/Instructions";
+import OtpInput from "./components/OtpInput";
+import SubmitButton from "./components/SubmitButton";
+import ResendOtpLink from "./components/ResendOtpLink";
+import SignInOptions from "./components/SignInOptions";
 
 // Component definition
 export default function OtpPage() {
@@ -16,99 +22,30 @@ export default function OtpPage() {
       {/* Main content card */}
       <div className="bg-white p-8 rounded-lg shadow-md">
         <div className="space-y-6">
-          {/* Header section */}
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Authentication required
-            </h2>
-            {/* Phone number display */}
-            <p className="text-sm text-gray-600 flex items-center">
-              <span className="font-medium text-gray-900 mr-1">
-                IN +918838838181
-              </span>
-              <Link
-                href="/phone"
-                className="text-blue-600 hover:text-blue-500 font-medium"
-              >
-                Change
-              </Link>
-            </p>
-            {/* Instructions */}
-            <p className="text-sm text-gray-700 mt-4">
-              We&apos;ve sent a One Time Password (OTP) to the mobile number above.
-              Please enter it to complete verification
-            </p>
-          </div>
+          <HeaderSection />
+          <PhoneNumberDisplay />
+          <Instructions />
+        </div>
 
-          {/* OTP form */}
-          <form className="space-y-6">
-            {/* OTP input field */}
-            <div>
-              <label
-                htmlFor="otp"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Enter OTP
-              </label>
-              <div className="mt-1">
-                <input
-                  id="otp"
-                  name="otp"
-                  type="text"
-                  required
-                  className="block w-full px-3 py-2.5 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Enter OTP"
-                />
-              </div>
-            </div>
+        {/* OTP form */}
+        <form className="space-y-6">
+          <OtpInput />
+          <SubmitButton />
+        </form>
 
-            {/* Submit button */}
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out"
-                onClick={()=>router.push("/")}
-              >
-                Sign In
-              </button>
-            </div>
-          </form>
+        {/* Resend OTP link */}
+        <ResendOtpLink />
 
-          {/* Resend OTP link */}
-          <div className="text-center">
-            <Link
-              href="/resend-otp"
-              className="text-sm text-blue-600 hover:text-blue-500 font-medium"
-            >
-              Resend OTP
-            </Link>
-          </div>
-
-          {/* Divider */}
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">or</span>
-            <div className="absolute inset-y-0 left-0 right-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-          </div>
-
-          {/* Alternative sign-in options */}
-          <div className="space-y-3">
-            <button
-              type="button"
-              className="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out"
-            >
-              Sent OTP to WhatsApp
-            </button>
-            <button
-              type="button"
-              className="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out"
-               onClick={()=>router.push("phone")}
-            >
-              Sign In with password
-            </button>
+        {/* Divider */}
+        <div className="relative flex justify-center text-sm">
+          <span className="px-2 bg-white text-gray-500">or</span>
+          <div className="absolute inset-y-0 left-0 right-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
           </div>
         </div>
+
+        {/* Alternative sign-in options */}
+        <SignInOptions />
       </div>
     </div>
   );
