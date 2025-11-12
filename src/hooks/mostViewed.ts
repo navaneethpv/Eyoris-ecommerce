@@ -11,7 +11,7 @@ interface EyoristProduct {
   product_rating: string;
 }
 
-const mostViewed = () => {
+const useMostViewed = () => {
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
       async function fetchProducts() {
@@ -47,4 +47,4 @@ const mostViewed = () => {
   )
 }
 
-export default mostViewed
+export default useMostViewed
