@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image"; // Import the Image component
+import Link from "next/link";
 import PriceFilter from "./components/PriceFilter";
 import ColourFilter from "./components/ColourFilter";
 import ProductImage from "./components/ProductImage";
@@ -117,6 +118,13 @@ const Category: React.FC = () => {
         selectedColors.includes(product.color.toLowerCase()))
   );
 
+  // current category display name for this listing (adjust as needed)
+  const currentCategoryName = "Mats & Rugs";
+  const currentCategorySlug = currentCategoryName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
   return (
     <div className="min-h-screen bg-gray-50 flex p-6 gap-6 items-start text-black">
       {/* Sidebar */}
@@ -136,8 +144,9 @@ const Category: React.FC = () => {
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 flex-1">
         {filteredProducts.map((product) => (
-          <div
+          <Link
             key={product.id}
+            href={`/products/${product.id}?category=${currentCategorySlug}`}
             className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300 flex flex-col h-full"
           >
             {/* Image */}
@@ -145,7 +154,7 @@ const Category: React.FC = () => {
 
             {/* Product Info */}
             <ProductInfo product={product} />
-          </div>
+          </Link>
         ))}
       </div>
     </div>
