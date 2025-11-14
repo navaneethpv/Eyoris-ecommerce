@@ -1,12 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Import Link component
 import { useParams } from "next/navigation"; // For App Router
 
 // Define the Product type
 type Product = {
-  id: string | number; 
+  id: number;
   name: string;
   price: number;
   originalPrice?: number; // Optional original price
@@ -32,30 +31,20 @@ const ProductPage: React.FC = () => {
   const productId = params.slug; // Get the slug (product ID) from the URL
 
   const [product, setProduct] = useState<Product | null>(null);
-  const [suggestedProducts, setSuggestedProducts] = useState<Product[]>([]);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState("");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
-    const fetchProductsAndSetCurrent = async () => {
+    const fetchProduct = async () => {
       try {
-        const response = await fetch("/sample_products.json");
-        const allData: Product[] = await response.json();
-        const foundProduct = allData.find((p) => p.id === Number(productId));
-
+        const response = await fetch("/products.json");
+        const data: Product[] = await response.json();
+        const foundProduct = data.find((p) => p.id === Number(productId));
         if (foundProduct) {
           setProduct(foundProduct);
           setActiveImage(foundProduct.images?.[0] || foundProduct.image || "");
-
-          // Filter for suggested products (same category, exclude current product)
-          const suggestions = allData.filter(
-            (p) =>
-              p.category === foundProduct.category &&
-              p.id !== foundProduct.id
-          );
-          setSuggestedProducts(suggestions.slice(0, 4)); // Limit to 4 suggestions
         } else {
           setProduct(null); // Product not found
         }
@@ -66,7 +55,7 @@ const ProductPage: React.FC = () => {
     };
 
     if (productId) {
-      fetchProductsAndSetCurrent();
+      fetchProduct();
     }
   }, [productId]);
 
@@ -265,34 +254,41 @@ const ProductPage: React.FC = () => {
       </div>
 
       {/* You might also like section */}
-      {suggestedProducts.length > 0 && (
-        <div className="mt-12">
-          <h2 className="text-3xl font-bold mb-6">You might also like</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {suggestedProducts.map((suggestedProduct) => (
-              <Link href={`/products/${suggestedProduct.id}`} key={suggestedProduct.id}>
-                <div className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300 flex flex-col h-full cursor-pointer">
-                  <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden mb-4">
-                    <Image
-                      src={suggestedProduct.image || "/placeholder-image.jpg"}
-                      alt={suggestedProduct.name}
-                      fill
-                      objectFit="cover"
-                    />
-                  </div>
-                  <h3 className="text-lg font-semibold">{suggestedProduct.name}</h3>
-                  <p className="text-gray-600">
-                    ${suggestedProduct.price.toFixed(2)}{" "}
-                    {suggestedProduct.originalPrice && (
-                      <span className="line-through">${suggestedProduct.originalPrice.toFixed(2)}</span>
-                    )}
-                  </p>
-                </div>
-              </Link>
-            ))}
+      <div className="mt-12">
+        <h2 className="text-3xl font-bold mb-6">You might also like</h2>
+        {/* Placeholder for similar products grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {/* Example similar product card */}
+          <div className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300">
+            <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden mb-4">
+              <Image src="/images/similar-product1.jpg" alt="Similar Product" fill objectFit="cover" />
+            </div>
+            <h3 className="text-lg font-semibold">Loveseat Sofa</h3>
+            <p className="text-gray-600">$199.00 <span className="line-through">$400.00</span></p>
+          </div>
+          <div className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300">
+            <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden mb-4">
+              <Image src="/images/similar-product2.jpg" alt="Similar Product" fill objectFit="cover" />
+            </div>
+            <h3 className="text-lg font-semibold">Table Lamp</h3>
+            <p className="text-gray-600">$24.99</p>
+          </div>
+          <div className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300">
+            <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden mb-4">
+              <Image src="/images/similar-product3.jpg" alt="Similar Product" fill objectFit="cover" />
+            </div>
+            <h3 className="text-lg font-semibold">Bamboo basket</h3>
+            <p className="text-gray-600">$24.99</p>
+          </div>
+          <div className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300">
+            <div className="relative w-full h-48 bg-gray-100 rounded-xl overflow-hidden mb-4">
+              <Image src="/images/similar-product4.jpg" alt="Similar Product" fill objectFit="cover" />
+            </div>
+            <h3 className="text-lg font-semibold">Toasted</h3>
+            <p className="text-gray-600">$224.99</p>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
