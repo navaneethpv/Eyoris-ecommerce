@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image"; // Import the Image component
 import Link from "next/link";
 import PriceFilter from "./components/PriceFilter";
 import ColourFilter from "./components/ColourFilter";

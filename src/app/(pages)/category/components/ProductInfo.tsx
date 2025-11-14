@@ -33,11 +33,12 @@ const ProductInfo: React.FC<ProductProps> = ({ product }) => {
 
       {/* Button */}
       <div className="flex justify-center">
-        <Link href={`/products/${product.id}`} className="w-full">
-          <button className="mt-2 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition hover:cursor-pointer">
-            View Details
-          </button>
-        </Link>
+        <button
+          type="button"
+          className="mt-2 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition"
+        >
+          View Details
+        </button>
       </div>
     </div>
   );
