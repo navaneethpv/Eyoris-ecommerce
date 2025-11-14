@@ -1,8 +1,10 @@
-'use client';
+"use client";
 import React from "react";
 import Image from "next/image"; // Import the Image component
 import PriceFilter from "./components/PriceFilter";
 import ColourFilter from "./components/ColourFilter";
+import ProductImage from "./components/ProductImage";
+import ProductInfo from "./components/ProductInfo";
 type Product = {
   id: number;
   name: string;
@@ -103,14 +105,16 @@ const Category: React.FC = () => {
   const [selectedColors, setSelectedColors] = React.useState<string[]>([]);
 
   const toggleColor = (color: string) => {
-    setSelectedColors(prev =>
-      prev.includes(color) ? prev.filter(c => c !== color) : [...prev, color]
+    setSelectedColors((prev) =>
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
     );
   };
 
-  const filteredProducts = products.filter(product =>
-    product.price <= price &&
-    (selectedColors.length === 0 || selectedColors.includes(product.color.toLowerCase()))
+  const filteredProducts = products.filter(
+    (product) =>
+      product.price <= price &&
+      (selectedColors.length === 0 ||
+        selectedColors.includes(product.color.toLowerCase()))
   );
 
   return (
@@ -123,7 +127,10 @@ const Category: React.FC = () => {
         <PriceFilter price={price} setPrice={setPrice} />
 
         {/* Colour Filter */}
-        <ColourFilter toggleColor={toggleColor} selectedColors = {selectedColors}/>
+        <ColourFilter
+          toggleColor={toggleColor}
+          selectedColors={selectedColors}
+        />
       </aside>
 
       {/* Product Grid */}
@@ -131,40 +138,13 @@ const Category: React.FC = () => {
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300"
+            className="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition duration-300 flex flex-col h-full"
           >
             {/* Image */}
-            <div className="relative w-full h-60 overflow-hidden rounded-xl">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                objectFit="contain"
-                className="hover:scale-105 transition-transform duration-300"
-              />
-            </div>
+            <ProductImage product={product} />
 
             {/* Product Info */}
-            <div className="mt-4">
-              <h2 className="text-sm font-light">{product.name}</h2>
-              <p className="text-gray-600 text-sm mt-1">
-                ₹{product.price.toLocaleString()}
-              </p>
-
-              {/* Color Indicator */}
-              <div className="flex items-center gap-2 mt-2">
-                <div
-                  className="w-4 h-4 rounded-full border"
-                  style={{ backgroundColor: product.color.toLowerCase() }}
-                ></div>
-                <span className="text-sm text-gray-700">{product.color}</span>
-              </div>
-
-              {/* Button */}
-              <button className="mt-4 w-full py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition">
-                View Details
-              </button>
-            </div>
+            <ProductInfo product={product} />
           </div>
         ))}
       </div>
