@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import InputField from "./components/InputField";
 import CheckBox from "./components/CheckBox";
+import { useState } from "react";
 
 // Component definition
 export default function SigninPage() {
   // Router hook
   const router = useRouter();
-
+  
+  const [email, setEmail] = useState<string>("");
   // Render section
   return (
     // Main container
@@ -28,7 +30,7 @@ export default function SigninPage() {
           {/* Sign-in form */}
           <form className="space-y-6">
             {/* Email/phone input field */}
-            <InputField />
+            <InputField email={email} setEmail={setEmail}/>
 
             {/* Terms agreement checkbox */}
             <CheckBox />
