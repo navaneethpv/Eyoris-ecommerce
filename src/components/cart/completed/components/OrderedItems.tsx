@@ -2,10 +2,9 @@
 import React from "react";
 import Image from "next/image";
 import { useCartStore } from "@/store/useCartStore";
-import type { cartItem } from "@/store/useCartStore";
 
-const OrderedItems: React.FC = () => {
-  const cartItems: cartItem[] = useCartStore((s) => s.cartItems);
+const OrderedItems = () => {
+  const cartItems = useCartStore((s) => s.cartItems);
 
   return (
     <div>
