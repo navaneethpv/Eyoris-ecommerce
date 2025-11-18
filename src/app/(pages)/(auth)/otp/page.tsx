@@ -1,7 +1,6 @@
 // Imports
 "use client";
 
-import { useRouter } from "next/navigation";
 import HeaderSection from "./components/HeaderSection";
 import PhoneNumberDisplay from "./components/PhoneNumberDisplay";
 import Instructions from "./components/Instructions";
@@ -12,8 +11,6 @@ import SignInOptions from "./components/SignInOptions";
 
 // Component definition
 export default function OtpPage() {
-  // Router hook
-  const router = useRouter();
 
   // Render section
   return (

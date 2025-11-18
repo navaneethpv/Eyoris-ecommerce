@@ -1,6 +1,7 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 const SubmitButton = () => {
-  const router = require("next/navigation").useRouter();
+  const router = useRouter();
   return (
     <div>
       <div>

@@ -1,8 +1,6 @@
 // Imports
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import HeaderSection from "./components/HeaderSection";
 import ButtonSection from "./components/ButtonSection";
 import SignInLink from "./components/SignInLink";
@@ -10,7 +8,6 @@ import SignInLink from "./components/SignInLink";
 // Component definition
 export default function SignupPage() {
   // Router hook
-  const router = useRouter();
 
   // Render section
   return (

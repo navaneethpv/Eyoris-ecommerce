@@ -1,7 +1,6 @@
 // Imports
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import InputField from "./components/InputField";
 import CheckBox from "./components/CheckBox";
