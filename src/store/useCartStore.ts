@@ -56,7 +56,6 @@ export const useCartStore = create<CartState>()(
       },
 
       emptyCart: () => set({ cartItems: [] }),
-
       totalItems: () => get().cartItems.reduce((s, i) => s + i.quantity, 0),
 
       totalPrice: () =>
