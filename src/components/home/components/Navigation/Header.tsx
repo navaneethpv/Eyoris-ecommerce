@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import ImageUploadModal from "../ImageUpload/ImageUploadModal";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "@/store/CartContext";
 import Navigation from "./NavigationSection";
 import LogoSection from "./LogoSection";
 import TopBar from "./TopBar";

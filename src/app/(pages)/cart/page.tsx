@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import CartPage from "@/components/cart/shopingCart/CartPage";
 import CheckoutDetails from "@/components/cart/checkoutDetails/page";
 import OrderComplete from "@/components/cart/completed/page";
-import { useCart } from "@/context/CartContext"; // Import useCart
+import { useCart } from "@/store/CartContext"; // Import useCart
 
 export default function Cart() {
   const [showCheckout, setShowCheckout] = useState(false);

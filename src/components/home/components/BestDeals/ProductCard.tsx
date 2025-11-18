@@ -2,7 +2,8 @@
 import React from "react";
 import Image from "next/image";
 import { Product } from "@/types";
-import { useCart } from "@/context/CartContext"; // Import useCart hook
+import { useCartStore } from "@/store/useCartStore";
+import type { cartItem } from "@/store/useCartStore";
 
 // Define ProductCardProps interface
 interface ProductCardProps {
@@ -19,7 +20,7 @@ const getImageUrl = (imageString: string) => {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addToCart} = useCart(); // Get addToCart and emptyCart from context
+  const addToCart = useCartStore((s) => s.addToCart); // use zustand store
 
   const imageUrl = getImageUrl(product.image);
 
@@ -32,16 +33,15 @@ export default function ProductCard({ product }: ProductCardProps) {
     );
   }
 
-  // Handler for adding item to cart, which also clears the cart first as per user request
+  // Handler for adding item to cart
   const handleAddToCart = () => {
-    const itemToAdd = {
+    const itemToAdd: Omit<cartItem, "quantity"> = {
       id: product.uniq_id,
       name: product.name,
       price: oldPrice, // Using oldPrice as the original item price
       discountPrice: currentPrice < oldPrice ? currentPrice : undefined, // discounted price if applicable
-      imageUrl: imageUrl, // Changed 'image' to 'imageUrl' to match CartItem type
+      imageUrl: imageUrl,
       color: "default",
-      quantity: 1, // Initial quantity is 1 when adding from product card
     };
     addToCart(itemToAdd);
   };
@@ -56,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={imageUrl}
           alt={product.name}
           fill
-          objectFit="contain"
+          style={{ objectFit: "contain" }}
           className="rounded-t-lg"
           onError={(e) => ((e.target as HTMLImageElement).src = "/next.svg")}
         />
@@ -66,7 +66,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
       </div>
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="p-4 flex flex-col grow">
         <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
           {product.name}
         </h3>

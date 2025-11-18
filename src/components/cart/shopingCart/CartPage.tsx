@@ -4,7 +4,7 @@ import CartHeader from "./Header"; // Corrected import path
 import CartItemsList from "./CartItemsList";
 import PriceDetails from "./PriceDetails";
 import Coupon from "./Coupon";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "@/store/CartContext";
 
 interface CartPageProps {
   onProceedToCheckout: () => void;
