@@ -7,6 +7,7 @@ import Gallery from "./components/Gallery";
 import ThumbnailCarousel from "./components/ThumbnailCarousel";
 import ProductDetails from "./components/ProductDetails";
 import Reviews from "./components/Reviews";
+import RelatedProducts from "./components/RelatedProducts";
 
 type Product = {
   id: number;
@@ -47,11 +48,22 @@ const allProducts: Product[] = [
     additionalDetails: {
       details:
         "You can use the removable tray for serving. The design makes it easy to put the tray back after use since you place it directly on the table frame without having to fit it into any holes.",
-      packaging: 'Width: 20 " Height: 1 ½ " Length: 21 ½ " Weight: 7 lb 8 oz Package(s): 1',
+      packaging:
+        'Width: 20 " Height: 1 ½ " Length: 21 ½ " Weight: 7 lb 8 oz Package(s): 1',
     },
     reviews: [
-      { id: 1, author: "John Doe", rating: 5, comment: "Great product, very sturdy and stylish!" },
-      { id: 2, author: "Jane Smith", rating: 4, comment: "Good quality, but a bit smaller than expected." },
+      {
+        id: 1,
+        author: "John Doe",
+        rating: 5,
+        comment: "Great product, very sturdy and stylish!",
+      },
+      {
+        id: 2,
+        author: "Jane Smith",
+        rating: 4,
+        comment: "Good quality, but a bit smaller than expected.",
+      },
     ],
   },
 ];
@@ -59,30 +71,16 @@ const allProducts: Product[] = [
 const StarRow: React.FC<{ rating: number }> = ({ rating }) => {
   const fullStars = Math.max(0, Math.min(5, Math.round(rating)));
   return (
-    <span aria-hidden className="text-yellow-400" title={`${fullStars} out of 5`}>
+    <span
+      aria-hidden
+      className="text-yellow-400"
+      title={`${fullStars} out of 5`}
+    >
       {"★".repeat(fullStars)}
       <span className="text-gray-300">{"★".repeat(5 - fullStars)}</span>
     </span>
   );
 };
-
-/* Sections for component extraction:
- - BreadcrumbsWithBack
- - Gallery
- - ThumbnailCarousel
- - ImageNavButtons
- - ProductHeader
- - PriceBlock
- - ColorSelector
- - QuantitySelector
- - PurchaseActions
- - AdditionalInfo
- - ReviewsList
- - ReviewForm
- - RelatedProducts
- - Shared: StarRow
-*/
-
 const ProductPage: React.FC = () => {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -100,11 +98,16 @@ const ProductPage: React.FC = () => {
     if (foundProduct) {
       setProduct(foundProduct);
       setActiveImageIndex(0);
-      setSelectedColor(foundProduct.selectedColor || foundProduct.colors?.[0] || "");
+      setSelectedColor(
+        foundProduct.selectedColor || foundProduct.colors?.[0] || ""
+      );
     }
   }, [productId]);
 
-  if (!product) return <div className="container mx-auto p-6 text-black">Product not found.</div>;
+  if (!product)
+    return (
+      <div className="container mx-auto p-6 text-black">Product not found.</div>
+    );
 
   const incomingCategory = searchParams?.get("category") || undefined;
   const primaryCategory = incomingCategory
@@ -121,7 +124,8 @@ const ProductPage: React.FC = () => {
 
   const handleQuantityChange = (type: "increment" | "decrement") => {
     if (type === "increment") setQuantity((prev) => prev + 1);
-    else if (type === "decrement" && quantity > 1) setQuantity((prev) => prev - 1);
+    else if (type === "decrement" && quantity > 1)
+      setQuantity((prev) => prev - 1);
   };
 
   const handleAddReview = () => {
@@ -129,8 +133,15 @@ const ProductPage: React.FC = () => {
       alert("Please provide a rating and a comment.");
       return;
     }
-    const newReview = { id: (product.reviews?.length || 0) + 1, author: "Anonymous", rating, comment };
-    setProduct((prev) => (prev ? { ...prev, reviews: [...(prev.reviews || []), newReview] } : prev));
+    const newReview = {
+      id: (product.reviews?.length || 0) + 1,
+      author: "Anonymous",
+      rating,
+      comment,
+    };
+    setProduct((prev) =>
+      prev ? { ...prev, reviews: [...(prev.reviews || []), newReview] } : prev
+    );
     setRating(0);
     setComment("");
   };
@@ -140,72 +151,80 @@ const ProductPage: React.FC = () => {
     setProduct((prev) => (prev ? { ...prev, selectedColor: color } : prev));
   };
 
-  const prevImage = () => setActiveImageIndex((i) => (product.images && product.images.length ? (i - 1 + product.images.length) % product.images.length : 0));
-  const nextImage = () => setActiveImageIndex((i) => (product.images && product.images.length ? (i + 1) % product.images.length : 0));
+  const prevImage = () =>
+    setActiveImageIndex((i) =>
+      product.images && product.images.length
+        ? (i - 1 + product.images.length) % product.images.length
+        : 0
+    );
+  const nextImage = () =>
+    setActiveImageIndex((i) =>
+      product.images && product.images.length
+        ? (i + 1) % product.images.length
+        : 0
+    );
 
-  const avgRating = product.reviews && product.reviews.length ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / product.reviews.length : 0;
+  const avgRating =
+    product.reviews && product.reviews.length
+      ? product.reviews.reduce((acc, r) => acc + r.rating, 0) /
+        product.reviews.length
+      : 0;
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 min-h-screen text-black">
       <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
         <div className="px-6 py-8">
           {/* BreadcrumbsWithBack */}
-         
-          <BreadcrumbsWithBack primaryCategorySlug ={primaryCategorySlug} primaryCategory={primaryCategory} product={product} />
+
+          <BreadcrumbsWithBack
+            primaryCategorySlug={primaryCategorySlug}
+            primaryCategory={primaryCategory}
+            product={product}
+          />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             {/* Gallery (Gallery + ThumbnailCarousel + ImageNavButtons) */}
             <div>
-             <Gallery activeImage={activeImage} product={product} nextImage={nextImage} prevImage={prevImage} />
+              <Gallery
+                activeImage={activeImage}
+                product={product}
+                nextImage={nextImage}
+                prevImage={prevImage}
+              />
 
               {/* ThumbnailCarousel */}
-              <ThumbnailCarousel product={{ name: product.name, images: product.images || [] }} setActiveImageIndex={setActiveImageIndex} activeImageIndex={activeImageIndex} />
+              <ThumbnailCarousel
+                product={{ name: product.name, images: product.images || [] }}
+                setActiveImageIndex={setActiveImageIndex}
+                activeImageIndex={activeImageIndex}
+              />
             </div>
 
             {/* Product Details (ProductHeader + PriceBlock + ColorSelector + QuantitySelector + PurchaseActions + AdditionalInfo) */}
-            <ProductDetails product={product} StarRow={StarRow} avgRating={avgRating} handleColorSelect={handleColorSelect} selectedColor={selectedColor} handleQuantityChange={handleQuantityChange} quantity={quantity} />
+            <ProductDetails
+              product={product}
+              StarRow={StarRow}
+              avgRating={avgRating}
+              handleColorSelect={handleColorSelect}
+              selectedColor={selectedColor}
+              handleQuantityChange={handleQuantityChange}
+              quantity={quantity}
+            />
           </div>
 
           {/* Reviews (ReviewsList + ReviewForm) */}
-          <Reviews product={product} StarRow={StarRow} rating={rating} setRating={setRating} comment={comment} setComment={setComment} handleAddReview={handleAddReview} />
+          <Reviews
+            product={product}
+            StarRow={StarRow}
+            rating={rating}
+            setRating={setRating}
+            comment={comment}
+            setComment={setComment}
+            handleAddReview={handleAddReview}
+          />
 
           {/* RelatedProducts */}
-          <div className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">You might also like</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-              <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
-                <div className="relative w-full h-36 bg-gray-100 rounded-xl overflow-hidden mb-4">
-                  <Image src="/images/similar-product1.jpg" alt="Similar Product" fill style={{ objectFit: 'cover' }} />
-                </div>
-                <h3 className="text-sm font-semibold">Loveseat Sofa</h3>
-                <p className="text-sm text-gray-500">$199.00 <span className="line-through text-gray-300">$400.00</span></p>
-              </div>
-
-              <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
-                <div className="relative w-full h-36 bg-gray-100 rounded-xl overflow-hidden mb-4">
-                  <Image src="/images/similar-product2.jpg" alt="Similar Product" fill style={{ objectFit: 'cover' }} />
-                </div>
-                <h3 className="text-sm font-semibold">Table Lamp</h3>
-                <p className="text-sm text-gray-500">$24.99</p>
-              </div>
-
-              <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
-                <div className="relative w-full h-36 bg-gray-100 rounded-xl overflow-hidden mb-4">
-                  <Image src="/images/similar-product3.jpg" alt="Similar Product" fill style={{ objectFit: 'cover' }} />
-                </div>
-                <h3 className="text-sm font-semibold">Bamboo basket</h3>
-                <p className="text-sm text-gray-500">$24.99</p>
-              </div>
-
-              <div className="bg-white p-4 rounded-xl shadow hover:shadow-lg transition">
-                <div className="relative w-full h-36 bg-gray-100 rounded-xl overflow-hidden mb-4">
-                  <Image src="/images/similar-product4.jpg" alt="Similar Product" fill style={{ objectFit: 'cover' }} />
-                </div>
-                <h3 className="text-sm font-semibold">Toasted</h3>
-                <p className="text-sm text-gray-500">$224.99</p>
-              </div>
-            </div>
-          </div>
+          <RelatedProducts />
         </div>
       </div>
     </div>
