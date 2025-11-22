@@ -24,7 +24,7 @@ export default function Coupon() {
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Have a coupon?</h3>
       <p className="text-sm text-gray-500 mb-4">Add your code for an instant cart discount</p>
       <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-3">
-        <div className="flex-grow relative w-full sm:w-auto">
+        <div className="grow relative w-full sm:w-auto">
           <input
             type="text"
             placeholder="Coupon Code"
