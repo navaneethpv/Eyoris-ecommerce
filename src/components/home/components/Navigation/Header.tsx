@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import ImageUploadModal from "../ImageUpload/ImageUploadModal";
-import { useCart } from "@/store/CartContext";
+import { useCartStore } from "@/store/useCartStore";
 import Navigation from "./NavigationSection";
 import LogoSection from "./LogoSection";
 import TopBar from "./TopBar";
@@ -16,7 +16,7 @@ export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isClicked = useRef(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { cartItems } = useCart();
+  const { cartItems } = useCartStore();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);

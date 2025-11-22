@@ -4,14 +4,14 @@ import CartHeader from "./Header"; // Corrected import path
 import CartItemsList from "./CartItemsList";
 import PriceDetails from "./PriceDetails";
 import Coupon from "./Coupon";
-import { useCart } from "@/store/CartContext";
+import { useCartStore } from "@/store/useCartStore";
 
 interface CartPageProps {
   onProceedToCheckout: () => void;
 }
 
 export default function CartPage({ onProceedToCheckout }: CartPageProps) {
-  const { cartItems, updateQuantity, removeFromCart } = useCart();
+  const { cartItems, updateQuantity, removeFromCart } = useCartStore();
 
   // Function to handle quantity changes
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
