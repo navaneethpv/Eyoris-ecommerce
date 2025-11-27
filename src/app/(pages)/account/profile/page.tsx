@@ -12,7 +12,7 @@ export default function ProfilePage() {
             <div className="w-20 h-20 rounded-full bg-linear-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white text-2xl font-semibold">FC</div>
             <div>
               <div className="text-sm text-gray-500">Hello,</div>
-              <div className="text-2xl font-bold text-gray-900">Flipkart Customer</div>
+              <div className="text-2xl font-bold text-gray-900">John Doe</div>
               <div className="text-sm text-gray-500 mt-1">you@example.com</div>
               <div className="mt-3 flex gap-3 text-sm">
                 <div className="px-3 py-1 rounded bg-gray-50 text-gray-700">Orders: <span className="font-medium ml-1">2</span></div>
