@@ -1,10 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-interface UserDropMenuProps {
-    isDropdownOpen: boolean;
-    }
+import PropTypes from 'prop-types'
 
-const UserDropMenu:React.FC<UserDropMenuProps> = ({isDropdownOpen}) => {
+const UserDropMenu = ({ isDropdownOpen }) => {
   return (
     <div>{isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
@@ -29,7 +27,7 @@ const UserDropMenu:React.FC<UserDropMenuProps> = ({isDropdownOpen}) => {
                     My Profile
                   </Link>
                   <Link
-                    href="/orders"
+                    href="/account/orders"
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     <svg
@@ -49,7 +47,7 @@ const UserDropMenu:React.FC<UserDropMenuProps> = ({isDropdownOpen}) => {
                     Orders
                   </Link>
                   <Link
-                    href="/wishlist"
+                    href="account/wishlist"
                     className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     <svg
@@ -132,5 +130,9 @@ const UserDropMenu:React.FC<UserDropMenuProps> = ({isDropdownOpen}) => {
               )}</div>
   )
 }
+
+UserDropMenu.propTypes = {
+  isDropdownOpen: PropTypes.bool.isRequired,
+};
 
 export default UserDropMenu
