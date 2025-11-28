@@ -5,15 +5,8 @@ import PriceFilter from "./components/PriceFilter";
 import ColourFilter from "./components/ColourFilter";
 import ProductImage from "./components/ProductImage";
 import ProductInfo from "./components/ProductInfo";
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  color: string;
-  image: string;
-};
-
-const products: Product[] = [
+// Product shape is represented by the objects below (no TypeScript annotations so this file is plain JS/JSX)
+const products = [
   {
     id: 1,
     name: "Status Contract Anti Slip Front Door Mat|(38x58cm) Living Room Rug for....",
@@ -100,13 +93,14 @@ const products: Product[] = [
   },
 ];
 
-const Category: React.FC = () => {
+const Category = () => {
   const [price, setPrice] = React.useState(3300);
-  const [selectedColors, setSelectedColors] = React.useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = React.useState([]);
 
-  const toggleColor = (color: string) => {
+  const toggleColor = (color) => {
+    const val = String(color).toLowerCase();
     setSelectedColors((prev) =>
-      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+      prev.includes(val) ? prev.filter((c) => c !== val) : [...prev, val]
     );
   };
 
@@ -125,19 +119,13 @@ const Category: React.FC = () => {
     .replace(/(^-|-$)/g, "");
 
   return (
-    <div className="min-h-screen bg-gray-50 flex p-6 gap-6 items-start text-black">
-      {/* Sidebar */}
-      <aside className="w-1/5 bg-white rounded-2xl shadow p-4">
-        <h2 className="font-semibold mb-3 text-lg">Filters</h2>
-
+    <div className="flex gap-6">
+      <aside className="w-64">
         {/* Price Filter */}
         <PriceFilter price={price} setPrice={setPrice} />
 
         {/* Colour Filter */}
-        <ColourFilter
-          toggleColor={toggleColor}
-          selectedColors={selectedColors}
-        />
+        <ColourFilter toggleColor={toggleColor} selectedColors={selectedColors} />
       </aside>
 
       {/* Product Grid */}
