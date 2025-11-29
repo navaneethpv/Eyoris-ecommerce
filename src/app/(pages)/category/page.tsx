@@ -5,8 +5,17 @@ import PriceFilter from "./components/PriceFilter";
 import ColourFilter from "./components/ColourFilter";
 import ProductImage from "./components/ProductImage";
 import ProductInfo from "./components/ProductInfo";
-// Product shape is represented by the objects below (no TypeScript annotations so this file is plain JS/JSX)
-const products = [
+
+// Product shape
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  color: string;
+  image: string;
+};
+
+const products: Product[] = [
   {
     id: 1,
     name: "Status Contract Anti Slip Front Door Mat|(38x58cm) Living Room Rug for....",
@@ -93,11 +102,11 @@ const products = [
   },
 ];
 
-const Category = () => {
-  const [price, setPrice] = React.useState(3300);
-  const [selectedColors, setSelectedColors] = React.useState([]);
+const Category: React.FC = () => {
+  const [price, setPrice] = React.useState<number>(3300);
+  const [selectedColors, setSelectedColors] = React.useState<string[]>([]);
 
-  const toggleColor = (color) => {
+  const toggleColor = (color: string) => {
     const val = String(color).toLowerCase();
     setSelectedColors((prev) =>
       prev.includes(val) ? prev.filter((c) => c !== val) : [...prev, val]

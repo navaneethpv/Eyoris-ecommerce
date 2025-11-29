@@ -8,29 +8,31 @@ import ProductDetails from "./components/ProductDetails";
 import Reviews from "./components/Reviews";
 import RelatedProducts from "./components/RelatedProducts";
 
-/**
- * @typedef {{ id: number, author: string, rating: number, comment: string }} Review
- */
+type Review = {
+  id: number;
+  author: string;
+  rating: number;
+  comment: string;
+};
 
-/**
- * @typedef {Object} Product
- * @property {number} id
- * @property {string} name
- * @property {number} price
- * @property {number} [originalPrice]
- * @property {string} [image]
- * @property {string} description
- * @property {string} [measurements]
- * @property {string[]} [colors]
- * @property {string} [selectedColor]
- * @property {string[]} [images]
- * @property {string} sku
- * @property {string} category
- * @property {{ details: string, packaging: string }} [additionalDetails]
- * @property {Review[]} [reviews]
- */
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice?: number;
+  image?: string;
+  description: string;
+  measurements?: string;
+  colors?: string[];
+  selectedColor?: string;
+  images?: string[];
+  sku: string;
+  category: string;
+  additionalDetails?: { details: string; packaging: string };
+  reviews?: Review[];
+};
 
-const allProducts = [
+const allProducts: Product[] = [
   {
     id: 13,
     name: "Tray Table",
@@ -72,7 +74,7 @@ const allProducts = [
   },
 ];
 
-function StarRow({ rating }) {
+const StarRow: React.FC<{ rating: number }> = ({ rating }) => {
   const fullStars = Math.max(0, Math.min(5, Math.round(rating)));
   return (
     <span aria-hidden className="text-yellow-400" title={`${fullStars} out of 5`}>
@@ -80,26 +82,26 @@ function StarRow({ rating }) {
       <span className="text-gray-300">{"★".repeat(5 - fullStars)}</span>
     </span>
   );
-}
+};
 
 export default function ProductPage() {
-  const params = useParams();
+  const params = useParams() as { slug?: string };
   const searchParams = useSearchParams();
   const productId = params?.slug ?? "";
 
-  const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+  const [product, setProduct] = useState<Product | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
+  const [comment, setComment] = useState<string>("");
 
   useEffect(() => {
     if (!productId) {
       // fallback to first product if no id provided
       setProduct(allProducts[0] || null);
       setActiveImageIndex(0);
-      setSelectedColor((allProducts[0] && (allProducts[0].selectedColor || (allProducts[0].colors && allProducts[0].colors[0]))) || "");
+      setSelectedColor(allProducts[0]?.selectedColor ?? allProducts[0]?.colors?.[0] ?? "");
       return;
     }
 
@@ -109,16 +111,13 @@ export default function ProductPage() {
     if (foundProduct) {
       setProduct(foundProduct);
       setActiveImageIndex(0);
-      setSelectedColor((foundProduct.selectedColor || (foundProduct.colors && foundProduct.colors[0])) || "");
+      setSelectedColor(foundProduct.selectedColor ?? foundProduct.colors?.[0] ?? "");
     } else {
       setProduct(null);
     }
   }, [productId]);
 
-  if (!product)
-    return (
-      <div className="container mx-auto p-6 text-black">Product not found.</div>
-    );
+  if (!product) return <div className="container mx-auto p-6 text-black">Product not found.</div>;
 
   const incomingCategory = searchParams?.get?.("category") || undefined;
   const primaryCategory = incomingCategory
@@ -131,9 +130,9 @@ export default function ProductPage() {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-  const activeImage = (product.images && product.images[activeImageIndex]) || product.image || "";
+  const activeImage = product.images?.[activeImageIndex] ?? product.image ?? "";
 
-  const handleQuantityChange = (type) => {
+  const handleQuantityChange = (type: "increment" | "decrement") => {
     if (type === "increment") setQuantity((prev) => prev + 1);
     else if (type === "decrement" && quantity > 1) setQuantity((prev) => prev - 1);
   };
@@ -143,8 +142,8 @@ export default function ProductPage() {
       alert("Please provide a rating and a comment.");
       return;
     }
-    const newReview = {
-      id: (product.reviews && product.reviews.length) ? product.reviews.length + 1 : 1,
+    const newReview: Review = {
+      id: product.reviews && product.reviews.length ? product.reviews.length + 1 : 1,
       author: "Anonymous",
       rating,
       comment,
@@ -154,7 +153,7 @@ export default function ProductPage() {
     setComment("");
   };
 
-  const handleColorSelect = (color) => {
+  const handleColorSelect = (color: string) => {
     setSelectedColor(color);
     setProduct((prev) => (prev ? { ...prev, selectedColor: color } : prev));
   };

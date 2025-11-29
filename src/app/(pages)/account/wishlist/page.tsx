@@ -1,16 +1,19 @@
-'use client'
+"use client"
 import React, { useState } from "react";
 import AccountLinks from "../components/AccountLinks";
 import Image from "next/image";
 import Link from "next/link";
 
-/**
- * @typedef {{ id: string, name: string, price: number, color: string, image: string }} WishlistItem
- */
+interface WishlistItem {
+  id: string;
+  name: string;
+  price: number;
+  color: string;
+  image: string;
+}
 
 export default function WishlistPage() {
-  /** @type {WishlistItem[]} */
-  const [items, setItems] = useState([
+  const [items, setItems] = useState<WishlistItem[]>([
     { id: '1', name: 'Cozy Bath Mat', price: 299, color: 'Black', image: '/assets/Images/product1.png' },
     { id: '2', name: 'Memory Foam Kitchen Mat', price: 499, color: 'Beige', image: '/assets/Images/product1.png' },
     { id: '3', name: 'Decorative Basket', price: 799, color: 'Brown', image: '/assets/Images/product1.png' },
@@ -19,13 +22,11 @@ export default function WishlistPage() {
     { id: '6', name: 'Storage Box', price: 349, color: 'Natural', image: '/assets/Images/product1.png' },
   ]);
 
-  const [sort, setSort] = useState('popular');
+  const [sort, setSort] = useState<string>('popular');
 
   const clearAll = () => setItems([]);
-  /** @param {string} id */
-  const removeItem = (id) => setItems((prev) => prev.filter((i) => i.id !== id));
-  /** @param {WishlistItem} item */
-  const addToCart = (item) => {
+  const removeItem = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
+  const addToCart = (item: WishlistItem) => {
     // wire to cart store if you have one
     console.log('Add to cart', item);
     // provide immediate feedback
