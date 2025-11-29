@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Product, SampleProductJson } from '@/types';
 
 export function useBestDeals() {
@@ -7,8 +8,8 @@ export function useBestDeals() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await fetch('/sample_products.json');
-        const data: SampleProductJson[] = await response.json(); // Use the new interface for raw data
+        const response = await axios.get<SampleProductJson[]>('/sample_products.json');
+        const data: SampleProductJson[] = response.data; // Use the new interface for raw data
         // Take only products with valid images and map to Product type
         const processedProducts = data.slice(10, 18)
           .filter((product: SampleProductJson) => product.image && product.image.length > 0)
