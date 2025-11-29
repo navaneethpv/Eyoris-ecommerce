@@ -1,0 +1,96 @@
+// importProducts.js
+require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+const mongoose = require('mongoose');
+const Product = require('./productModel'); // adjust path if needed
+
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/mydb';
+const JSON_PATH = process.env.JSON_PATH || path.join(__dirname, 'sample_200_products.json');
+
+function normalizeColors(colors) {
+  if (!colors) return [];
+  if (Array.isArray(colors)) return colors.map(c => String(c).trim()).filter(Boolean);
+  if (typeof colors === 'string') {
+    return colors.split(/[;,|]/).map(s => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
+async function main() {
+  try {
+    console.log('Connecting to MongoDB:', MONGO_URI);
+    // <<< simple connect without legacy options >>>
+    await mongoose.connect(MONGO_URI);
+
+    console.log('Loading JSON file from:', JSON_PATH);
+    const raw = fs.readFileSync(JSON_PATH, 'utf8');
+    let items;
+    try {
+      items = JSON.parse(raw);
+      if (!Array.isArray(items)) {
+        throw new Error('JSON file must contain an array of objects');
+      }
+    } catch (err) {
+      console.error('Failed to parse JSON:', err.message);
+      process.exit(1);
+    }
+
+    console.log(`Loaded ${items.length} items. Preparing bulk operations...`);
+
+    const operations = items.map(item => {
+      const doc = {
+        uniq_id: String(item.uniq_id).trim(),
+        product_name: item.product_name || item.title || null,
+        brand: item.brand || null,
+        product_url: item.product_url || null,
+        product_category_tree: Array.isArray(item.product_category_tree)
+          ? item.product_category_tree
+          : (typeof item.product_category_tree === 'string'
+              ? item.product_category_tree.split('>>').map(s => s.trim()).filter(Boolean)
+              : []),
+        primary_category: item.primary_category || null,
+        retail_price: item.retail_price != null ? Number(item.retail_price) : null,
+        discounted_price: item.discounted_price != null ? Number(item.discounted_price) : null,
+        description: item.description || null,
+        product_specifications: Array.isArray(item.product_specifications) ? item.product_specifications : [],
+        colors_specified: normalizeColors(item.colors_specified),
+        color_primary_specified: item.color_primary_specified || null,
+        rating: item.rating != null ? Number(item.rating) : null
+      };
+
+      return {
+        updateOne: {
+          filter: { uniq_id: doc.uniq_id },
+          update: { $set: doc },
+          upsert: true
+        }
+      };
+    });
+
+    const CHUNK_SIZE = 500;
+    for (let i = 0; i < operations.length; i += CHUNK_SIZE) {
+      const chunk = operations.slice(i, i + CHUNK_SIZE);
+      console.log(`Writing chunk ${i / CHUNK_SIZE + 1} (${chunk.length} ops) ...`);
+      try {
+        const res = await Product.bulkWrite(chunk);
+        console.log('Chunk result:', {
+          matchedCount: res.matchedCount,
+          modifiedCount: res.modifiedCount,
+          upsertedCount: res.upsertedCount ?? 0
+        });
+      } catch (err) {
+        console.error('Error during bulkWrite:', err);
+      }
+    }
+
+    console.log('Import finished. Disconnecting...');
+    await mongoose.disconnect();
+    console.log('Disconnected. Done.');
+  } catch (err) {
+    console.error('Fatal error:', err);
+    process.exit(1);
+  }
+}
+
+main();
