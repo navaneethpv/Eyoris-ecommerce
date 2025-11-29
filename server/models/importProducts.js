@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const Product = require('./productModel'); // adjust path if needed
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/mydb';
-const JSON_PATH = process.env.JSON_PATH || path.join(__dirname, 'sample_200_products.json');
+const JSON_PATH = process.env.JSON_PATH || path.join(__dirname, 'sample_200_products.json'); //
 
 function normalizeColors(colors) {
   if (!colors) return [];
