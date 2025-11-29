@@ -1,41 +1,35 @@
-const mongoose = require('mongoose');
+// models/Product.js
+const mongoose = require("mongoose");
 
-const ProductSchema = new mongoose.Schema({
-  uniq_id: {
-    type: String,
-    required: true,
-    unique: true
+const productSchema = new mongoose.Schema(
+  {
+    uniq_id: { type: String, required: true, unique: true },
+    crawl_timestamp: { type: String },
+
+    product_url: { type: String },
+    product_name: { type: String, required: true },
+
+    product_category_tree: { type: [String] }, // since the data is an array
+
+    pid: { type: String },
+
+    retail_price: { type: Number },
+    discounted_price: { type: Number },
+
+    image: { type: [String] }, // array of images
+
+    is_FK_Advantage_product: { type: Boolean },
+
+    description: { type: String },
+
+    product_rating: { type: Number },
+    overall_rating: { type: Number },
+
+    brand: { type: String },
+
+    product_specifications: { type: mongoose.Schema.Types.Mixed }, // stores any object
   },
+  { timestamps: true }
+);
 
-  product_name: {
-    type: String,
-    required: true
-  },
-
-  brand: String,
-  product_url: String,
-
-  product_category_tree: [String],   // array of categories
-  primary_category: String,
-
-  retail_price: Number,
-  discounted_price: Number,
-
-  description: String,
-
-  // simple array of { key, value }
-  product_specifications: [{
-    key: String,
-    value: String
-  }],
-
-  // colors
-  colors_specified: [String],
-  color_primary_specified: String,
-
-  rating: Number
-}, {
-  timestamps: true
-});
-
-module.exports = mongoose.model('Product', ProductSchema);
+module.exports = mongoose.model("Product", productSchema);

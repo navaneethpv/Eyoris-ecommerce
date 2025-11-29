@@ -1,9 +1,5 @@
 // Importing the product model
-<<<<<<< HEAD
-const products = require("../models/newModel");
-=======
-const products = require("../models/demoModel");
->>>>>>> test
+const products = require("../models/productModel");
 
 const addProduct = async (req, res) => {
   try {
