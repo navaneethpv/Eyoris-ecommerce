@@ -17,6 +17,71 @@ function normalizeColors(colors) {
   return [];
 }
 
+function normalizeImages(item) {
+  if (!item) return [];
+  const vals = [];
+
+  // common possible fields in JSON sources
+  if (item.image) vals.push(item.image);
+  if (item.image_url) vals.push(item.image_url);
+  if (item.image_urls) vals.push(item.image_urls);
+  if (item.images) vals.push(item.images);
+  if (item.images_list) vals.push(item.images_list);
+  if (item.thumbnails) vals.push(item.thumbnails);
+  if (item.thumbnail) vals.push(item.thumbnail);
+
+  const flattened = [];
+  vals.forEach(v => {
+    if (Array.isArray(v)) {
+      flattened.push(...v);
+      return;
+    }
+
+    if (v && typeof v === 'object') {
+      if (v.url) flattened.push(v.url);
+      else flattened.push(JSON.stringify(v));
+      return;
+    }
+
+    if (typeof v === 'string') {
+      const s = v.trim();
+
+      // try parsing JSON string like '["url1","url2"]'
+      if ((s.startsWith('[') && s.endsWith(']')) || (s.startsWith('{') && s.endsWith('}'))) {
+        try {
+          const parsed = JSON.parse(s);
+          if (Array.isArray(parsed)) {
+            flattened.push(...parsed);
+            return;
+          } else {
+            flattened.push(parsed);
+            return;
+          }
+        } catch (e) {
+          // fall through to regex extraction
+        }
+      }
+
+      // fallback: extract http(s) urls from string
+      const urls = s.match(/https?:\/\/[^\s"'\]]+/g);
+      if (urls && urls.length) {
+        flattened.push(...urls);
+      } else {
+        // no urls found — keep raw string (will be filtered later)
+        flattened.push(s);
+      }
+      return;
+    }
+
+    if (v != null) flattened.push(String(v));
+  });
+
+  return flattened
+    .map(x => (typeof x === 'object' && x.url) ? x.url : String(x))
+    .map(s => s.trim())
+    .filter(Boolean);
+}
+
 async function main() {
   try {
     console.log('Connecting to MongoDB:', MONGO_URI);
@@ -56,7 +121,8 @@ async function main() {
         product_specifications: Array.isArray(item.product_specifications) ? item.product_specifications : [],
         colors_specified: normalizeColors(item.colors_specified),
         color_primary_specified: item.color_primary_specified || null,
-        rating: item.rating != null ? Number(item.rating) : null
+        rating: item.rating != null ? Number(item.rating) : null,
+        image: normalizeImages(item)
       };
 
       return {
