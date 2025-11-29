@@ -1,5 +1,5 @@
 // Importing the product model
-const products = require("../models/productModel");
+const products = require("../models/newModel");
 
 const addProduct = async (req, res) => {
   try {

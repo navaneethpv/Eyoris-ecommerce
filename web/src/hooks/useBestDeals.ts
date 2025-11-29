@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Product, SampleProductJson } from '@/types';
+import { Product, SampleProductJson } from '../types';
 
 export function useBestDeals() {
   const [products, setProducts] = useState<Product[]>([]);
