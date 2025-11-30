@@ -56,9 +56,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={imageUrl}
           alt={product.name}
           fill
+          unoptimized
           style={{ objectFit: "contain" }}
           className="rounded-t-lg"
-          onError={(e) => ((e.target as HTMLImageElement).src = "/next.svg")}
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = "/next.svg";
+          }}
         />
         {discountPercentage > 0 && (
           <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">

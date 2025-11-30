@@ -10,17 +10,48 @@ type ApiResponse =
 
 function parseFirstImage(imageField: unknown): string | undefined {
   if (!imageField) return undefined;
-  if (Array.isArray(imageField)) return String(imageField[0]);
-  if (typeof imageField === "string") {
-    // try parsing JSON string like '["url1","url2"]' or plain url
-    try {
-      const parsed = JSON.parse(imageField);
-      if (Array.isArray(parsed)) return String(parsed[0]);
-      if (typeof parsed === "string") return parsed;
-    } catch {
-      return imageField;
-    }
+  // If it's already an array, take first truthy entry
+  if (Array.isArray(imageField)) {
+    const first = imageField.map(String).find(Boolean);
+    if (!first) return undefined;
+    // normalize protocol-less or relative
+    if (first.startsWith('//')) return `https:${first}`;
+    if (first.startsWith('/')) return typeof window !== 'undefined' ? `${window.location.origin}${first}` : first;
+    return first;
   }
+
+  if (typeof imageField === 'string') {
+    const s = imageField.trim();
+
+    // Try JSON parse for stringified array or string
+    try {
+      const parsed = JSON.parse(s);
+      if (Array.isArray(parsed)) {
+        const first = parsed.map(String).find(Boolean);
+        if (!first) return undefined;
+        if (first.startsWith('//')) return `https:${first}`;
+        if (first.startsWith('/')) return typeof window !== 'undefined' ? `${window.location.origin}${first}` : first;
+        return first;
+      }
+      if (typeof parsed === 'string' && parsed.trim()) {
+        if (parsed.startsWith('//')) return `https:${parsed}`;
+        if (parsed.startsWith('/')) return typeof window !== 'undefined' ? `${window.location.origin}${parsed}` : parsed;
+        return parsed;
+      }
+    } catch {
+      // not JSON, continue
+    }
+
+    // handle simple comma-separated lists like 'url1,url2'
+    const cleaned = s.replace(/^\[|\]$/g, '').replace(/^"|"$/g, '');
+    const parts = cleaned.split(',').map(p => p.trim().replace(/^"|"$/g, '')).filter(Boolean);
+    const first = parts[0] ?? cleaned;
+    if (!first) return undefined;
+    if (first.startsWith('//')) return `https:${first}`;
+    if (first.startsWith('/')) return typeof window !== 'undefined' ? `${window.location.origin}${first}` : first;
+    return first;
+  }
+
   return undefined;
 }
 
@@ -30,31 +61,25 @@ export function useBestDeals() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await axios.get<ApiResponse>(
-          "http://localhost:4000/product"
-        );
+        const response = await axios.get<ApiResponse>("http://localhost:4000/product/best-deals?limit=12");
+
+
         const raw = response.data;
         console.log("Raw response data for products:", raw);
 
         // Resolve actual array from possible wrappers
         let data: SampleProductJson[] = [];
-        if (Array.isArray(raw)) {
-          data = raw;
-        } else if (
-          raw &&
-          Array.isArray((raw as { data?: SampleProductJson[] }).data)
-        ) {
-          data = (raw as { data: SampleProductJson[] }).data;
-        } else if (
-          raw &&
-          Array.isArray((raw as { products?: SampleProductJson[] }).products)
-        ) {
-          data = (raw as { products: SampleProductJson[] }).products;
-        } else if (
-          raw &&
-          Array.isArray((raw as { items?: SampleProductJson[] }).items)
-        ) {
-          data = (raw as { items: SampleProductJson[] }).items;
+        const rawAny = raw as any;
+        if (Array.isArray(rawAny)) {
+          data = rawAny;
+        } else if (rawAny && Array.isArray(rawAny.deals)) {
+          data = rawAny.deals;
+        } else if (rawAny && Array.isArray(rawAny.data)) {
+          data = rawAny.data;
+        } else if (rawAny && Array.isArray(rawAny.products)) {
+          data = rawAny.products;
+        } else if (rawAny && Array.isArray(rawAny.items)) {
+          data = rawAny.items;
         } else {
           console.warn("Unexpected response shape for products:", raw);
         }
@@ -63,20 +88,15 @@ export function useBestDeals() {
           console.warn("No products found after resolving response shape.");
         }
 
-        // Start at index 8 and take 8 products (indexes 8..15)
-        const startIndex = 8;
+        // Take only the first 8 products
         const count = 8;
-        if (data.length <= startIndex) {
-          console.warn(
-            `Requested startIndex ${startIndex} but only ${data.length} products available. No items will be shown.`
-          );
-        }
-        const endIndex = Math.min(startIndex + count, data.length);
+        const endIndex = Math.min(count, data.length);
 
         const processedProducts = data
-          .slice(startIndex, endIndex)
+          .slice(0, endIndex)
           .map((product: SampleProductJson) => {
-            const parsedImage = parseFirstImage(product.image as unknown);
+            const parsedImage = parseFirstImage(product.image as unknown) ?? '/next.svg';
+            console.log('Parsed image for', product.uniq_id, parsedImage);
             return {
               uniq_id: product.uniq_id,
               name: product.product_name,
