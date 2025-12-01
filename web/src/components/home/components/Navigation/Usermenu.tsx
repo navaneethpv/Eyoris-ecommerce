@@ -15,32 +15,26 @@ const Usermenu: React.FC<UsermenuProps> = ({ handleLoginClick, isDropdownOpen })
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const menuRef = React.useRef<HTMLDivElement | null>(null);
 
-  // local open state (used when parent doesn't control open state)
   const [localOpen, setLocalOpen] = React.useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = React.useState(false);
 
   const open = typeof isDropdownOpen === "boolean" ? isDropdownOpen : localOpen;
 
   React.useEffect(() => {
-    function handleOutsideEvent(e: Event) {
-      const el = containerRef.current;
-      const menuEl = menuRef.current;
-      if (!el && !menuEl) return;
+    function handleDocumentPointer(e: Event) {
+      const container = containerRef.current;
+      const menu = menuRef.current;
+      if (!container && !menu) return;
 
-      const path: EventTarget[] =
-        (e as any).composedPath?.() ||
-        ((e as any).path as EventTarget[]) ||
-        [];
+      const path: EventTarget[] = (e as any).composedPath?.() || (e as any).path || [];
 
       if (path && path.length) {
-        if (el && path.includes(el)) return;
-        if (menuEl && path.includes(menuEl)) return;
+        if ((container && path.includes(container)) || (menu && path.includes(menu))) return;
       } else {
-        if (el && el.contains(e.target as Node)) return;
-        if (menuEl && menuEl.contains(e.target as Node)) return;
+        if ((container && container.contains(e.target as Node)) || (menu && menu.contains(e.target as Node))) return;
       }
 
-      // hide dropdown and prompt when clicking outside
+      // clicked outside -> hide menu/prompt
       if (typeof isDropdownOpen !== "boolean") {
         setLocalOpen(false);
         setShowLoginPrompt(false);
@@ -54,30 +48,35 @@ const Usermenu: React.FC<UsermenuProps> = ({ handleLoginClick, isDropdownOpen })
       }
     }
 
-    document.addEventListener("pointerdown", handleOutsideEvent, true);
-    document.addEventListener("touchstart", handleOutsideEvent, true);
-    document.addEventListener("keydown", handleKey, true);
-
+    document.addEventListener("pointerdown", handleDocumentPointer);
+    document.addEventListener("touchstart", handleDocumentPointer);
+    document.addEventListener("keydown", handleKey);
     return () => {
-      document.removeEventListener("pointerdown", handleOutsideEvent, true);
-      document.removeEventListener("touchstart", handleOutsideEvent, true);
-      document.removeEventListener("keydown", handleKey, true);
+      document.removeEventListener("pointerdown", handleDocumentPointer);
+      document.removeEventListener("touchstart", handleDocumentPointer);
+      document.removeEventListener("keydown", handleKey);
     };
   }, [isDropdownOpen]);
 
-  function onButtonClick() {
+  function onButtonClick(e?: React.MouseEvent) {
+    e?.stopPropagation();
     handleLoginClick?.();
     if (user) {
       if (typeof isDropdownOpen !== "boolean") {
         setLocalOpen((v) => !v);
-        // ensure login prompt hidden when opening menu
         setShowLoginPrompt(false);
       }
     } else {
-      // show prompt telling user to login
       setShowLoginPrompt(true);
-      // auto-hide after 3s
       window.setTimeout(() => setShowLoginPrompt(false), 3000);
+    }
+  }
+
+  // pass close handler to child so clicks inside menu can close it
+  function closeMenu() {
+    if (typeof isDropdownOpen !== "boolean") {
+      setLocalOpen(false);
+      setShowLoginPrompt(false);
     }
   }
 
@@ -113,7 +112,7 @@ const Usermenu: React.FC<UsermenuProps> = ({ handleLoginClick, isDropdownOpen })
       )}
 
       {/* only render user menu when logged in */}
-      {user && open && <UserDropMenu menuRef={menuRef} />}
+      {user && open && <UserDropMenu menuRef={menuRef} onClose={closeMenu} />}
     </div>
   );
 };

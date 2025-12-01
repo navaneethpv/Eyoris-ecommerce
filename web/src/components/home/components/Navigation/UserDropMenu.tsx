@@ -6,9 +6,10 @@ import { useUser, useClerk } from "@clerk/nextjs";
 
 interface UserDropMenuProps {
   menuRef?: React.RefObject<HTMLDivElement>;
+  onClose?: () => void;
 }
 
-const UserDropMenu: React.FC<UserDropMenuProps> = ({ menuRef }) => {
+const UserDropMenu: React.FC<UserDropMenuProps> = ({ menuRef, onClose }) => {
   const { signOut } = useClerk();
   const { user } = useUser();
 
@@ -22,6 +23,7 @@ const UserDropMenu: React.FC<UserDropMenuProps> = ({ menuRef }) => {
     try {
       await signOut();
       setSignedOut(true);
+      onClose?.();
     } catch {
       setSignedOut(false);
     }
@@ -37,21 +39,42 @@ const UserDropMenu: React.FC<UserDropMenuProps> = ({ menuRef }) => {
       className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50"
       role="menu"
     >
-      <Link href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+      <Link
+        href="/account/profile"
+        onClick={() => onClose?.()}
+        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+      >
         My Profile
       </Link>
-      <Link href="/orders" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+      <Link
+        href="/account/orders"
+        onClick={() => onClose?.()}
+        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+      >
         Orders
       </Link>
-      <Link href="/wishlist" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+      <Link
+        href="/account/wishlist"
+        onClick={() => onClose?.()}
+        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+      >
         Wishlist
       </Link>
-      <Link href="/rewards" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+      <Link
+        href="/account/rewards"
+        onClick={() => onClose?.()}
+        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+      >
         Rewards
       </Link>
-      <Link href="/image-history" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+      <Link
+        href="/account/image-history"
+        onClick={() => onClose?.()}
+        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+      >
         Image history
       </Link>
+
       <button
         onClick={handleSignOut}
         className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
