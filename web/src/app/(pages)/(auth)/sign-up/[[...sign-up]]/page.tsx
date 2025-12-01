@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { GalleryVerticalEnd, Eye, EyeOff } from "lucide-react";
 import { useSignUp, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -34,9 +34,14 @@ export default function SignupPage() {
   const [name, setName] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
 
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user, router]);
+
   if (user) {
-    router.push("/");
-    return null;
+    return null; // or a loading message
   }
 
   if (!isLoaded) {
@@ -56,7 +61,12 @@ export default function SignupPage() {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
     } catch (err: any) {
-      setError("Something went wrong");
+      if (err.errors?.[0]?.code === "email_address_already_exists") {
+        setError("An account with this email already exists. Please sign in instead.");
+        router.push('/sign-in?email=' + encodeURIComponent(email));
+      } else {
+        setError(err.errors[0]?.longMessage || "Something went wrong");
+      }
       console.error("Sign-up error:", err);
     }
   }
