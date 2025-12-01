@@ -2,7 +2,7 @@
 
 import React from "react";
 import { GalleryVerticalEnd, Eye, EyeOff } from "lucide-react";
-import { useSignUp } from "@clerk/nextjs";
+import { useSignUp, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { user } = useUser();
   const { signUp, isLoaded, setActive } = useSignUp();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -32,6 +33,11 @@ export default function SignupPage() {
   const [error, setError] = React.useState<string | null>(null);
   const [name, setName] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+
+  if (user) {
+    router.push("/");
+    return null;
+  }
 
   if (!isLoaded) {
     return <div>Loading...</div>;
@@ -50,7 +56,8 @@ export default function SignupPage() {
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
     } catch (err: any) {
-      setError(err.errors[0]?.longMessage || "Something went wrong");
+      setError("Something went wrong");
+      console.error("Sign-up error:", err);
     }
   }
 
@@ -67,7 +74,7 @@ export default function SignupPage() {
       router.push("/");
     } catch (err: any) {
       console.error("Verification error:", err);
-      setError(err.errors[0]?.longMessage || "Verification failed");
+      setError("Verification failed");
     }
   }
 
@@ -145,6 +152,7 @@ export default function SignupPage() {
                       Must be at least 8 characters long.
                     </FieldDescription>
                   </Field>
+                  <div id="clerk-captcha"></div>
                   <Field>
                     <Button type="submit">Create Account</Button>
                     <FieldDescription className="text-center">

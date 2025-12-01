@@ -17,8 +17,8 @@ export default function Promotions() {
                   <Image
                     src={item}
                     alt={`Promotion item ${index + 1}`}
-                    layout="fill"
-                    objectFit="contain"
+                    fill
+                    style={{ objectFit: 'cover' }}
                   />
                 </div>
               ))}
