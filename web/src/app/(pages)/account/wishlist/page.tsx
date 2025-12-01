@@ -3,34 +3,24 @@ import React, { useState } from "react";
 import AccountLinks from "../components/AccountLinks";
 import Image from "next/image";
 import Link from "next/link";
-
-interface WishlistItem {
-  id: string;
-  name: string;
-  price: number;
-  color: string;
-  image: string;
-}
+import useWishlistStore, { WishlistItem } from '@/store/useWishlistStore';
+import { useRouter } from 'next/navigation';
 
 export default function WishlistPage() {
-  const [items, setItems] = useState<WishlistItem[]>([
-    { id: '1', name: 'Cozy Bath Mat', price: 299, color: 'Black', image: '/assets/Images/product1.png' },
-    { id: '2', name: 'Memory Foam Kitchen Mat', price: 499, color: 'Beige', image: '/assets/Images/product1.png' },
-    { id: '3', name: 'Decorative Basket', price: 799, color: 'Brown', image: '/assets/Images/product1.png' },
-    { id: '4', name: 'Soft Rug', price: 1299, color: 'Blue', image: '/assets/Images/product1.png' },
-    { id: '5', name: 'Cozy Pillow', price: 199, color: 'Grey', image: '/assets/Images/product1.png' },
-    { id: '6', name: 'Storage Box', price: 349, color: 'Natural', image: '/assets/Images/product1.png' },
-  ]);
-
   const [sort, setSort] = useState<string>('popular');
 
-  const clearAll = () => setItems([]);
-  const removeItem = (id: string) => setItems((prev) => prev.filter((i) => i.id !== id));
+  const items = useWishlistStore((s) => s.items);
+  const clearAll = useWishlistStore((s) => s.clear);
+  const removeItem = useWishlistStore((s) => s.remove);
+  const router = useRouter();
+
   const addToCart = (item: WishlistItem) => {
     // wire to cart store if you have one
     console.log('Add to cart', item);
-    // provide immediate feedback
+    // provide immediate feedback: remove from wishlist after adding
     removeItem(item.id);
+    // optionally navigate to cart
+    // router.push('/cart');
   };
 
   return (
@@ -78,7 +68,7 @@ export default function WishlistPage() {
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center gap-4 p-3 rounded-md hover:bg-gray-50 transition">
                     <div className="w-20 h-20 relative shrink-0 rounded overflow-hidden bg-gray-100">
-                      <Image src={item.image} alt={item.name} fill style={{ objectFit: 'cover' }} />
+                      <Image src={item.image ?? '/next.svg'} alt={item.name} fill style={{ objectFit: 'cover' }} />
                     </div>
 
                     <div className="flex-1 min-w-0">

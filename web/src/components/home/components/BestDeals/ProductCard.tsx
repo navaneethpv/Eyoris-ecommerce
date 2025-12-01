@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import { Product } from "@/types";
 import { useCartStore } from "@/store/useCartStore";
-import type { cartItem } from "@/store/useCartStore";
+import { useWishlistStore } from '@/store/useWishlistStore';
 
 // Define ProductCardProps interface
 interface ProductCardProps {
@@ -21,8 +20,16 @@ const getImageUrl = (imageString: string) => {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const addToCart = useCartStore((s) => s.addToCart); // use zustand store
+  const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const productId = String(product.uniq_id ?? product.name ?? '');
+  const hasInWishlist = useWishlistStore((s) => s.has(productId));
 
+  const [imgError, setImgError] = useState(false);
   const imageUrl = getImageUrl(product.image);
+  const displayUrl = imgError ? "/next.svg" : imageUrl;
+
+  // ensure Image gets a string src
+  const safeSrc = typeof displayUrl === "string" && displayUrl.trim() ? displayUrl.trim() : "/next.svg";
 
   const oldPrice = parseFloat(product.oldPrice);
   const currentPrice = parseFloat(product.currentPrice);
@@ -46,7 +53,16 @@ export default function ProductCard({ product }: ProductCardProps) {
     addToCart(itemToAdd);
   };
 
- console.log(imageUrl);
+ const wishlistToggleHandler = () => {
+    const item = {
+      id: productId,
+      name: product.name ?? product.product_name ?? 'Product',
+      price: Number(product.currentPrice ?? product.discounted_price ?? product.retail_price ?? 0) || 0,
+      color: (product as any).color ?? 'default',
+      image: imageUrl || '/next.svg',
+    };
+    toggleWishlist(item);
+  };
    
 
   return (
@@ -55,15 +71,33 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col hover:cursor-pointer hover:scale-104 duration-150 gap-5"
     >
       <div className="relative h-48">
-        <Image
-          src={imageUrl}
+        {/* Wishlist button */}
+        <button
+          onClick={wishlistToggleHandler}
+          className="absolute top-2 right-2 z-10 bg-white/80 p-1 rounded-full shadow"
+          aria-label="Toggle wishlist"
+        >
+          {hasInWishlist ? (
+            <svg className="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 3.99 4 6.5 4c1.74 0 3.41.81 4.5 2.09C12.09 4.81 13.76 4 15.5 4 18.01 4 20 6 20 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+            </svg>
+          )}
+        </button>
+
+        <img
+          src={safeSrc}
           alt={product.name}
-          fill
-          unoptimized
-          style={{ objectFit: "contain" }}
-          className="rounded-t-lg"
+          loading="eager"
+          crossOrigin="anonymous"
+          className="w-full h-full object-contain rounded-t-lg"
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = "/next.svg";
+            setImgError(true);
+            const target = e.currentTarget as HTMLImageElement;
+            if (target.src !== "/next.svg") target.src = "/next.svg";
           }}
         />
         {discountPercentage > 0 && (
