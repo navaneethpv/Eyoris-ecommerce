@@ -99,22 +99,27 @@ export function useBestDeals() {
         const count = 8;
         const endIndex = Math.min(count, data.length);
 
+        // helper to read potentially unknown fields without using `any`
+        const getField = (obj: unknown, key: string): unknown => {
+          return (obj as Record<string, unknown>)[key];
+        };
+
         const processedProducts = data
           .slice(0, endIndex)
           .map((product: SampleProductJson) => {
             // try several fields that might contain images
             const candidates = [
-              (product as any).image,
-              (product as any).images,
-              (product as any).image_url,
-              (product as any).imageUrl,
-              (product as any).thumbnail,
-              (product as any).media,
+              getField(product, 'image'),
+              getField(product, 'images'),
+              getField(product, 'image_url'),
+              getField(product, 'imageUrl'),
+              getField(product, 'thumbnail'),
+              getField(product, 'media'),
             ];
 
             let parsedImage: string | undefined;
             for (const c of candidates) {
-              parsedImage = parseFirstImage(c as unknown);
+              parsedImage = parseFirstImage(c);
               if (parsedImage) break;
             }
 
@@ -125,7 +130,7 @@ export function useBestDeals() {
               if (isRemote) {
                 parsedImage = `/api/image?url=${encodeURIComponent(parsedImage)}`;
               }
-            } catch (e) {
+            } catch {
               // ignore
             }
             if (parsedImage === '/next.svg') {
