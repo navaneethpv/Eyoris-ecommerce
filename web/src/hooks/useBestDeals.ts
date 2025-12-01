@@ -69,17 +69,24 @@ export function useBestDeals() {
 
         // Resolve actual array from possible wrappers
         let data: SampleProductJson[] = [];
-        const rawAny = raw as any;
-        if (Array.isArray(rawAny)) {
-          data = rawAny;
-        } else if (rawAny && Array.isArray(rawAny.deals)) {
-          data = rawAny.deals;
-        } else if (rawAny && Array.isArray(rawAny.data)) {
-          data = rawAny.data;
-        } else if (rawAny && Array.isArray(rawAny.products)) {
-          data = rawAny.products;
-        } else if (rawAny && Array.isArray(rawAny.items)) {
-          data = rawAny.items;
+
+        // Treat raw as unknown and narrow safely to an object we can index
+        const rawUnknown: unknown = raw;
+        if (Array.isArray(rawUnknown)) {
+          data = rawUnknown as SampleProductJson[];
+        } else if (rawUnknown && typeof rawUnknown === "object") {
+          const obj = rawUnknown as Record<string, unknown>;
+          if (Array.isArray(obj["deals"])) {
+            data = obj["deals"] as SampleProductJson[];
+          } else if (Array.isArray(obj["data"])) {
+            data = obj["data"] as SampleProductJson[];
+          } else if (Array.isArray(obj["products"])) {
+            data = obj["products"] as SampleProductJson[];
+          } else if (Array.isArray(obj["items"])) {
+            data = obj["items"] as SampleProductJson[];
+          } else {
+            console.warn("Unexpected response shape for products:", raw);
+          }
         } else {
           console.warn("Unexpected response shape for products:", raw);
         }
@@ -95,7 +102,36 @@ export function useBestDeals() {
         const processedProducts = data
           .slice(0, endIndex)
           .map((product: SampleProductJson) => {
-            const parsedImage = parseFirstImage(product.image as unknown) ?? '/next.svg';
+            // try several fields that might contain images
+            const candidates = [
+              (product as any).image,
+              (product as any).images,
+              (product as any).image_url,
+              (product as any).imageUrl,
+              (product as any).thumbnail,
+              (product as any).media,
+            ];
+
+            let parsedImage: string | undefined;
+            for (const c of candidates) {
+              parsedImage = parseFirstImage(c as unknown);
+              if (parsedImage) break;
+            }
+
+            parsedImage = parsedImage ?? '/next.svg';
+            // If parsedImage is a remote absolute URL, proxy it through our API to avoid hotlinking issues
+            try {
+              const isRemote = typeof parsedImage === 'string' && /^https?:\/\//i.test(parsedImage);
+              if (isRemote) {
+                parsedImage = `/api/image?url=${encodeURIComponent(parsedImage)}`;
+              }
+            } catch (e) {
+              // ignore
+            }
+            if (parsedImage === '/next.svg') {
+              console.warn('No valid image found for product:', product.uniq_id, { candidates });
+            }
+
             console.log('Parsed image for', product.uniq_id, parsedImage);
             return {
               uniq_id: product.uniq_id,

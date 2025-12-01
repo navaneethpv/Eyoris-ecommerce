@@ -46,6 +46,9 @@ export default function ProductCard({ product }: ProductCardProps) {
     addToCart(itemToAdd);
   };
 
+ console.log(imageUrl);
+   
+
   return (
     <div
       key={product.uniq_id}
