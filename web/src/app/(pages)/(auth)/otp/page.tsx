@@ -2,7 +2,7 @@
 "use client";
 
 import HeaderSection from "./components/HeaderSection";
-import PhoneNumberDisplay from "./components/PhoneNumberDisplay";
+import PhoneNumberDisplay from "./components/emailDisplay";
 import Instructions from "./components/Instructions";
 import OtpInput from "./components/OtpInput";
 import SubmitButton from "./components/SubmitButton";

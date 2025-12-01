@@ -4,9 +4,9 @@ const PhoneNumberDisplay = () => {
   return (
     <div>
       <p className="text-sm text-gray-600 flex items-center">
-        <span className="font-medium text-gray-900 mr-1">IN +918838838181</span>
+        <span className="font-medium text-gray-900 mr-1">youre_email@gmail.com</span>
         <Link
-          href="/phone"
+          href="/signin"
           className="text-blue-600 hover:text-blue-500 font-medium"
         >
           Change

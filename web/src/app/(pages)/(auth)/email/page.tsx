@@ -18,10 +18,10 @@ export default function PhonePage() {
             {/* Phone number display */}
             <p className="text-sm text-gray-600 flex items-center">
               <span className="font-medium text-gray-900 mr-1">
-                +918788838828
+                youre_email@gmail.com
               </span>
               <Link
-                href="/phone"
+                href="/signin"
                 className="text-blue-600 hover:text-blue-500 font-medium"
               >
                 Change
@@ -81,7 +81,7 @@ export default function PhonePage() {
                 type="button"
                 className="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out hover:cursor-pointer"
               >
-                Get an OTP on your phone
+                Get an OTP
               </button>
             </Link>
           </div>

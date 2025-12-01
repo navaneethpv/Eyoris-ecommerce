@@ -5,12 +5,6 @@ const OtpInput = () => {
     <div>
       {" "}
       <div>
-        <label
-          htmlFor="otp"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Enter OTP
-        </label>
         <div className="mt-1">
           <input
             id="otp"
