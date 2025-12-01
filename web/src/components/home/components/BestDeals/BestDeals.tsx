@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 import { useBestDeals } from '@/hooks/useBestDeals';
 
 export default function BestDeals() {
-  const products = useBestDeals();
+  const products = useBestDeals(0, 12);
 
   return (
     <section className="container mx-auto py-12 px-4">

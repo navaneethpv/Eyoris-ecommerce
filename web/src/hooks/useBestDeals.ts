@@ -55,7 +55,7 @@ function parseFirstImage(imageField: unknown): string | undefined {
   return undefined;
 }
 
-export function useBestDeals() {
+export function useBestDeals(startIndexArg?: number, count = 8) {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -95,9 +95,14 @@ export function useBestDeals() {
           console.warn("No products found after resolving response shape.");
         }
 
-        // Take only the first 8 products
-        const count = 8;
-        const endIndex = Math.min(count, data.length);
+        // Decide start index: use provided startIndexArg (bounded) or center the window
+        const countToUse = Math.max(1, Math.floor(count));
+        const maxStart = Math.max(0, data.length - countToUse);
+        const startIndex = typeof startIndexArg === 'number'
+          ? Math.max(0, Math.min(Math.floor(startIndexArg), maxStart))
+          : Math.max(0, Math.floor((data.length - countToUse) / 2));
+        const endIndex = Math.min(startIndex + countToUse, data.length);
+        console.log('Selecting products range:', startIndex, 'to', endIndex, 'of', data.length);
 
         // helper to read potentially unknown fields without using `any`
         const getField = (obj: unknown, key: string): unknown => {
@@ -105,7 +110,7 @@ export function useBestDeals() {
         };
 
         const processedProducts = data
-          .slice(0, endIndex)
+          .slice(startIndex, endIndex)
           .map((product: SampleProductJson) => {
             // try several fields that might contain images
             const candidates = [
@@ -168,7 +173,7 @@ export function useBestDeals() {
     }
 
     fetchProducts();
-  }, []);
+  }, [startIndexArg, count]);
 
   return products;
 }
