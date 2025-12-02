@@ -18,6 +18,7 @@
     // "jsx": "preserve",
     "jsx": "preserve",
     "incremental": true,
+    // Temporarily add a comment to trigger tsconfig re-evaluation
     "plugins": [
       {
         "name": "next"
