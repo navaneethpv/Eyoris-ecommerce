@@ -90,7 +90,7 @@ export default function SignInPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md p-8 bg-white rounded shadow">
         <h2 className="text-2xl font-bold text-center mb-6">Sign in</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form method="post" noValidate onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">Email</label>
             <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full px-3 py-2 border rounded" />

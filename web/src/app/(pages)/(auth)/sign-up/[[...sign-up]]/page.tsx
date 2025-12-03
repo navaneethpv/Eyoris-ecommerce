@@ -86,10 +86,7 @@ const page = () => {
               </p>
             </div>
             <div className="mt-8">
-              <form
-                className="flex flex-col gap-6 mt-8"
-                onSubmit={handleSubmit}
-              >
+              <form method="post" noValidate className="flex flex-col gap-6 mt-8" onSubmit={handleSubmit}>
                 <div>
                   <label className="block mb-2 text-sm text-black">
                     First Name
