@@ -9,7 +9,7 @@ const page = () => {
           <div
             className="hidden h-screen bg-cover bg-no-repeat lg:block lg:w-2/3"
             style={{
-              backgroundImage: "url('/assets/Images/signIn.jpg')",  // Set as background image for proper coverage
+              backgroundImage: "url('/assets/Images/signIn.jpg')", // Set as background image for proper coverage
             }}
           >
             <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
@@ -54,7 +54,7 @@ const page = () => {
                     <input
                       type="text"
                       placeholder="John"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-200 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
@@ -65,7 +65,7 @@ const page = () => {
                     <input
                       type="text"
                       placeholder="Snow"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-200 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
@@ -76,7 +76,7 @@ const page = () => {
                     <input
                       type="text"
                       placeholder="XXX-XX-XXXX-XXX"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-200 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
@@ -87,7 +87,7 @@ const page = () => {
                     <input
                       type="email"
                       placeholder="johnsnow@example.com"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-200 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
@@ -98,7 +98,7 @@ const page = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-200 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
@@ -109,7 +109,7 @@ const page = () => {
                     <input
                       type="password"
                       placeholder="Enter your password"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-200 bg-white border border-gray-200 rounded-lg dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
 
