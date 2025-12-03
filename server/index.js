@@ -1,4 +1,18 @@
-require("dotenv").config();
+// ensure env is loaded before any Clerk require
+require('dotenv').config();
+
+// fail-fast with a clear message if keys are missing
+const required = ['CLERK_PUBLISHABLE_KEY', 'CLERK_SECRET_KEY'];
+const missing = required.filter((k) => !process.env[k]);
+if (missing.length) {
+  console.error('Missing env vars:', missing.join(', '));
+  console.error('Set them in server/.env or export them in the shell. See: https://dashboard.clerk.com/api-keys');
+  process.exit(1);
+}
+
+console.log('CLERK_SECRET_KEY present?', !!process.env.CLERK_SECRET_KEY);
+console.log('CLERK_PUBLISHABLE_KEY present?', !!process.env.CLERK_PUBLISHABLE_KEY);
+
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -6,7 +20,6 @@ const connectDB = require("./config/db_connection");
 
 const productRoute = require("./router/porductRoute");
 const profileRoute = require("./router/profileRoute");
-
 
 const { clerkMiddleware } = require("@clerk/express");
 
