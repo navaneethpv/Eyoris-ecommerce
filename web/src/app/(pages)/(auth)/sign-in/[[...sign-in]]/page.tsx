@@ -1,109 +1,125 @@
 'use client';
-import Link from "next/link";
-import React from "react";
-// Removed Image import since we're using background-image
-import { useState } from "react";
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useSignIn, useAuth } from '@clerk/nextjs';
 
-const signIn = () => {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:5000';
+
+export default function SignInPage() {
+  const router = useRouter();
+  const { isLoaded: signInLoaded, signIn } = useSignIn();
+  const { getToken } = useAuth();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    if (!signInLoaded || !signIn) {
+      setError('Auth not ready');
+      return;
+    }
+
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // create a signIn instance
+      const createRes = await signIn.create({ identifier: email, password });
+      console.log('signIn.create =>', createRes);
+
+      let signedIn = false;
+
+      // If SDK returns a session or status complete
+      if (createRes?.status === 'complete' || createRes?.createdSessionId) {
+        signedIn = true;
+      }
+
+      // If attemptFirstFactor is available, call it
+      if (!signedIn && typeof signIn.attemptFirstFactor === 'function') {
+        const attempt = await signIn.attemptFirstFactor({ strategy: 'password' });
+        console.log('signIn.attemptFirstFactor =>', attempt);
+        if (attempt?.status === 'complete' || attempt?.createdSessionId) signedIn = true;
+      }
+
+      if (!signedIn) {
+        setError('Sign-in requires additional verification (email/OTP). Please complete verification.');
+        setLoading(false);
+        // Optionally redirect to verify page
+        router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
+        return;
+      }
+
+      // we have a session -> get token and call backend
+      const token = await getToken();
+      console.log('[DEBUG] got token length', token?.length);
+
+      const resp = await fetch(`${API_BASE}/api/profile/me`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!resp.ok) {
+        const json = await resp.json().catch(() => ({}));
+        setError('Backend error: ' + (json?.error || resp.status));
+        setLoading(false);
+        return;
+      }
+
+      router.push('/');
+    } catch (err: any) {
+      console.error('sign-in error', err);
+      setError(err?.errors?.[0]?.message || err?.message || 'Sign-in failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div>
-      <div className="bg-white">
-        <div className="flex justify-center h-screen">
-          <div
-            className="hidden h-screen bg-cover bg-no-repeat lg:block lg:w-2/3"
-            style={{
-              backgroundImage: "url('/assets/Images/signIn.jpg')",  // Set as background image for proper coverage
-            }}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md p-8 bg-white rounded shadow">
+        <h2 className="text-2xl font-bold text-center mb-6">Sign in</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full px-3 py-2 border rounded" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 block w-full px-3 py-2 border rounded" />
+          </div>
+
+          <div>
+            <button type="submit" disabled={loading} className="w-full px-4 py-2 bg-blue-600 text-white rounded">
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </div>
+        </form>
+
+        {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
+
+        <p className="mt-4 text-sm text-center">
+          Don&#x27;t have an account yet?{" "}
+          <Link
+            href="sign-up"
+            className="text-blue-500 focus:outline-none focus:underline hover:underline"
           >
-            {/* Removed Image component; background image now covers the div */}
-          </div>
-
-          <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
-            <div className="flex-1">
-              <div className="text-center">
-                <p className="mt-3 text-black text-2xl font-bold sm:text-3xl">
-                  Sign in to access your account
-                </p>
-              </div>
-
-              <div className="mt-8">
-                <form>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm text-black"
-                    >
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      placeholder="example@example.com"
-                      className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-700 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                    />
-                  </div>
-
-                  <div className="mt-6">
-                    <div className="flex justify-between mb-2">
-                      <label htmlFor="password" className="text-sm text-black">
-                        Password
-                      </label>
-                      <a
-                        href="#"
-                        className="text-sm text-black focus:text-blue-500 hover:text-blue-500 hover:underline"
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
-
-                    <div className="relative">
-                      <input
-                        type={showPassword ? "text" : "password"}  // Updated to toggle type
-                        name="password"
-                        id="password"
-                        placeholder="Password"
-                        className="block w-full px-4 py-2 mt-2 pr-10 text-gray-700 placeholder-gray-700 bg-white border border-gray-200 rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                      />
-                      <button
-                        type="button"
-                        onClick={togglePasswordVisibility}
-                        className="absolute inset-y-0 right-0 px-3 flex items-center text-sm text-blue-600 cursor-pointer"
-                      >
-                        {showPassword ? "Hide" : "Show"}
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="mt-6">
-                    <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                      Sign in
-                    </button>
-                  </div>
-                </form>
-
-                <p className="mt-6 text-sm text-center text-black">
-                  Don&#x27;t have an account yet?{" "}
-                  <Link
-                    href="sign-up"
-                    className="text-blue-500 focus:outline-none focus:underline hover:underline"
-                  >
-                    Sign up
-                  </Link>
-                  .
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+            Sign up
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );
-};
-
-export default signIn;
+}

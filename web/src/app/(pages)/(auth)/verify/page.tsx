@@ -117,6 +117,26 @@ const page = () => {
     void verifyCode(code);
   };
 
+  async function showTokenAndCallApi() {
+    try {
+      const token = await getToken(); // <-- Bearer token
+      console.log('Clerk token:', token);
+
+      // Example call to your backend
+      const res = await fetch('http://localhost:4000/api/profile/me', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ firstName: 'Alice', lastName: 'Doe' }),
+      });
+      console.log('backend status', res.status, await res.json());
+    } catch (err) {
+      console.error('getToken / API error', err);
+    }
+  }
+
   return (
     <div>
       <div className="bg-white">
@@ -195,6 +215,7 @@ const page = () => {
           </div>
         </div>
       </div> 
+      <button onClick={showTokenAndCallApi}>Get token & call API</button>
     </div>
   );
 };

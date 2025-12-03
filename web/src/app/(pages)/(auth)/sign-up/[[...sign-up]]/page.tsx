@@ -21,8 +21,6 @@ const page = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const validateEmail = (em: string) => /\S+@\S+\.\S+/.test(em);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -40,10 +38,11 @@ const page = () => {
 
       // If session created -> signed in
       if (createRes?.status === "complete" || createRes?.createdSessionId) {
-        // persisted and signed in -> proceed as before
+        // get token from Clerk (must await getToken())
         const token = await getToken();
+        console.log("User signed in, token:", token);
         await fetch(`${API_BASE}/api/profile/me`, {
-          method: "POST",
+          method: "PATCH",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ firstName, lastName, email }),
         });
@@ -70,6 +69,7 @@ const page = () => {
   };
 
   const togglePasswordVisibility = () => setShowPassword((s) => !s);
+
 
   return (
     <div className="bg-white">
