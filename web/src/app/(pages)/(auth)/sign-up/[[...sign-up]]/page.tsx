@@ -1,7 +1,15 @@
+'use client';
 import React from "react";
-import Image from "next/image";
+import { useState } from "react";
 
 const page = () => {
+   const [showPassword, setShowPassword] = useState(false);
+   const [password, setPassword] = useState("");
+   const [confirmPassword, setConfirmPassword] = useState("");
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+  
   return (
     <div>
       {/* Component: AuthLayout (page) */}
@@ -14,22 +22,7 @@ const page = () => {
             style={{
               backgroundImage: "url('/assets/Images/signIn.jpg')", // Set as background image for proper coverage
             }}
-          >
-            {/* Component: LeftHero content */}
-            <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
-              <div>
-                <h2 className="text-2xl font-bold text-white sm:text-3xl">
-                  Meraki UI
-                </h2>
-
-                <p className="max-w-xl mt-3 text-gray-300">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                  autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                  libero suscipit nam temporibus molestiae
-                </p>
-              </div>
-            </div>
-          </div>
+          />
 
           {/* Component: SignUpContainer */}
           <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
@@ -37,17 +30,6 @@ const page = () => {
             <div className="flex-1">
               {/* Component: Brand */}
               <div className="text-center">
-                {/* Component: Logo */}
-                <div className="flex justify-center mx-auto">
-                  <Image
-                    className="w-auto h-7 sm:h-8"
-                    src="https://merakiui.com/images/logo.svg"
-                    alt=""
-                    width={100}
-                    height={32}
-                  />
-                </div>
-
                 {/* Component: PageTitle */}
                 <p className="mt-3 text-black text-2xl font-bold sm:text-3xl">
                   Create your account
@@ -111,11 +93,22 @@ const page = () => {
                     <label className="block mb-2 text-sm text-black">
                       Password
                     </label>
-                    <input
-                      type="password"
-                      placeholder="Enter your password"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="block w-full px-5 py-3 pr-12 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center text-sm text-blue-600 cursor-pointer"
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Component: ConfirmPasswordField */}
@@ -123,15 +116,26 @@ const page = () => {
                     <label className="block mb-2 text-sm text-black">
                       Confirm password
                     </label>
-                    <input
-                      type="password"
-                      placeholder="Enter your password"
-                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                    />
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="block w-full px-5 py-3 pr-12 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                      />
+                      <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center text-sm text-blue-600 cursor-pointer"
+                      >
+                        {showPassword ? "Hide" : "Show"}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Component: SubmitButton */}
-                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50 cursor-pointer">
                     Sign Up
                   </button>
                 </form>
