@@ -1,4 +1,5 @@
 'use client';
+import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 
@@ -143,12 +144,12 @@ const page = () => {
                 {/* Component: FooterPrompt */}
                 <p className="mt-6 text-sm text-center text-black">
                   Already have an account?{" "}
-                  <a
-                    href="#"
+                  <Link
+                    href="sign-in"
                     className="text-blue-500 focus:outline-none focus:underline hover:underline"
                   >
                     Sign in
-                  </a>
+                  </Link>
                   .
                 </p>
               </div>
