@@ -1,7 +1,7 @@
 // ensure env is loaded before any Clerk require
 require('dotenv').config();
 
-const productRoute = require("./router/porductRoute");
+const productRoute = require("./router/productRoute");
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db_connection");
