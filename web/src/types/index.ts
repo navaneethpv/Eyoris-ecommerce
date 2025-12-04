@@ -1,12 +1,23 @@
 export interface Product {
-  uniq_id: string;
-  name: string;
-  rating: number;
-  reviews: number;
-  currentPrice: string;
-  oldPrice: string;
+  uniq_id?: string;
+  pid?: string;
+  _id?: string;
+  name?: string;
+  product_name?: string;
+  image?: string;
+  images?: string[];
+  thumbnail?: string;
+  currentPrice?: number | string;
+  oldPrice?: number | string;
   discount?: string;
-  image: string;
+  rating?: number | string;
+  reviews?: number | string;
+  brand?: string;
+  color?: string;
+  colors?: string[];
+  sizes?: string[];
+  description?: string;
+  // include other fields used by controllers
 }
 
 export interface SampleProductJson {
