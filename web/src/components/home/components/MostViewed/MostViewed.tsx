@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Product } from '@/types/index'
 import { useCartStore } from '@/store/useCartStore'
 import mostViewed from '@/hooks/mostViewed'
+import Link from 'next/link'
 
 const MostViewed: React.FC = () => {
   // select only the action to avoid unnecessary re-renders
@@ -42,11 +43,11 @@ const MostViewed: React.FC = () => {
     }
 
     const itemToAdd = {
-      id: String(product.uniq_id),
-      name: product.name,
+      id: String(product.uniq_id ?? product._id ?? product.pid ?? ''),
+      name: product.name ?? 'Product',
       price: oldPrice,
       discountPrice: currentPrice > 0 && currentPrice < oldPrice ? currentPrice : undefined,
-      imageUrl: product.image,
+      imageUrl: product.image ?? '/assets/Images/no-image.png',
       color: 'default',
       quantity: 1,
     }
@@ -72,56 +73,60 @@ const MostViewed: React.FC = () => {
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * (100 / 5)}%)` }}
           >
-            {products.map((product: Product) => (
-              <div key={String(product.uniq_id)} className="w-1/5 shrink-0 px-2">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
-                  <div className="relative h-44 w-full">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      style={{ objectFit: 'contain' }}
-                      className="rounded-t-lg"
-                    />
-                  </div>
+            {products.map((product) => {
+              const p = product
+              const slug = String(p.uniq_id ?? p.pid ?? p._id ?? p.id ?? '')
+              return (
+                <Link href={`/products/${slug}`} key={slug} className="w-1/5 shrink-0 px-2 block">
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full cursor-pointer">
+                    <div className="relative h-44 w-full">
+                      <Image
+                        src={product.image ?? '/assets/Images/no-image.png'}
+                        alt={product.name ?? 'Product'}
+                        fill
+                        style={{ objectFit: 'contain' }}
+                        className="rounded-t-lg"
+                      />
+                    </div>
 
-                  <div className="p-4 flex flex-col grow">
-                    <h3 className="text-base font-semibold text-gray-900 mb-1 min-h-10">
-                      {product.name}
-                    </h3>
+                    <div className="p-4 flex flex-col grow">
+                      <h3 className="text-base font-semibold text-gray-900 mb-1 min-h-10">
+                        {product.name}
+                      </h3>
 
-                    <div className="flex items-center mb-2">
-                      <div className="flex">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <svg
-                            key={i}
-                            className={`w-5 h-5 ${i < (product.rating ?? 0) ? 'text-yellow-400' : 'text-gray-300'}`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.381-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                      <div className="flex items-center mb-2">
+                        <div className="flex">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <svg
+                              key={i}
+                              className={`w-5 h-5 ${i < Number(product.rating ?? 0) ? 'text-yellow-400' : 'text-gray-300'}`}
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.538 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.783.57-1.838-.197-1.538-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.381-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                            </svg>
+                          ))}
+                        </div>
+                        <span className="ml-2 text-sm text-gray-600">({String(product.reviews ?? '')})</span>
                       </div>
-                      <span className="ml-2 text-sm text-gray-600">({String(product.reviews ?? '')})</span>
-                    </div>
 
-                    <div className="flex items-baseline space-x-2 mb-2">
-                      <span className="text-lg font-bold text-gray-900">₹{product.currentPrice}</span>
-                      <span className="text-sm text-gray-500 line-through">₹{product.oldPrice}</span>
-                      {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
-                    </div>
+                      <div className="flex items-baseline space-x-2 mb-2">
+                        <span className="text-lg font-bold text-gray-900">₹{product.currentPrice}</span>
+                        <span className="text-sm text-gray-500 line-through">₹{product.oldPrice}</span>
+                        {product.discount && <span className="text-sm text-green-600">{product.discount}</span>}
+                      </div>
 
-                    <button
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto"
-                      onClick={() => handleAddtoCart(product)}
-                    >
-                      Add to cart
-                    </button>
+                      <button
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 mt-auto"
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAddtoCart(product); }}
+                      >
+                        Add to cart
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </Link>
+              )
+            })}
           </div>
         </div>
 
@@ -150,4 +155,4 @@ const MostViewed: React.FC = () => {
     </section>
   )
 }
-export default MostViewed ;
+export default MostViewed
