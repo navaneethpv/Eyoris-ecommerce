@@ -145,7 +145,7 @@ export default function SignInPage() {
                   Sign up
                 </Link>
               </p>
-              {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+              {error && <p className="mt-2 text-sm text-center text-red-500">{error}</p>}
             </div>
           </div>
         </div>
