@@ -4,12 +4,10 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSignIn, useAuth } from '@clerk/nextjs';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:5000';
-
 export default function SignInPage() {
   const router = useRouter();
   const { isLoaded: signInLoaded, signIn } = useSignIn();
-  const { getToken } = useAuth();
+  const { setActive } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,23 +55,18 @@ export default function SignInPage() {
         return;
       }
 
-      const token = await getToken();
-      const resp = await fetch(`${API_BASE}/api/profile/me`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!resp.ok) {
-        const json = await resp.json().catch(() => ({}));
-        setError('Backend error: ' + (json?.error || resp.status));
-        setLoading(false);
-        return;
+      // Activate client session if Clerk returned a session id
+      if (createRes?.createdSessionId && typeof setActive === 'function') {
+        try {
+          await setActive({ session: createRes.createdSessionId });
+          // allow state to settle briefly
+          await new Promise((r) => setTimeout(r, 200));
+        } catch (e) {
+          console.warn('setActive failed', e);
+        }
       }
 
+      // Successful sign-in, redirect client-side to home (no backend call)
       router.push('/');
     } catch (err: any) {
       console.error('sign-in error', err);
