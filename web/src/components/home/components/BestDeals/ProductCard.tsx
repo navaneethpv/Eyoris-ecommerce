@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Product } from "@/types";
 import { useCartStore } from "@/store/useCartStore";
 import { useWishlistStore } from '@/store/useWishlistStore';
+import type { CartItem } from '@/store/useCartStore';
 
 // Define ProductCardProps interface
 interface ProductCardProps {
@@ -31,8 +32,15 @@ export default function ProductCard({ product }: ProductCardProps) {
   // ensure Image gets a string src
   const safeSrc = typeof displayUrl === "string" && displayUrl.trim() ? displayUrl.trim() : "/next.svg";
 
-  const oldPrice = parseFloat(product.oldPrice);
-  const currentPrice = parseFloat(product.currentPrice);
+  const parsePrice = (v?: string | number) => {
+    if (v == null) return NaN;
+    if (typeof v === 'number') return v;
+    const cleaned = String(v).replace(/[^0-9.]/g, '');
+    const parsed = parseFloat(cleaned);
+    return Number.isFinite(parsed) ? parsed : NaN;
+  };
+  const oldPrice = parsePrice(product.oldPrice);
+  const currentPrice = parsePrice(product.currentPrice);
   let discountPercentage = 0;
   if (!isNaN(oldPrice) && !isNaN(currentPrice) && oldPrice > 0) {
     discountPercentage = Math.round(
@@ -42,22 +50,34 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   // Handler for adding item to cart
   const handleAddToCart = () => {
-    const itemToAdd: Omit<cartItem, "quantity"> = {
-      id: product.uniq_id,
-      name: product.name,
-      price: oldPrice, // Using oldPrice as the original item price
-      discountPrice: currentPrice < oldPrice ? currentPrice : undefined, // discounted price if applicable
-      imageUrl: imageUrl,
-      color: "default",
+    const itemToAdd: Omit<CartItem, 'quantity'> = {
+      id: productId,
+      name: product.name ?? 'Product',
+      price: !isNaN(oldPrice) && oldPrice > 0 ? oldPrice : (!isNaN(currentPrice) ? currentPrice : 0),
+      discountPrice: !isNaN(currentPrice) && currentPrice < oldPrice ? currentPrice : undefined,
+      imageUrl: safeSrc,
+      color: (product as any).color ?? 'default',
     };
+
+    console.log('[ProductCard] Add to cart', itemToAdd);
     addToCart(itemToAdd);
+    // debug: log cart items after adding
+    setTimeout(() => {
+      // read the store items directly for debug
+      try {
+        const items = (useCartStore as any).getState?.()?.items ?? null;
+        console.log('[Cart] items after add', items);
+      } catch (e) {
+        console.warn('[Cart] could not read store items for debug', e);
+      }
+    }, 10);
   };
 
  const wishlistToggleHandler = () => {
     const item = {
       id: productId,
-      name: product.name ?? product.product_name ?? 'Product',
-      price: Number(product.currentPrice ?? product.discounted_price ?? product.retail_price ?? 0) || 0,
+      name: product.name ?? product.name ?? 'Product',
+      price: Number(product.currentPrice ?? product.discount ?? product.currentPrice ?? 0) || 0,
       color: (product as any).color ?? 'default',
       image: imageUrl || '/next.svg',
     };
@@ -73,7 +93,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="relative h-48">
         {/* Wishlist button */}
         <button
-          onClick={wishlistToggleHandler}
+          onClick={(e) => { e.stopPropagation(); wishlistToggleHandler(); }}
           className="absolute top-2 right-2 z-10 bg-white/80 p-1 rounded-full shadow"
           aria-label="Toggle wishlist"
         >
@@ -121,7 +141,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
           <div className="mt-auto pt-4">
             <button
-              onClick={handleAddToCart}
+              onClick={(e) => { e.stopPropagation(); handleAddToCart(); }}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md transition duration-300 hover:cursor-pointer"
             >
               Add to cart

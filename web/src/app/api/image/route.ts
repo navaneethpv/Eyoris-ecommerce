@@ -1,3 +1,12 @@
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+  const { email, name } = await req.json();
+  // Save to DB (Prisma / whatever)
+  // await prisma.user.create({ data: { email, name }});
+  return NextResponse.json({ ok: true });
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const url = searchParams.get('url');

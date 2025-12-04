@@ -1,203 +1,196 @@
 "use client";
-
-import React, { useEffect } from "react";
-import { GalleryVerticalEnd, Eye, EyeOff } from "lucide-react";
-import { useSignUp, useUser } from "@clerk/nextjs";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSignUp, useSignIn, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 
-export default function SignupPage() {
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5000";
+
+const page = () => {
   const router = useRouter();
-  const { user } = useUser();
-  const { signUp, isLoaded, setActive } = useSignUp();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [pendingVerification, setPendingVerification] = React.useState(false);
-  const [verificationCode, setVerificationCode] = React.useState("");
-  const [error, setError] = React.useState<string | null>(null);
-  const [name, setName] = React.useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
+  const { isLoaded: signUpLoaded, signUp } = useSignUp();
+  const { isLoaded: signInLoaded, signIn } = useSignIn();
+  const { getToken } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      router.push("/");
-    }
-  }, [user, router]);
+  const [firstName, setFirstName] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  if (user) {
-    return null; // or a loading message
-  }
-
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
-
-  async function handleSignUp(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) {
+    setError("");
+    if (!signUpLoaded || !signInLoaded || !signUp || !signIn) {
+      setError("Auth not ready");
       return;
     }
-    try {
-      await signUp.create({
-        emailAddress: email,
-        password,
-      });
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      setPendingVerification(true);
-    } catch (err: any) {
-      if (err.errors?.[0]?.code === "email_address_already_exists") {
-        setError("An account with this email already exists. Please sign in instead.");
-        router.push('/sign-in?email=' + encodeURIComponent(email));
-      } else {
-        setError(err.errors[0]?.longMessage || "Something went wrong");
-      }
-      console.error("Sign-up error:", err);
-    }
-  }
 
-  async function handleVerifyCode(e: React.FormEvent) {
-    e.preventDefault();
+    // validation...
+    setLoading(true);
     try {
-      const result = await signUp.attemptEmailAddressVerification({
-        code: verificationCode,
-      });
-      if (result.status !== "complete") {
-        throw new Error("Verification failed");
+      console.log("Creating user", { email, firstName, lastName });
+      const createRes = await signUp.create({ emailAddress: email, password, firstName, lastName });
+      console.log("signUp.create =>", createRes);
+
+      // If session created -> signed in
+      if (createRes?.status === "complete" || createRes?.createdSessionId) {
+        // get token from Clerk (must await getToken())
+        const token = await getToken();
+        console.log("User signed in, token:", token);
+        await fetch(`${API_BASE}/api/profile/me`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ firstName, lastName, email }),
+        });
+        router.push("/");
+        return;
       }
-      await setActive({ session: result.createdSessionId });
-      router.push("/");
+
+      // No session: likely email verification required
+      if (typeof signUp.prepareEmailAddressVerification === "function") {
+        await signUp.prepareEmailAddressVerification();
+        // Redirect to your verification/OTP page — provide email or clerk user id in query
+        router.push(`/verify?email=${encodeURIComponent(email)}`);
+        return;
+      }
+
+      // Fallback: redirect to a generic info/verify page
+      router.push(`/verify?email=${encodeURIComponent(email)}`);
     } catch (err: any) {
-      console.error("Verification error:", err);
-      setError("Verification failed");
+      console.error("signup error", err);
+      setError(err?.errors?.[0]?.message || err?.message || "Signup failed");
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  const togglePasswordVisibility = () => setShowPassword((s) => !s);
+
 
   return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
-          <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <GalleryVerticalEnd className="size-4" />
+    <div className="bg-white">
+      <div className="flex justify-center h-screen">
+        <div
+          className="hidden h-screen bg-cover bg-no-repeat lg:block lg:w-2/3"
+          style={{ backgroundImage: "url('/assets/Images/signIn.jpg')" }}
+        />
+        <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
+          <div className="flex-1">
+            <div className="text-center">
+              <p className="mt-3 text-black text-2xl font-bold sm:text-3xl">
+                Create your account
+              </p>
+            </div>
+            <div className="mt-8">
+              <form method="post" noValidate className="flex flex-col gap-6 mt-8" onSubmit={handleSubmit}>
+                <div>
+                  <label className="block mb-2 text-sm text-black">
+                    First Name
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="John"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-black">
+                    Last Name
+                  </label>
+                  <input
+                    required
+                    type="text"
+                    placeholder="Doe"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-black">
+                    Email address
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    placeholder="john@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-black">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      required
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="block w-full px-5 py-3 pr-12 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 px-3 flex items-center text-sm text-blue-600"
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block mb-2 text-sm text-black">
+                    Confirm Password
+                  </label>
+                  <input
+                    required
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Confirm your password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-500 bg-white border border-gray-200 rounded-lg"
+                  />
+                </div>
+
+                <button
+                  disabled={loading}
+                  className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg"
+                >
+                  {loading ? "Creating..." : "Sign Up"}
+                </button>
+              </form>
+
+              <p className="mt-6 text-sm text-center text-black">
+                Already have an account?{" "}
+                <Link
+                  href="sign-in"
+                  className="text-blue-500"
+                >
+                  Sign in
+                </Link>
+                .
+              </p>
+              {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+            </div>
           </div>
-          Acme Inc.
-        </a>
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-xl">Create your account</CardTitle>
-            <CardDescription>
-              Enter your email below to create your account
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {!pendingVerification ? (
-              <form onSubmit={handleSignUp}>
-                <FieldGroup>
-                  <Field>
-                    <FieldLabel htmlFor="name">Full Name</FieldLabel>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="John Doe"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                    />
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="email">Email</FieldLabel>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="m@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        type={showPassword ? "text" : "password"}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                        className="pr-10"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                        onClick={() => setShowPassword(!showPassword)}
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
-                        }
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
-                    <FieldDescription>
-                      Must be at least 8 characters long.
-                    </FieldDescription>
-                  </Field>
-                  <div id="clerk-captcha"></div>
-                  <Field>
-                    <Button type="submit">Create Account</Button>
-                    <FieldDescription className="text-center">
-                      Already have an account? <Link href="/sign-in">Sign in</Link>
-                    </FieldDescription>
-                  </Field>
-                </FieldGroup>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyCode}>
-                <FieldGroup>
-                  <Field>
-                    <FieldLabel htmlFor="code">Verification Code</FieldLabel>
-                    <Input
-                      id="code"
-                      type="text"
-                      value={verificationCode}
-                      onChange={(e) => setVerificationCode(e.target.value)}
-                      required
-                    />
-                  </Field>
-                  <Field>
-                    <Button type="submit">Verify</Button>
-                  </Field>
-                </FieldGroup>
-              </form>
-            )}
-            {error && <p className="text-red-500">{error}</p>}
-          </CardContent>
-        </Card>
-        <FieldDescription className="px-6 text-center">
-          By clicking continue, you agree to our{" "}
-          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-        </FieldDescription>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default page;

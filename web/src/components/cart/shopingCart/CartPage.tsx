@@ -11,19 +11,23 @@ interface CartPageProps {
 }
 
 export default function CartPage({ onProceedToCheckout }: CartPageProps) {
-  const { cartItems, updateQuantity, removeFromCart } = useCartStore();
+  const cartItems = useCartStore((s) => s.items ?? []);
+  const removeFromCart = useCartStore((s) => s.removeFromCart);
+  const updateQuantity = useCartStore((s) => s.updateQuantity);
+
+  const subtotal = cartItems.reduce((acc, i) => acc + (i.price ?? 0) * (i.quantity ?? 1), 0);
 
   // Function to handle quantity changes
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     const currentItem = cartItems.find(item => item.id === itemId);
     if (!currentItem) return;
     const diff = newQuantity - currentItem.quantity;
-    updateQuantity(itemId, diff);
+    updateHandler(itemId, diff);
   };
 
   // Function to handle item removal
   const handleRemoveItem = (itemId: string) => {
-    removeFromCart(itemId);
+    removeHandler(itemId);
   };
 
   // Recalculate total price and final amount whenever cartItems change
@@ -44,20 +48,26 @@ export default function CartPage({ onProceedToCheckout }: CartPageProps) {
   const finalAmountRaw = totalPrice - discount - couponDiscount + platformFee;
   const finalAmount = isNaN(finalAmountRaw) ? 0 : finalAmountRaw;
 
+  const updateHandler = (itemId: string, diff: number) => {
+    console.log('[CartPage] updateHandler', itemId, diff);
+    updateQuantity(itemId, diff);
+  };
+
+  const removeHandler = (itemId: string) => {
+    console.log('[CartPage] removeHandler', itemId);
+    removeFromCart(itemId);
+  };
+
+  if (!cartItems) return <div>Loading...</div>;
+
   return (
     <div className="bg-gray-100 min-h-screen p-4 md:p-8">
       <div className="max-w-6xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
         <CartHeader activeStep="cart" />
         {cartItems.length === 0 ? (
-          <div className="text-center py-10">
-            <p className="text-xl text-gray-600">Your cart is empty.</p>
-            <p className="text-md text-gray-500 mt-2">Please add some products to proceed.</p>
-            {/* Optionally, add a button to navigate to shop page */}
-            {/* <Link href="/shop">
-              <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded-md">
-                Go to Shop
-              </button>
-            </Link> */}
+          <div className="py-12 text-center">
+            <h2 className="text-2xl font-semibold text-gray-800">Your cart is empty</h2>
+            <p className="mt-2 text-gray-600">Add some products to get started.</p>
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-8">

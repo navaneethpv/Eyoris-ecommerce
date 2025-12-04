@@ -1,21 +1,36 @@
+// ensure env is loaded before any Clerk require
+require('dotenv').config();
+
+const productRoute = require("./router/productRoute");
 const express = require("express");
-const connectDB = require("./config/db_connection");
-const route  = require("./router/porductRoute");
 const cors = require("cors");
-require("dotenv").config();
+const connectDB = require("./config/db_connection");
+
+
+
+
 const app = express();
 const port = process.env.PORT || 5000;
-app.use(express.json());
 
-connectDB()
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+// Database
+connectDB();
+
+// Middleware
+app.use(cors())
+
+app.use(express.json());
+// Test route
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.json({ msg: "Backend running…" });
 });
 
-app.use('/product', route);
+// Product Routes (public)
+app.use("/product", productRoute);
+
+
+// Example protected order route
+// app.use("/api/orders", orderRoute);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });

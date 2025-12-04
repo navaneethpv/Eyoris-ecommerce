@@ -1,69 +1,66 @@
-// ...existing code...
-import {create} from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
 
-export type cartItem = {
+export interface CartItem {
   id: string;
   name: string;
   price: number;
-  discountPrice?: number;
-  quantity: number;
-  imageUrl: string;
+  discountPrice?: number | null;
+  imageUrl: string; // made required to match types
   color: string;
-};
+  quantity: number;
+}
 
-type CartState = {
-  cartItems: cartItem[]; // <- use exported cartItem type
-  addToCart: (item: Omit<cartItem, "quantity">) => void;
+interface CartState {
+  items: CartItem[];
+  addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, amount: number) => void;
-  emptyCart: () => void;
-  totalItems: () => number;
-  totalPrice: () => number;
-};
+  updateQuantity: (id: string, diff: number) => void;
+  clearCart: () => void;
+}
 
-export const useCartStore = create<CartState>()(
-  persist(
-    (set, get) => ({
-      cartItems: [],
+export const useCartStore = create<CartState>((set, get) => ({
+  items: [],
+  addToCart: (item) => {
+    console.log('[Cart] addToCart called with', item);
+    set((state) => {
+      const existingIndex = state.items.findIndex((i) => i.id === item.id);
+      if (existingIndex >= 0) {
+        const newItems = [...state.items];
+        newItems[existingIndex] = {
+          ...newItems[existingIndex],
+          quantity: newItems[existingIndex].quantity + 1,
+        };
+        console.log('[Cart] incremented quantity', newItems[existingIndex]);
+        return { items: newItems };
+      }
+      const newItem: CartItem = { ...item, quantity: 1, imageUrl: item.imageUrl || '/next.svg', color: item.color ?? 'default' } as CartItem;
+      console.log('[Cart] added new item', newItem);
+      return { items: [...state.items, newItem] };
+    });
+  },
+  removeFromCart: (id) => {
+    console.log('[Cart] removeFromCart', id);
+    set((state) => ({ items: state.items.filter((i) => i.id !== id) }));
+  },
+  updateQuantity: (id, diff) => {
+    console.log('[Cart] updateQuantity', id, diff);
+    set((state) => {
+      const idx = state.items.findIndex((i) => i.id === id);
+      if (idx === -1) return state;
+      const newItems = [...state.items];
+      const newQty = (newItems[idx].quantity || 0) + diff;
+      if (newQty <= 0) {
+        newItems.splice(idx, 1);
+      } else {
+        newItems[idx] = { ...newItems[idx], quantity: newQty };
+      }
+      return { items: newItems };
+    });
+  },
+  clearCart: () => {
+    console.log('[Cart] clearCart');
+    set({ items: [] });
+  },
+}));
 
-      addToCart: (itemToAdd) => {
-        set((state) => {
-          const existing = state.cartItems.find((i) => i.id === itemToAdd.id);
-          if (existing) {
-            return {
-              cartItems: state.cartItems.map((i) =>
-                i.id === itemToAdd.id
-                  ? { ...i, quantity: i.quantity + 1, discountPrice: itemToAdd.discountPrice ?? i.discountPrice }
-                  : i
-              ),
-            };
-          }
-          return { cartItems: [...state.cartItems, { ...itemToAdd, quantity: 1 }] };
-        });
-      },
-
-      removeFromCart: (id) => {
-        set((state) => ({ cartItems: state.cartItems.filter((i) => i.id !== id) }));
-      },
-
-      updateQuantity: (id, amount) => {
-        set((state) => ({
-          cartItems: state.cartItems.map((i) =>
-            i.id === id ? { ...i, quantity: Math.max(1, i.quantity + amount) } : i
-          ),
-        }));
-      },
-
-      emptyCart: () => set({ cartItems: [] }),
-      totalItems: () => get().cartItems.reduce((s, i) => s + i.quantity, 0),
-
-      totalPrice: () =>
-        get().cartItems.reduce((s, i) => s + (i.discountPrice ?? i.price) * i.quantity, 0),
-    }),
-    {
-      name: "eyoris-cart",
-    }
-  )
-);
-// ...existing
+export default useCartStore;

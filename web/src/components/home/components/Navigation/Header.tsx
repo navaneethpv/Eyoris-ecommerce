@@ -78,7 +78,7 @@ export default function Header() {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <Usermenu handleLoginClick={handleLoginClick} isDropdownOpen = {isDropdownOpen} />
+              {/* <Usermenu handleLoginClick={handleLoginClick} isDropdownOpen = {isDropdownOpen} /> */}
               <UserDropMenu isDropdownOpen={isDropdownOpen} />
             </div>
             <CartSection cartItems={cartItems} />
