@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     domains: [
+      'img.clerk.com',
       'images.unsplash.com',
       'via.placeholder.com',
       'img5a.flixcart.com',
