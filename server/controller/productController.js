@@ -1,66 +1,116 @@
 // eyoris/server/controller/productController.js
-const mongoose = require("mongoose");
-const Product = require("../models/productModel"); // matches your repo
+const mongoose = require('mongoose');
+const Product = require('../models/productModel');
 
 /* ----------------- helpers ----------------- */
 
-/**
- * parseImagesField
- * Accepts:
- *  - actual array
- *  - JSON-string like '["http://..."]'
- *  - plain string that contains one or more URLs
- * Returns array of URLs (may be empty)
- */
+// parse images helper (same approach used elsewhere)
 function parseImagesField(imageField) {
   if (!imageField) return [];
   if (Array.isArray(imageField)) return imageField.map(String).filter(Boolean);
 
   const txt = String(imageField).trim();
-
-  // try JSON parse: '["http://...","..."]'
   try {
     const parsed = JSON.parse(txt);
     if (Array.isArray(parsed)) return parsed.map(String).filter(Boolean);
-  } catch (e) {
-    // ignore parse errors
-  }
+  } catch (e) {}
 
-  // extract URLs with regex as fallback
-  const urls = Array.from(txt.matchAll(/https?:\/\/[^"\]\s,}]+/g)).map(m => m[0]);
+  const urls = Array.from(txt.matchAll(/https?:\/\/[^"' \]\s,}]+/g)).map((m) => m[0]);
   if (urls.length) return urls;
-
-  // final fallback: if the string itself looks like a url
-  if (/^https?:\/\//.test(txt)) return [txt];
-
+  if (/^https?:\/\//i.test(txt)) return [txt];
   return [];
 }
 
-/**
- * normalizeProductDoc
- * Map DB document fields to lightweight shape for frontend
- */
-function normalizeProductDoc(doc) {
-  if (!doc) return null;
-  const images = parseImagesField(doc.image ?? doc.images ?? doc.gallery ?? "");
-  const price = doc.discounted_price ?? doc.discount_price ?? doc.retail_price ?? doc.price ?? null;
-  const originalPrice = doc.retail_price ?? doc.original_price ?? doc.mrp ?? null;
+function toNumber(val) {
+  if (val == null) return null;
+  const n = Number(String(val).replace(/[^0-9.]/g, ''));
+  return Number.isFinite(n) ? n : null;
+}
+
+function parseRating(val) {
+  if (val == null) return null;
+  const n = Number(String(val).replace(/[^0-9.]/g, ''));
+  if (!Number.isFinite(n)) return null;
+  return Number(Math.max(0, Math.min(5, n)).toFixed(1));
+}
+
+function extractVariantOptions(doc) {
+  const colors = new Set();
+  const sizes = new Set();
+
+  const addColor = (v) => {
+    if (!v) return;
+    if (Array.isArray(v)) v.forEach(addColor);
+    else colors.add(String(v).trim());
+  };
+  const addSize = (v) => {
+    if (!v) return;
+    if (Array.isArray(v)) v.forEach(addSize);
+    else sizes.add(String(v).trim());
+  };
+
+  const gather = (obj) => {
+    if (!obj) return;
+    if (Array.isArray(obj)) {
+      for (const item of obj) gather(item);
+      return;
+    }
+    if (typeof obj === 'object') {
+      for (const k of Object.keys(obj)) {
+        const key = String(k).toLowerCase();
+        const v = obj[k];
+        if (key.includes('color')) addColor(v);
+        else if (key.includes('size')) addSize(v);
+        else gather(v);
+      }
+      return;
+    }
+    if (typeof obj === 'string') {
+      if (/^#?[0-9A-F]{3,6}$/i.test(obj) || obj.toLowerCase().match(/\b(black|white|red|blue|green|yellow|pink|gray|brown|orange|purple)\b/)) {
+        addColor(obj.trim());
+      } else if (obj.match(/\b(S|M|L|XL|XXL|XS|XXS|\d+(?:cm|mm|in)?)\b/i)) {
+        addSize(obj.trim());
+      }
+    }
+  };
+
+  gather(doc.colors || doc.color || doc.available_colors || doc.availableColors);
+  gather(doc.variants || doc.skus || doc.product_variants || doc.options || doc.attributes || doc.product_options);
+  const variantsArr = Array.isArray(doc.variants) ? doc.variants : (Array.isArray(doc.skus) ? doc.skus : []);
+  for (const v of variantsArr) gather(v);
+
+  return { colors: Array.from(colors), sizes: Array.from(sizes) };
+}
+
+function normalizeProductDoc(d) {
+  const images = parseImagesField(d.image ?? d.images ?? d.gallery ?? d.thumbnail ?? '');
+  const thumbnail = images.length ? images[0] : (d.thumbnail ?? null);
+  const oldPrice = toNumber(d.retail_price ?? d.original_price ?? d.mrp ?? d.oldPrice ?? d.price);
+  const currentPrice = toNumber(d.discounted_price ?? d.discount_price ?? d.currentPrice ?? d.price);
+  const discount = oldPrice && currentPrice && oldPrice > 0
+    ? `${Math.round(((oldPrice - currentPrice) / oldPrice) * 100)}%`
+    : null;
+  const rating = parseRating(d.rating ?? d.product_rating ?? d.ratingValue ?? d.average_rating ?? null);
+  const reviews = Number(toNumber(d.reviews ?? d.reviewCount ?? d.reviews_count ?? d.review_count ?? d.num_reviews ?? 0)) || 0;
+  const { colors, sizes } = extractVariantOptions(d);
 
   return {
-    _id: doc._id?.toString?.() ?? String(doc._id),
-    product_name: doc.product_name ?? doc.name ?? "",
-    pid: doc.pid ?? null,
-    price,
-    originalPrice,
-    retail_price: doc.retail_price ?? null,
-    discounted_price: doc.discounted_price ?? null,
-    thumbnail: images.length ? images[0] : (doc.thumbnail ?? null),
+    _id: d._id?.toString?.() ?? String(d._id),
+    pid: d.pid ?? null,
+    uniq_id: d.uniq_id ?? d.pid ?? d._id?.toString?.(),
+    name: d.product_name ?? d.name ?? '',
+    description: d.description ?? d.long_description ?? d.short_description ?? null,
     images,
-    description: doc.description ?? "",
-    brand: doc.brand ?? null,
-    clean_category: doc.clean_category ?? doc.product_category_tree ?? null,
-    rating: doc.rating ?? doc.product_rating ?? doc.parsed_rating ?? null,
-    raw: doc // full raw doc if frontend wants additional fields
+    thumbnail,
+    oldPrice,
+    currentPrice,
+    discount,
+    rating,
+    reviews,
+    brand: d.brand ?? null,
+    colors,
+    sizes,
+    raw: d,
   };
 }
 
@@ -138,28 +188,20 @@ const getProducts = async (req, res) => {
  */
 const getProductById = async (req, res) => {
   try {
-    const idOrPid = req.params.id;
-    let doc = null;
+    const id = String(req.params.id || '');
+    const orQuery = [{ pid: id }, { uniq_id: id }];
+    if (mongoose.Types.ObjectId.isValid(id)) orQuery.push({ _id: new mongoose.Types.ObjectId(id) });
 
-    // try _id first
-    if (mongoose.Types.ObjectId.isValid(idOrPid)) {
-      doc = await Product.findById(idOrPid).lean();
-    }
-
-    // fallback to pid
+    const doc = await Product.findOne({ $or: orQuery }).lean();
     if (!doc) {
-      doc = await Product.findOne({ pid: idOrPid }).lean();
+      return res.status(404).json({ message: 'Product not found' });
     }
 
-    if (!doc) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    const normalized = normalizeProductDoc(doc);
-    return res.status(200).json({ product: normalized });
+    const product = normalizeProductDoc(doc);
+    return res.status(200).json({ product });
   } catch (err) {
-    console.error("getProductById error:", err);
-    return res.status(500).json({ message: "Error fetching product", error: err.message });
+    console.error('getProductById error:', err);
+    return res.status(500).json({ message: 'Error fetching product', error: String(err.message || err) });
   }
 };
 
@@ -241,9 +283,11 @@ const getBestDeals = async (req, res) => {
   }
 };
 
+// export existing controllers and new one
 module.exports = {
   addProduct,
   getProducts,
+  getBestDeals,
   getProductById,
-  getBestDeals
+  getProductById,
 };
